@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MargamParkArchives (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MargamParkArchives (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
