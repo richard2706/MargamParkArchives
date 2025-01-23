@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives", "MargamParkArchives\MargamParkArchives.csproj", "{D525C865-E8FE-4451-94C0-C5F1AE7623A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesTests", "MargamParkArchivesTests\MargamParkArchivesTests.csproj", "{198E5E28-5817-441A-82DC-B75E69349127}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,18 @@ Global
 		{D525C865-E8FE-4451-94C0-C5F1AE7623A2}.Release|x86.ActiveCfg = Release|x86
 		{D525C865-E8FE-4451-94C0-C5F1AE7623A2}.Release|x86.Build.0 = Release|x86
 		{D525C865-E8FE-4451-94C0-C5F1AE7623A2}.Release|x86.Deploy.0 = Release|x86
+		{198E5E28-5817-441A-82DC-B75E69349127}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Debug|x64.Build.0 = Debug|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Debug|x86.Build.0 = Debug|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Release|ARM64.Build.0 = Release|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Release|x64.ActiveCfg = Release|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Release|x64.Build.0 = Release|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Release|x86.ActiveCfg = Release|Any CPU
+		{198E5E28-5817-441A-82DC-B75E69349127}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
