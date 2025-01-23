@@ -26,6 +26,10 @@ namespace MargamParkArchives
         public MainWindow()
         {
             this.InitializeComponent();
+            // Ask Database operation handler for data - Get random 2 archive entries from the database
+            // Display the archive entries on screen
+
+            
         }
 
         private void myButton_Click(object sender, RoutedEventArgs e)
