@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MargamParkArchives.Entities
+﻿namespace MargamParkArchives.Entities
 {
     /// <summary>
     /// Represents a creator entity from the database, including its ID. Should be used when retriving/updating categories from the database.
