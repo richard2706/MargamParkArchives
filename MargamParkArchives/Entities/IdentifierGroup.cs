@@ -5,8 +5,6 @@ namespace MargamParkArchives.Entities
     /// <summary>
     /// Represents an identifer group entity from the database.
     /// </summary>
-    /// <param name="Id">3 character code uniquely identifying the identifier group.</param>
-    /// <param name="Name">Name of the identifier group.</param>
     internal record IdentifierGroup
     {
         private const int MaxIdLength = 3;
