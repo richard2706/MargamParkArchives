@@ -1,4 +1,4 @@
-namespace MargamParkArchivesTests;
+namespace MargamParkArchivesTests.Entities;
 
 using MargamParkArchives.Entities;
 using static TestMessageConstants;
