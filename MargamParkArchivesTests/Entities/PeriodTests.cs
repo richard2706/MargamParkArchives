@@ -1,12 +1,13 @@
 using MargamParkArchives.Entities;
 
+using static MargamParkArchivesTests.TestMessageConstants;
+
 namespace MargamParkArchivesTests.Entities;
 
 [TestClass]
 public class PeriodTests
 {
-    private const string ClassUnderTestName = "period";
-    private const string PropertyMismatchFailMsg = "The {0} stored in the {1} instance does not match the {0} used when creating the {1}";
+    private const string ClassUnderTestName = "Period";
 
     [TestMethod]
     public void CreatePeriod_GivenAllValues_ContainsAllValues()
@@ -15,7 +16,7 @@ public class PeriodTests
         const string dates = "2000 - 2010";
         Period period = new(id, dates);
 
-        Assert.AreEqual(id, period.Id, string.Format(PropertyMismatchFailMsg, "id", ClassUnderTestName));
-        Assert.AreEqual(dates, period.Dates, string.Format(PropertyMismatchFailMsg, "dates", ClassUnderTestName));
+        Assert.AreEqual(id, period.Id, GetPropertyMismatchMsg("id", ClassUnderTestName));
+        Assert.AreEqual(dates, period.Dates, GetPropertyMismatchMsg("dates", ClassUnderTestName));
     }
 }
