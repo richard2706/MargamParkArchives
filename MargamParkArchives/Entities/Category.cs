@@ -1,15 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MargamParkArchives.Entities
 {
     /// <summary>
     /// Represents a category entity from the database, including its ID. Should be used when retriving/updating categories from the database.
     /// </summary>
-    /// <param name="Id">Int id of the category.</param>
-    /// <param name="Name">Description of the category.</param>
-    internal record Category(string Id, string Name) : CategoryBase(Name);
+    internal record Category
+    {
+        private const int MaxIdLength = 2;
+        private const string IdEmptyErrorMsg = "The Id cannot be an empty string.";
+        private readonly string IdTooLongErrorMsg = string.Format("The Id cannot be longer than {0} characters", MaxIdLength);
+
+        private readonly string _id;
+
+        internal string Id
+        {
+            get => _id;
+            init
+            {
+                if (value.Length <= 0)
+                {
+                    throw new ArgumentException(IdEmptyErrorMsg);
+                }
+                else if (value.Length > MaxIdLength)
+                {
+                    throw new ArgumentException(IdTooLongErrorMsg);
+                }
+                _id = value;
+            }
+        }
+
+        internal string Name { get; init; }
+
+        /// <summary>
+        /// Create a category with an id and name.
+        /// </summary>
+        /// <param name="Id">Int id of the category.</param>
+        /// <param name="Name">Name of the category.</param>
+        internal Category(string id, string name)
+        {
+            _id = id;
+            Id = id;
+            Name = name;
+        }
+    }
 }
