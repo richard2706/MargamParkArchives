@@ -6,16 +6,17 @@ using static TestMessageConstants;
 [TestClass]
 public class CategoryTests
 {
-    private const string ClassUnderTestName = "Category";
+    private readonly string _idMismatchMsg = GetPropertyMismatchMsg(nameof(Category.Id), nameof(Category));
+    private readonly string _descriptionMismatchMsg = GetPropertyMismatchMsg(nameof(Category.Description), nameof(Category));
 
     [TestMethod]
-    public void CreateCategory_GivenAllData_ContainsAllData()
+    public void CreateInstance_GivenAllData_ContainsAllData()
     {
         const string id = "A";
         const string description = "Test";
         Category category = new(id, description);
 
-        Assert.AreEqual(id, category.Id, GetPropertyMismatchMsg("id", ClassUnderTestName));
-        Assert.AreEqual(description, category.Description, GetPropertyMismatchMsg("description", ClassUnderTestName));
+        Assert.AreEqual(id, category.Id, _idMismatchMsg));
+        Assert.AreEqual(description, category.Description, _descriptionMismatchMsg);
     }
 }

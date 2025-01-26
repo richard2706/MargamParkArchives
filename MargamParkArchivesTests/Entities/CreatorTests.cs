@@ -6,16 +6,17 @@ using static TestMessageConstants;
 [TestClass]
 public class CreatorTests
 {
-    private const string ClassUnderTestName = "Creator";
+    private readonly string _idMismatchMsg = GetPropertyMismatchMsg(nameof(Creator.Id), nameof(Creator));
+    private readonly string _nameMismatchMsg = GetPropertyMismatchMsg(nameof(Creator.Name), nameof(Creator));
 
     [TestMethod]
-    public void CreateCreator_GivenAllValues_ContainsAllValues()
+    public void CreateInstance_GivenAllValues_ContainsAllValues()
     {
         const int id = 1;
         const string name = "Dan";
         Creator creator = new(id, name);
 
-        Assert.AreEqual(id, creator.Id, GetPropertyMismatchMsg("id", ClassUnderTestName));
-        Assert.AreEqual(name, creator.Name, GetPropertyMismatchMsg("name", ClassUnderTestName));
+        Assert.AreEqual(id, creator.Id, _idMismatchMsg);
+        Assert.AreEqual(name, creator.Name, _nameMismatchMsg);
     }
 }
