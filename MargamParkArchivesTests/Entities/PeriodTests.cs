@@ -1,6 +1,6 @@
 using MargamParkArchives.Entities;
 
-namespace MargamParkArchivesTests;
+namespace MargamParkArchivesTests.Entities;
 
 [TestClass]
 public class PeriodTests
