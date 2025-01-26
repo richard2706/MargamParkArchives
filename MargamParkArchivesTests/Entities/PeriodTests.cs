@@ -1,8 +1,7 @@
-using MargamParkArchives.Entities;
-
-using static MargamParkArchivesTests.TestMessageConstants;
-
 namespace MargamParkArchivesTests.Entities;
+
+using MargamParkArchives.Entities;
+using static TestMessageConstants;
 
 [TestClass]
 public class PeriodTests
