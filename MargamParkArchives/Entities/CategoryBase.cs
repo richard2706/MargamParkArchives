@@ -9,6 +9,6 @@ namespace MargamParkArchives.Entities
     /// <summary>
     /// Represents a category entity from the database, exluding its ID. Should be used when inserting into the database.
     /// </summary>
-    /// <param name="Description">Description of the category.</param>
-    internal record CategoryBase(string Description);
+    /// <param name="Name">Description of the category.</param>
+    internal record CategoryBase(string Name);
 }

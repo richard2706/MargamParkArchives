@@ -6,14 +6,14 @@ using static TestMessageConstants;
 [TestClass]
 public class CategoryBaseTests
 {
-    private readonly string _descriptionMismatchMsg = GetPropertyMismatchMsg(nameof(CategoryBase.Description), nameof(CategoryBase));
+    private readonly string _nameMismatchMsg = GetPropertyMismatchMsg(nameof(CategoryBase.Name), nameof(CategoryBase));
 
     [TestMethod]
     public void CreateInstance_GivenAllData_ContainsAllData()
     {
-        const string description = "Test";
-        CategoryBase category = new(description);
+        const string name = "Test";
+        CategoryBase category = new(name);
 
-        Assert.AreEqual(description, category.Description, _descriptionMismatchMsg);
+        Assert.AreEqual(name, category.Name, _nameMismatchMsg);
     }
 }
