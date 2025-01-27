@@ -4,9 +4,9 @@ namespace MargamParkArchives.Entities
 {
     internal record Artefact : ArtefactBase
     {
-        public int IdentifierNumber { get; init; }
-        public int IdentifierKey { get; init; }
-        public DateTime DateCreated { get; init; }
-        public DateTime DateModified { get; init; }
+        public required int IdentifierNumber { get; init; }
+        public required string IdentifierKey { get; init; }
+        public DateTime? DateCreated { get; init; }
+        public DateTime? DateModified { get; init; }
     }
 }
