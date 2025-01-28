@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using MargamParkArchives.DatabaseManagement;
+using MargamParkArchives.Entities;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,18 +26,32 @@ namespace MargamParkArchives
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private Artefact[] _artefacts = [];
+
         public MainWindow()
         {
             this.InitializeComponent();
-            // Ask Database operation handler for data - Get random 2 archive entries from the database
-            // Display the archive entries on screen
-
-            
+            LoadRandomArtefacts();
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void LoadRandomArtefacts()
         {
-            myButton.Content = "Clicked";
+            try
+            {
+                _artefacts = DatabaseOperationHandler.Get2RandomArtefacts();
+            }
+            catch (Exception ex)
+            {
+                // Display Error Message
+                Debug.WriteLine(ex.Message);
+            }
+
+            // print artefacts
+            Debug.WriteLine("2 random artefacts loaded from database:");
+            foreach (Artefact artefact in _artefacts)
+            {
+                Debug.WriteLine(artefact);
+            }
         }
     }
 }
