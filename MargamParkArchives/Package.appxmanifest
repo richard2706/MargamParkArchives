@@ -9,14 +9,14 @@
 
   <Identity
     Name="3aee45b7-03c6-4d87-934b-684fe559f5d9"
-    Publisher="CN=rwake"
+    Publisher="CN=Richard Wakeham"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="3aee45b7-03c6-4d87-934b-684fe559f5d9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MargamParkArchives</DisplayName>
-    <PublisherDisplayName>rwake</PublisherDisplayName>
+    <DisplayName>Margam Park Archives</DisplayName>
+    <PublisherDisplayName>Richard Wakeham</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -34,8 +34,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="MargamParkArchives"
-        Description="MargamParkArchives"
+        DisplayName="Margam Park Archives"
+        Description="Windows application which allows users to search the archive documents at Margam Park. Admin users can manage the archive database in the app."
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
