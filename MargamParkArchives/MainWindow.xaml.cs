@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -26,7 +27,11 @@ namespace MargamParkArchives
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private const string DatabaseErrorTitle = "A database error occurred";
+
         private Artefact[] _artefacts = [];
+        private string _errorTitle = string.Empty;
+        private string _errorDetails = string.Empty;
 
         public MainWindow()
         {
@@ -46,6 +51,10 @@ namespace MargamParkArchives
             {
                 // Display Error Message
                 Debug.WriteLine(ex.Message);
+                DatabaseConnectionFailedPopup.IsOpen = true;
+
+                _errorTitle = ex.GetType().Name;
+                _errorDetails = ex.Message;
             }
 
             // print artefacts
@@ -53,6 +62,32 @@ namespace MargamParkArchives
             foreach (Artefact artefact in _artefacts)
             {
                 Debug.WriteLine(artefact);
+            }
+        }
+
+        private void ViewErrorButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayErrorDetailsDialog();
+        }
+
+        private async void DisplayErrorDetailsDialog()
+        {
+            ContentDialog errorDialog = new()
+            {
+                Title = DatabaseErrorTitle,
+                Content = $"{_errorTitle}\n{_errorDetails}",
+                PrimaryButtonText = "Copy",
+                CloseButtonText = "Close"
+            };
+            errorDialog.XamlRoot = this.Content.XamlRoot;
+            ContentDialogResult result = await errorDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                DataPackage dataPackage = new();
+                dataPackage.RequestedOperation = DataPackageOperation.Copy;
+                dataPackage.SetText($"{_errorTitle}: {_errorDetails}");
+                Clipboard.SetContent(dataPackage);
             }
         }
     }

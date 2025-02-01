@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0">Title and commands</TextBlock>
@@ -29,5 +30,26 @@
             IsOpen="False"
             Severity="Informational"
             Title="Database connection successful." />
+
+        <InfoBar
+            Grid.Row="2"
+            x:Name="DatabaseConnectionFailedPopup"
+            IsOpen="False"
+            Severity="Error"
+            Title="Database Error"
+            Message="A database error has occurred. Click to view the error details." >
+            <InfoBar.ActionButton>
+                <Button Content="View Error" HorizontalAlignment="Right" Click="ViewErrorButton_Click" />
+            </InfoBar.ActionButton>
+        </InfoBar>
     </Grid>
+
+    <!--<Page
+        x:Class="WinUIGallery.ControlPages.ContentDialogContent"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TextBlock x:Name="ErrorDetails" TextWrapping="Wrap"/>
+        </StackPanel>
+    </Page>-->
 </Window>
