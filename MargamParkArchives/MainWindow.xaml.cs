@@ -39,6 +39,8 @@ namespace MargamParkArchives
             try
             {
                 _artefacts = DatabaseOperationHandler.Get2RandomArtefacts();
+                DatabaseConnectionSuccessPopup.Message = $"{_artefacts.Length} artefacts loaded.";
+                DatabaseConnectionSuccessPopup.IsOpen = true;
             }
             catch (Exception ex)
             {

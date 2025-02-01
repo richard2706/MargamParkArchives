@@ -22,5 +22,12 @@
                 <StackLayout Spacing="5"/>
             </ItemsView.Layout>
         </ItemsView>
+
+        <InfoBar
+            Grid.Row="2"
+            x:Name="DatabaseConnectionSuccessPopup"
+            IsOpen="False"
+            Severity="Informational"
+            Title="Database connection successful." />
     </Grid>
 </Window>
