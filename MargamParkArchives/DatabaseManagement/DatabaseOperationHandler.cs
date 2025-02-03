@@ -20,11 +20,11 @@ namespace MargamParkArchives.DatabaseManagement
         private const string DbOpenConnectionFailMsg = "There was an error connecting to the database.";
 
         // Queries
-        private const string GetRandomArtefactsQuery = "select * from {0} order by rand() limit 2;";
+        private const string GetRandomArtefactsQuery = "select * from {0} order by rand() limit {1};";
 
         private static readonly string _connectionString = GenerateReadOnlyConnectionString();
 
-        internal static Artefact[] Get2RandomArtefacts()
+        internal static Artefact[] GetRandomArtefacts(int numArtefacts = 3)
         {
             using MySqlConnection connection = new(_connectionString);
             try
@@ -38,11 +38,11 @@ namespace MargamParkArchives.DatabaseManagement
                 throw;
             }
 
-            string query = string.Format(GetRandomArtefactsQuery, ArtefactTableName);
+            string query = string.Format(GetRandomArtefactsQuery, ArtefactTableName, numArtefacts);
             MySqlCommand command = new(query, connection);
             using MySqlDataReader dataReader = command.ExecuteReader();
 
-            Artefact[] artefacts = new Artefact[2];
+            Artefact[] artefacts = new Artefact[numArtefacts];
             int i = 0;
             while (dataReader.Read())
             {
