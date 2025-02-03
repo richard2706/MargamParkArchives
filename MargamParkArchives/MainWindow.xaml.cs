@@ -54,7 +54,7 @@ namespace MargamParkArchives
                 DatabaseConnectionFailedPopup.IsOpen = true;
 
                 _errorTitle = ex.GetType().Name;
-                _errorDetails = ex.Message;
+                _errorDetails = $"{ex.Message}\nStack Trace: {ex.StackTrace}\nSource: {ex.Source}\nInnerException: {ex.InnerException}";
             }
 
             // print artefacts
