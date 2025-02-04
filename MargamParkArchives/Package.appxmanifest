@@ -10,7 +10,7 @@
   <Identity
     Name="3aee45b7-03c6-4d87-934b-684fe559f5d9"
     Publisher="CN=Richard Wakeham"
-    Version="1.0.10.0" />
+    Version="1.0.11.0" />
 
   <mp:PhoneIdentity PhoneProductId="3aee45b7-03c6-4d87-934b-684fe559f5d9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
