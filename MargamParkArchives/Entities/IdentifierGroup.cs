@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MargamParkArchives.Entities
+namespace MargamParkArchivesApp.Entities
 {
     /// <summary>
     /// Represents an identifer group entity from the database.

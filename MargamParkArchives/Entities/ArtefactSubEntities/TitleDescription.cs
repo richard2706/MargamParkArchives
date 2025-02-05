@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Entities.ArtefactSubEntities
+﻿namespace MargamParkArchivesApp.Entities.ArtefactSubEntities
 {
     internal record TitleDescription
     {

@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.DatabaseManagement
+﻿namespace MargamParkArchivesApp.DatabaseManagement
 {
     internal static class DatabaseConstants
     {

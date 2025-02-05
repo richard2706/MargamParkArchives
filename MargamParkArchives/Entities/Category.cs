@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MargamParkArchives.Entities
+namespace MargamParkArchivesApp.Entities
 {
     /// <summary>
     /// Represents a category entity from the database, including its ID. Should be used when retriving/updating categories from the database.

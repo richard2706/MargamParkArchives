@@ -1,7 +1,7 @@
-﻿using MargamParkArchives.Entities.ArtefactSubEntities;
+﻿using MargamParkArchivesApp.Entities.ArtefactSubEntities;
 using System;
 
-namespace MargamParkArchives.Entities
+namespace MargamParkArchivesApp.Entities
 {
     internal record ArtefactBase
     {

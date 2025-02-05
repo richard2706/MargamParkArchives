@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Entities
+﻿namespace MargamParkArchivesApp.Entities
 {
     /// <summary>
     /// Represents a creator entity from the database, including its ID. Should be used when retriving/updating categories from the database.

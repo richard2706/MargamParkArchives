@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Entities
+﻿namespace MargamParkArchivesApp.Entities
 {
     internal record Period(int Id, string Dates);
 }

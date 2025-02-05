@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using MargamParkArchives.DatabaseManagement;
-using MargamParkArchives.Entities;
+using MargamParkArchivesApp.DatabaseManagement;
+using MargamParkArchivesApp.Entities;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -20,7 +20,7 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace MargamParkArchives
+namespace MargamParkArchivesApp
 {
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.

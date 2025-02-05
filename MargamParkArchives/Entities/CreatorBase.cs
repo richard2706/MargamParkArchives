@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Entities
+﻿namespace MargamParkArchivesApp.Entities
 {
     /// <summary>
     /// Represents a creator entity from the database, exluding its ID. Should be used when inserting into the database.

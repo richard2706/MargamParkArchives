@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MargamParkArchives.Entities
+namespace MargamParkArchivesApp.Entities
 {
     internal record Artefact : ArtefactBase
     {

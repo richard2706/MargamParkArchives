@@ -1,12 +1,12 @@
-﻿using MargamParkArchives.Entities;
+﻿using MargamParkArchivesApp.Entities;
 //using MySql.Data.MySqlClient;
 using MySqlConnector;
 using System;
 using System.Data;
 using System.Diagnostics;
-using static MargamParkArchives.DatabaseManagement.DatabaseConstants;
+using static MargamParkArchivesApp.DatabaseManagement.DatabaseConstants;
 
-namespace MargamParkArchives.DatabaseManagement
+namespace MargamParkArchivesApp.DatabaseManagement
 {
     /// <summary>
     /// Class of static methods for database operations used thoughout the application.
