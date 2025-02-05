@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesDataTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesData", "MargamParkArchivesData\MargamParkArchivesData.csproj", "{A3288395-04BA-404A-A8A0-F31D374FEE70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesAppTests", "MargamParkArchivesAppTests\MargamParkArchivesAppTests.csproj", "{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -61,6 +63,18 @@ Global
 		{A3288395-04BA-404A-A8A0-F31D374FEE70}.Release|x64.Build.0 = Release|Any CPU
 		{A3288395-04BA-404A-A8A0-F31D374FEE70}.Release|x86.ActiveCfg = Release|Any CPU
 		{A3288395-04BA-404A-A8A0-F31D374FEE70}.Release|x86.Build.0 = Release|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Debug|x64.Build.0 = Debug|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Debug|x86.Build.0 = Debug|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|ARM64.Build.0 = Release|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|x64.ActiveCfg = Release|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|x64.Build.0 = Release|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|x86.ActiveCfg = Release|Any CPU
+		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
