@@ -1,17 +1,17 @@
-﻿using MargamParkArchivesApp.Entities;
+﻿using MargamParkArchivesData.Entities;
 //using MySql.Data.MySqlClient;
 using MySqlConnector;
 using System;
 using System.Data;
 using System.Diagnostics;
-using static MargamParkArchivesApp.DatabaseManagement.DatabaseConstants;
+using static MargamParkArchivesData.DatabaseConstants;
 
-namespace MargamParkArchivesApp.DatabaseManagement
+namespace MargamParkArchivesData
 {
     /// <summary>
     /// Class of static methods for database operations used thoughout the application.
     /// </summary>
-    internal class DatabaseOperationHandler
+    public class DatabaseOperationHandler
     {
         // Connection constants
         private const string ServerLocation = "localhost";
@@ -24,7 +24,7 @@ namespace MargamParkArchivesApp.DatabaseManagement
 
         private static readonly string _connectionString = GenerateReadOnlyConnectionString();
 
-        internal static Artefact[] GetRandomArtefacts(int numArtefacts = 3)
+        public static Artefact[] GetRandomArtefacts(int numArtefacts = 3)
         {
             using MySqlConnection connection = new(_connectionString);
             try

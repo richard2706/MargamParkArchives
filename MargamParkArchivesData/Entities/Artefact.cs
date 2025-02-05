@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MargamParkArchivesApp.Entities
+namespace MargamParkArchivesData.Entities
 {
-    internal record Artefact : ArtefactBase
+    public record Artefact : ArtefactBase
     {
         public required int IdentifierNumber { get; init; }
         public required string IdentifierKey { get; init; }
