@@ -1,6 +1,8 @@
-namespace MargamParkArchivesTests.Entities;
+using MargamParkArchivesDataTests;
 
-using MargamParkArchivesApp.Entities;
+namespace MargamParkArchivesDataTests.Entities;
+
+using MargamParkArchivesData.Entities;
 using static TestMessageConstants;
 
 [TestClass]

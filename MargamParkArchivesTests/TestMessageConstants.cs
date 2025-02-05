@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MargamParkArchivesTests
+namespace MargamParkArchivesDataTests
 {
     internal static class TestMessageConstants
     {

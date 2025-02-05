@@ -1,7 +1,7 @@
-namespace MargamParkArchivesTests.Entities; 
+namespace MargamParkArchivesDataTests.Entities;
 
-using MargamParkArchivesApp.Entities;
-using static MargamParkArchivesTests.TestMessageConstants;
+using MargamParkArchivesData.Entities;
+using static MargamParkArchivesDataTests.TestMessageConstants;
 
 [TestClass]
 public class SpecificLocationBaseTests

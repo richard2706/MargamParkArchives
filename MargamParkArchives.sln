@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesApp", "MargamParkArchives\MargamParkArchivesApp.csproj", "{D525C865-E8FE-4451-94C0-C5F1AE7623A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesTests", "MargamParkArchivesTests\MargamParkArchivesTests.csproj", "{198E5E28-5817-441A-82DC-B75E69349127}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesDataTests", "MargamParkArchivesTests\MargamParkArchivesDataTests.csproj", "{198E5E28-5817-441A-82DC-B75E69349127}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesData", "MargamParkArchivesData\MargamParkArchivesData.csproj", "{A3288395-04BA-404A-A8A0-F31D374FEE70}"
 EndProject
