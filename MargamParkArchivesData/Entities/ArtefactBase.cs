@@ -5,7 +5,7 @@ namespace MargamParkArchivesData.Entities
 {
     public record ArtefactBase
     {
-        public required string IdentifierGroup { get; init; }
+        public required IdentifierGroup IdentifierGroup { get; init; }
         public string? FilePath { get; init; }
         public string? ParentId { get; init; }
         public string? Notes { get; init; }
@@ -15,11 +15,11 @@ namespace MargamParkArchivesData.Entities
         public Tags? Tags { get; init; }
         public RightsInformation? RightsDetails { get; init; }
 
-        // Foreign keys
-        public string? CategoryId { get; init; }
-        public int? PeriodId { get; init; }
-        public int? CreatorId { get; init; }
-        public int? GeneralLocationId { get; init; }
-        public int? SpecificLocationId { get; init; }
+        // Linked entities
+        public Category? Category { get; init; }
+        public Period? Period { get; init; }
+        public Creator? Creator { get; init; }
+        public GeneralLocation? GeneralLocation { get; init; }
+        public SpecificLocation? SpecificLocation { get; init; }
     }
 }

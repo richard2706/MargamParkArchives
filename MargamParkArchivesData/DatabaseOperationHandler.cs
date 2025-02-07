@@ -1,5 +1,4 @@
 ﻿using MargamParkArchivesData.Entities;
-//using MySql.Data.MySqlClient;
 using MySqlConnector;
 using System;
 using System.Data;
@@ -48,7 +47,7 @@ namespace MargamParkArchivesData
             {
                 artefacts[i] = new Artefact()
                 {
-                    IdentifierGroup = dataReader.GetString(ArtefactIdentiferGroupId),
+                    IdentifierGroup = new(dataReader.GetString(ArtefactIdentiferGroupId), ""),
                     IdentifierNumber = dataReader.GetInt32(ArtefactIdentifierNumber),
                     IdentifierKey = dataReader.GetString(ArtefactIdentifierKey),
                     FilePath = dataReader.IsDBNull(ArtefactFilePath) ? null : dataReader.GetString(ArtefactFilePath),
