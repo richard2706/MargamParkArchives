@@ -37,34 +37,77 @@ namespace MargamParkArchivesData
                 throw;
             }
 
-            string query = string.Format(GetRandomArtefactsQuery, ArtefactTableName, numArtefacts);
+            string query = string.Format(GetRandomArtefactsQuery, ArtefactDetailsViewName, numArtefacts);
             MySqlCommand command = new(query, connection);
-            using MySqlDataReader dataReader = command.ExecuteReader();
+            using MySqlDataReader dbReader = command.ExecuteReader();
 
             Artefact[] artefacts = new Artefact[numArtefacts];
             int i = 0;
-            while (dataReader.Read())
+            while (dbReader.Read())
             {
+                Category? category = (dbReader.IsDBNull(CategoryId) || dbReader.IsDBNull(ArtefactDetailsCategoryName))
+                    ? null
+                    : new Category(dbReader.GetString(CategoryId), dbReader.GetString(ArtefactDetailsCategoryName));
+
+                Creator? creator = (dbReader.IsDBNull(CreatorId) || dbReader.IsDBNull(ArtefactDetailsCreatorName))
+                    ? null
+                    : new Creator(dbReader.GetInt32(CreatorId), dbReader.GetString(ArtefactDetailsCreatorName));
+
+                GeneralLocation? generalLocation = (dbReader.IsDBNull(GeneralLocationId) || dbReader.IsDBNull(ArtefactDetailsGeneralLocationName))
+                    ? null
+                    : new GeneralLocation(dbReader.GetInt32(GeneralLocationId), dbReader.GetString(ArtefactDetailsGeneralLocationName));
+
+                SpecificLocation? specificLocation = (dbReader.IsDBNull(SpecificLocationId) || dbReader.IsDBNull(ArtefactDetailsSpecificLocationSummary))
+                    ? null
+                    : new SpecificLocation(dbReader.GetInt32(SpecificLocationId), dbReader.GetString(ArtefactDetailsSpecificLocationSummary));
+
+                Period? period = (dbReader.IsDBNull(PeriodId) || dbReader.IsDBNull(ArtefactDetailsPeriodDates))
+                    ? null
+                    : new Period(dbReader.GetInt32(PeriodId), dbReader.GetString(ArtefactDetailsPeriodDates));
+
                 artefacts[i] = new Artefact()
                 {
-                    IdentifierGroup = new(dataReader.GetString(ArtefactIdentiferGroupId), ""),
-                    IdentifierNumber = dataReader.GetInt32(ArtefactIdentifierNumber),
-                    IdentifierKey = dataReader.GetString(ArtefactIdentifierKey),
-                    FilePath = dataReader.IsDBNull(ArtefactFilePath) ? null : dataReader.GetString(ArtefactFilePath),
-                    DateCreated = dataReader.IsDBNull(ArtefactDateCreated) ? null : dataReader.GetDateTime(ArtefactDateCreated),
-                    DateModified = dataReader.IsDBNull(ArtefactDateModified) ? null : dataReader.GetDateTime(ArtefactDateModified),
-                    //ParentId = dataReader.GetString(ArtefactParentId),
-                    //Notes = dataReader.GetString(ArtefactNotes),
-                    //TitleDescription = new()
-                    //{
-                    //    TitleEn = dataReader.GetString(ArtefactTitleEn),
-                    //    TitleCy = dataReader.GetString(ArtefactTitleCy),
-                    //    DescriptionEn = dataReader.GetString(ArtefactDescriptionEn),
-                    //}
+                    IdentifierGroup = new
+                    (
+                        dbReader.GetString(ArtefactIdentiferGroupId),
+                        dbReader.GetString(ArtefactDetailsIdentifierGroupName)
+                    ),
+                    IdentifierNumber = dbReader.GetInt32(ArtefactIdentifierNumber),
+                    IdentifierKey = dbReader.GetString(ArtefactIdentifierKey),
+                    DateCreated = dbReader.IsDBNull(ArtefactDateCreated) ? null : dbReader.GetDateTime(ArtefactDateCreated),
+                    DateModified = dbReader.IsDBNull(ArtefactDateModified) ? null : dbReader.GetDateTime(ArtefactDateModified),
+                    FilePath = dbReader.IsDBNull(ArtefactFilePath) ? null : dbReader.GetString(ArtefactFilePath),
+                    ParentId = dbReader.IsDBNull(ArtefactParentId) ? null : dbReader.GetString(ArtefactParentId),
+                    Notes = dbReader.IsDBNull(ArtefactNotes) ? null : dbReader.GetString(ArtefactNotes),
+                    IsVisualArtefact = dbReader.IsDBNull(ArtefactVisualArtefact) ? null : dbReader.GetBoolean(ArtefactVisualArtefact),
+                    LocationCoverage = dbReader.IsDBNull(ArtefactLocationCoverage) ? null : dbReader.GetString(ArtefactLocationCoverage),
+                    TitleDescription = new()
+                    {
+                        TitleEn = dbReader.IsDBNull(ArtefactTitleEn) ? null : dbReader.GetString(ArtefactTitleEn),
+                        TitleCy = dbReader.IsDBNull(ArtefactTitleCy) ? null : dbReader.GetString(ArtefactTitleCy),
+                        DescriptionEn = dbReader.IsDBNull(ArtefactDescriptionEn) ? null : dbReader.GetString(ArtefactDescriptionEn),
+                        DescriptionCy = dbReader.IsDBNull(ArtefactDescriptionCy) ? null : dbReader.GetString(ArtefactDescriptionCy)
+                    },
+                    Tags = new()
+                    {
+                        CultureTagEn = dbReader.IsDBNull(ArtefactCultureTagEn) ? null : dbReader.GetString(ArtefactCultureTagEn),
+                        TagsCy = dbReader.IsDBNull(ArtefactTagsCy) ? null : dbReader.GetString(ArtefactTagsCy)
+                    },
+                    RightsDetails = new()
+                    {
+                        RightHolder1En = dbReader.IsDBNull(ArtefactRightHolder1En) ? null : dbReader.GetString(ArtefactRightHolder1En),
+                        RightHolder1Cy = dbReader.IsDBNull(ArtefactRightHolder1Cy) ? null : dbReader.GetString(ArtefactRightHolder1Cy),
+                        RightType1 = dbReader.IsDBNull(ArtefactRightType1) ? null : dbReader.GetString(ArtefactRightType1)
+                    },
+                    Category = category,
+                    Creator = creator,
+                    GeneralLocation = generalLocation,
+                    SpecificLocation = specificLocation,
+                    Period = period
                 };
                 i++;
             }
-            dataReader.Close();
+            dbReader.Close();
             return artefacts;
         }
 

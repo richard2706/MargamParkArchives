@@ -29,5 +29,14 @@
         internal const string CreatorId = "creator_id";
         internal const string GeneralLocationId = "general_location_id";
         internal const string SpecificLocationId = "specific_location_id";
+
+        // ArtefactDetails view (in addition to Artefact table)
+        internal const string ArtefactDetailsViewName = "artefact_details";
+        internal const string ArtefactDetailsIdentifierGroupName = "identifier_group_name";
+        internal const string ArtefactDetailsCategoryName = "category_name";
+        internal const string ArtefactDetailsCreatorName = "creator_name";
+        internal const string ArtefactDetailsGeneralLocationName = "general_location_name";
+        internal const string ArtefactDetailsSpecificLocationSummary = "specific_location_summary";
+        internal const string ArtefactDetailsPeriodDates = "period_dates";
     }
 }
