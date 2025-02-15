@@ -56,13 +56,6 @@ namespace MargamParkArchivesApp
                 _errorTitle = ex.GetType().Name;
                 _errorDetails = $"{ex.Message}\nStack Trace: {ex.StackTrace}\nSource: {ex.Source}\nInnerException: {ex.InnerException}";
             }
-
-            // print artefacts
-            Debug.WriteLine("2 random artefacts loaded from database:");
-            foreach (Artefact artefact in _artefacts)
-            {
-                Debug.WriteLine(artefact);
-            }
         }
 
         private void ViewErrorButton_Click(object sender, RoutedEventArgs e)
@@ -77,9 +70,9 @@ namespace MargamParkArchivesApp
                 Title = DatabaseErrorTitle,
                 Content = $"{_errorTitle}\n{_errorDetails}",
                 PrimaryButtonText = "Copy",
-                CloseButtonText = "Close"
+                CloseButtonText = "Close",
+                XamlRoot = this.Content.XamlRoot
             };
-            errorDialog.XamlRoot = this.Content.XamlRoot;
             ContentDialogResult result = await errorDialog.ShowAsync();
 
             if (result == ContentDialogResult.Primary)
