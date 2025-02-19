@@ -7,41 +7,37 @@ using static MargamParkArchivesData.DatabaseConstants;
 
 namespace MargamParkArchivesData
 {
-    /// <summary>
-    /// Class of static methods for database operations used thoughout the application.
-    /// </summary>
-    public class DatabaseOperationHandler
+    public class MySqlArtefactDataAccess : IArtefactDataAccess
     {
-        // Connection constants
-        private const string ServerLocation = "localhost";
-        private const string ReadOnlyUsername = "readonly_user";
-        private const string DatabaseName = "margam_archives";
-        private const string DbOpenConnectionFailMsg = "There was an error connecting to the database.";
+        // Messages
+        private const string _openConnectionFailMsg = "There was an error connecting to the database.";
+        private const string _connectionOpenedMsg = "Database connection {0} has been opened.";
+        private const string _connectionClosedMsg = "Database connection {0} has been closed.";
 
-        // Queries
-        private const string GetRandomArtefactsQuery = "select * from {0} order by rand() limit {1};";
-
-        private static readonly string _connectionString = GenerateReadOnlyConnectionString();
-
-        public static Artefact[] GetRandomArtefacts(int numArtefacts = 3)
+        /// <summary>
+        /// Gets a list of artefact objects resulting from the given database query. Assumes the query is querying the ArtefactDetails view.
+        /// </summary>
+        /// <param name="query">SQL query to execute on the database. Must be on the ArtefactDetails view or</param>
+        /// <returns></returns>
+        public Artefact[] GetArtefactList(string query)
         {
-            using MySqlConnection connection = new(_connectionString);
+            using MySqlConnection connection = MySqlConnectionFactory.GetReadOnlyConnection();
             try
             {
                 connection.Open();
+                Debug.WriteLine(_connectionOpenedMsg, connection.ServerThread);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(DbOpenConnectionFailMsg);
+                Debug.WriteLine(_openConnectionFailMsg);
                 Debug.WriteLine(ex.Message);
                 throw;
             }
 
-            string query = string.Format(GetRandomArtefactsQuery, ArtefactDetailsViewName, numArtefacts);
             MySqlCommand command = new(query, connection);
             using MySqlDataReader dbReader = command.ExecuteReader();
 
-            Artefact[] artefacts = new Artefact[numArtefacts];
+            List<Artefact> artefacts = [];
             int i = 0;
             while (dbReader.Read())
             {
@@ -65,7 +61,7 @@ namespace MargamParkArchivesData
                     ? null
                     : new Period(dbReader.GetInt32(PeriodId), dbReader.GetString(ArtefactDetailsPeriodDates));
 
-                artefacts[i] = new Artefact()
+                artefacts.Add(new Artefact()
                 {
                     IdentifierGroup = new
                     (
@@ -104,19 +100,12 @@ namespace MargamParkArchivesData
                     GeneralLocation = generalLocation,
                     SpecificLocation = specificLocation,
                     Period = period
-                };
+                });
                 i++;
             }
             dbReader.Close();
-            return artefacts;
+            Debug.WriteLine(_connectionClosedMsg, connection.ServerThread);
+            return artefacts.ToArray();
         }
-
-        private static string GenerateReadOnlyConnectionString() =>
-            new MySqlConnectionStringBuilder()
-            {
-                Server = ServerLocation,
-                UserID = ReadOnlyUsername,
-                Database = DatabaseName
-            }.ConnectionString;
     }
 }

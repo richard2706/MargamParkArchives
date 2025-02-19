@@ -29,13 +29,16 @@ namespace MargamParkArchivesApp
     {
         private const string DatabaseErrorTitle = "A database error occurred";
 
+        private readonly ArtefactLoader _artefactLoader;
         private Artefact[] _artefacts = [];
+
         private string _errorTitle = string.Empty;
         private string _errorDetails = string.Empty;
 
         public MainWindow()
         {
             this.InitializeComponent();
+            _artefactLoader = new ArtefactLoader();
             LoadRandomArtefacts();
         }
 
@@ -43,7 +46,7 @@ namespace MargamParkArchivesApp
         {
             try
             {
-                _artefacts = DatabaseOperationHandler.GetRandomArtefacts();
+                _artefacts = _artefactLoader.GetRandomArtefactList();
                 DatabaseConnectionSuccessPopup.Message = $"{_artefacts.Length} artefacts loaded.";
                 DatabaseConnectionSuccessPopup.IsOpen = true;
             }

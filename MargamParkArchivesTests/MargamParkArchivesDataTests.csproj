@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MargamParkArchives\MargamParkArchivesApp.csproj" />
+    <ProjectReference Include="..\MargamParkArchivesData\MargamParkArchivesData.csproj" />
   </ItemGroup>
 
   <ItemGroup>
