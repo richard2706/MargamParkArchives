@@ -62,7 +62,7 @@
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefaultLanguage>en-gb</DefaultLanguage>
-    <PackageCertificateThumbprint>B40DD5AD73A9D6DEBF4D753C30528B341ECC082F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>C25EA0754320ECDD487EA65E95B4865F4E4D8D8F</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
