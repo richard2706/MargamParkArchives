@@ -1,6 +1,5 @@
 using MargamParkArchivesData.Entities;
 using MargamParkArchivesData.Entities.ArtefactSubEntities;
-using Windows.ApplicationModel.Contacts;
 
 namespace MargamParkArchivesDataTests.Entities;
 

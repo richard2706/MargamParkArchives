@@ -1,8 +1,7 @@
-﻿namespace MargamParkArchivesData.Entities.ArtefactSubEntities
+﻿namespace MargamParkArchivesData.Entities.ArtefactSubEntities;
+
+public record Tags
 {
-    public record Tags
-    {
-        public string? TagsCy { get; init; }
-        public string? CultureTagEn { get; init; }
-    }
+    public string? TagsCy { get; init; }
+    public string? CultureTagEn { get; init; }
 }
