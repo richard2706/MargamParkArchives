@@ -41,15 +41,7 @@ public partial class App : Application
     public App()
     {
         this.InitializeComponent();
-
-        AppHost = Host.CreateDefaultBuilder()
-            .ConfigureServices((hostContext, services) =>
-            {
-                services.AddSingleton<MainWindow>();
-                services.AddTransient<IArtefactDataAccess, MySqlArtefactDataAccess>();
-                services.AddTransient<IArtefactReader, MySqlArtefactReader>();
-            })
-            .Build();
+        ConfigureAppHost();
     }
 
     /// <summary>
@@ -59,6 +51,18 @@ public partial class App : Application
     protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
     {
         Start();
+    }
+
+    private static void ConfigureAppHost()
+    {
+        AppHost = Host.CreateDefaultBuilder()
+            .ConfigureServices((hostContext, services) =>
+            {
+                services.AddSingleton<MainWindow>();
+                services.AddTransient<IArtefactDataAccess, MySqlArtefactDataAccess>();
+                services.AddTransient<IArtefactReader, MySqlArtefactReader>();
+            })
+            .Build();
     }
 
     private async void Start()
