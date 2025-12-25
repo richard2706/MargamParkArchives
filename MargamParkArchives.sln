@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesApp", "MargamParkArchivesApp\MargamParkArchivesApp.csproj", "{D525C865-E8FE-4451-94C0-C5F1AE7623A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives.Explorer", "MargamParkArchives.Explorer\MargamParkArchives.Explorer.csproj", "{D525C865-E8FE-4451-94C0-C5F1AE7623A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesDataTests", "MargamParkArchivesTests\MargamParkArchivesDataTests.csproj", "{198E5E28-5817-441A-82DC-B75E69349127}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives.Data.Tests", "MargamParkArchives.Data.Tests\MargamParkArchives.Data.Tests.csproj", "{198E5E28-5817-441A-82DC-B75E69349127}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesData", "MargamParkArchivesData\MargamParkArchivesData.csproj", "{A3288395-04BA-404A-A8A0-F31D374FEE70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives.Data", "MargamParkArchives.Data\MargamParkArchives.Data.csproj", "{A3288395-04BA-404A-A8A0-F31D374FEE70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchivesAppTests", "MargamParkArchivesAppTests\MargamParkArchivesAppTests.csproj", "{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives.Explorer.Tests", "MargamParkArchives.Explorer.Tests\MargamParkArchives.Explorer.Tests.csproj", "{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,5 +78,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AF56D09F-DED0-4A42-8C6B-00C0014AE4A9}
 	EndGlobalSection
 EndGlobal
