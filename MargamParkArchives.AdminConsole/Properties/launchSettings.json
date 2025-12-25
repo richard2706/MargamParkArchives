@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MargamParkArchives.AdminConsole (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MargamParkArchives.AdminConsole (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

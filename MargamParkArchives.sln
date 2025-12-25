@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.1.11312.151 d18.0
+VisualStudioVersion = 18.1.11312.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives.Explorer", "MargamParkArchives.Explorer\MargamParkArchives.Explorer.csproj", "{D525C865-E8FE-4451-94C0-C5F1AE7623A2}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives.Data", "MargamParkArchives.Data\MargamParkArchives.Data.csproj", "{A3288395-04BA-404A-A8A0-F31D374FEE70}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives.Explorer.Tests", "MargamParkArchives.Explorer.Tests\MargamParkArchives.Explorer.Tests.csproj", "{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MargamParkArchives.AdminConsole", "MargamParkArchives.AdminConsole\MargamParkArchives.AdminConsole.csproj", "{1776DD36-E2BE-454A-8BC3-E010C217B4BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,24 @@ Global
 		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|x64.Build.0 = Release|Any CPU
 		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|x86.ActiveCfg = Release|Any CPU
 		{A73CAA11-DBCB-48A8-A56D-0FA3023201C0}.Release|x86.Build.0 = Release|Any CPU
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|ARM64.Build.0 = Debug|ARM64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|x64.ActiveCfg = Debug|x64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|x64.Build.0 = Debug|x64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|x64.Deploy.0 = Debug|x64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|x86.ActiveCfg = Debug|x86
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|x86.Build.0 = Debug|x86
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Debug|x86.Deploy.0 = Debug|x86
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|ARM64.ActiveCfg = Release|ARM64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|ARM64.Build.0 = Release|ARM64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|ARM64.Deploy.0 = Release|ARM64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|x64.ActiveCfg = Release|x64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|x64.Build.0 = Release|x64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|x64.Deploy.0 = Release|x64
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|x86.ActiveCfg = Release|x86
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|x86.Build.0 = Release|x86
+		{1776DD36-E2BE-454A-8BC3-E010C217B4BE}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
