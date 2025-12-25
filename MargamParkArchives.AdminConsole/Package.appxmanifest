@@ -34,7 +34,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="MargamParkArchives.AdminConsole"
+        DisplayName="Margam Park Archives Admin Console"
         Description="MargamParkArchives.AdminConsole"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
