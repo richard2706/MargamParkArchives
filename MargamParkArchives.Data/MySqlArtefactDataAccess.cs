@@ -1,4 +1,5 @@
-﻿using MargamParkArchives.Data.Entities;
+﻿using MargamParkArchives.Data.Connections;
+using MargamParkArchives.Data.Entities;
 using MySqlConnector;
 using System.Data;
 using System.Diagnostics;
@@ -6,12 +7,12 @@ using static MargamParkArchives.Data.DatabaseConstants;
 
 namespace MargamParkArchives.Data;
 
-public class MySqlArtefactDataAccess : IArtefactDataAccess
+public class MySqlArtefactDataAccess(IMySqlConnectionFactory connectionFactory) : IArtefactDataAccess
 {
     // Messages
     private const string _openConnectionFailMsg = "There was an error connecting to the database.";
-    private const string _connectionOpenedMsg = "Database connection {0} has been opened.";
-    private const string _connectionClosedMsg = "Database connection {0} has been closed.";
+
+    private readonly IMySqlConnectionFactory _connectionFactory = connectionFactory;
 
     /// <summary>
     /// Gets a list of artefact objects resulting from the given database query. Assumes the query is querying the ArtefactDetails view.
@@ -20,11 +21,10 @@ public class MySqlArtefactDataAccess : IArtefactDataAccess
     /// <returns></returns>
     public Artefact[] GetArtefactList(string query)
     {
-        using MySqlConnection connection = MySqlConnectionFactory.GetReadOnlyConnection();
+        using MySqlConnection connection = _connectionFactory.CreateConnection();
         try
         {
             connection.Open();
-            Debug.WriteLine(_connectionOpenedMsg, connection.ServerThread);
         }
         catch (Exception ex)
         {
@@ -103,7 +103,6 @@ public class MySqlArtefactDataAccess : IArtefactDataAccess
             i++;
         }
         dbReader.Close();
-        Debug.WriteLine(_connectionClosedMsg, connection.ServerThread);
         return artefacts.ToArray();
     }
 }

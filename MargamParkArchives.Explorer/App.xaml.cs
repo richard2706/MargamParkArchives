@@ -1,4 +1,5 @@
 ﻿using MargamParkArchives.Data;
+using MargamParkArchives.Data.Connections;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -42,6 +43,10 @@ public partial class App : Application
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<MainWindow>();
+                services.AddTransient<IConnectionStringProvider, MySqlConnectionStringProvider>();
+
+                // Data Access Services
+                services.AddSingleton<IMySqlConnectionFactory, MySqlConnectionFactory>();
                 services.AddTransient<IArtefactDataAccess, MySqlArtefactDataAccess>();
                 services.AddTransient<IArtefactReader, MySqlArtefactReader>();
             })
