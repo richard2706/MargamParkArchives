@@ -1,5 +1,6 @@
 ﻿using MargamParkArchives.Data;
 using MargamParkArchives.Data.Connections;
+using MargamParkArchives.Explorer.DatabaseConnection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -39,18 +40,25 @@ public partial class App : Application
 
     private static void ConfigureAppHost()
     {
-        AppHost = Host.CreateDefaultBuilder()
-            .ConfigureServices((hostContext, services) =>
+        var builder = Host.CreateDefaultBuilder();
+        builder.ConfigureServices((hostContext, services) =>
             {
                 services.AddSingleton<MainWindow>();
+
+                // App specific database options and services
+                services.AddOptions<DatabaseOptions>()
+                    .Bind(hostContext.Configuration.GetSection("DatabaseOptions"))
+                    .ValidateDataAnnotations()
+                    .ValidateOnStart();
                 services.AddTransient<IConnectionStringProvider, MySqlConnectionStringProvider>();
 
                 // Data Access Services
                 services.AddSingleton<IMySqlConnectionFactory, MySqlConnectionFactory>();
                 services.AddTransient<IArtefactDataAccess, MySqlArtefactDataAccess>();
                 services.AddTransient<IArtefactReader, MySqlArtefactReader>();
-            })
-            .Build();
+            });
+
+        AppHost = builder.Build();
     }
 
     private async void Start()
