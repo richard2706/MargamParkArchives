@@ -53,6 +53,7 @@ public partial class App : Application
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
             services.AddTransient<IConnectionStringProvider, MySqlConnectionStringProvider>();
+            services.AddSingleton<IPasswordProvider, ExplorerPasswordProvider>();
 
             // Data Access Services
             services.AddSingleton<IMySqlConnectionFactory, MySqlConnectionFactory>();
