@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -73,7 +74,7 @@ public partial class App : Application
         catch (OptionsValidationException ex)
         {
             Debug.WriteLine(ex.Message);
-            ShowDatabaseOptionsErrorDialog();
+            ShowDatabaseOptionsErrorDialog(ex);
             return;
         }
 
@@ -81,7 +82,7 @@ public partial class App : Application
         m_window.Activate();
     }
 
-    private async void ShowDatabaseOptionsErrorDialog()
+    private async void ShowDatabaseOptionsErrorDialog(Exception exceptionThrown)
     {
         Window tempWindow = new();
         var root = new Grid(); // Temporary content to get a XamlRoot
@@ -97,10 +98,30 @@ public partial class App : Application
         {
             Title = "Database Configuration Error",
             Content = "The database configuration is invalid. Please check the settings in appsettings.json.",
+            PrimaryButtonText = "Open settings file",
+            SecondaryButtonText = "Copy error",
             CloseButtonText = "Close",
+            DefaultButton = ContentDialogButton.Primary,
             XamlRoot = tempWindow.Content.XamlRoot
         };
-        await dialog.ShowAsync();
+        ContentDialogResult result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            // Open appsettings.json in notepad
+        }
+        else if (result == ContentDialogResult.Secondary)
+        {
+            // Copy error to clipboard
+            DataPackage dataPackage = new();
+            dataPackage.RequestedOperation = DataPackageOperation.Copy;
+            dataPackage.SetText($"{exceptionThrown.GetType().Name}: {exceptionThrown.Message}");
+            Clipboard.SetContent(dataPackage);
+
+            tempWindow.AppWindow.Hide();
+            await Task.Delay(500); // Wait long enough for copying to complete
+        }
+
         tempWindow.Close();
     }
 }
