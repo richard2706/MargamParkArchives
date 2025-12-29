@@ -36,14 +36,15 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7175" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.251106002" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MargamParkArchives.Data\MargamParkArchives.Data.csproj" />
+    <ProjectReference Include="..\MargamParkArchives.SharedUI\MargamParkArchives.SharedUI.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
@@ -68,7 +69,7 @@
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefaultLanguage>en-gb</DefaultLanguage>
-    <PackageCertificateThumbprint>C25EA0754320ECDD487EA65E95B4865F4E4D8D8F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>27C1FB7D1382B309DC3352CB26C0F2A89444BCFC</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
@@ -80,6 +81,7 @@
     <AppInstallerUri>https://richard2706.github.io/Margam-Park-Archives-Install-From-Here/</AppInstallerUri>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
+    <PackageCertificateKeyFile>MargamParkArchives.Explorer_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <Optimize>True</Optimize>
