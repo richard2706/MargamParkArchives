@@ -43,6 +43,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.251106002" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MargamParkArchives.Core\MargamParkArchives.Core.csproj" />
     <ProjectReference Include="..\MargamParkArchives.Data\MargamParkArchives.Data.csproj" />
     <ProjectReference Include="..\MargamParkArchives.SharedUI\MargamParkArchives.SharedUI.csproj" />
   </ItemGroup>

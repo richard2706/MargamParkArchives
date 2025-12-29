@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MargamParkArchives.Explorer.DatabaseConnection;
+namespace MargamParkArchives.Core;
 
 public sealed class DatabaseOptions
 {

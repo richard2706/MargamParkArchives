@@ -1,9 +1,9 @@
-﻿using MargamParkArchives.Data.Connections;
+﻿using MargamParkArchives.Core;
 using Microsoft.Extensions.Options;
 
-namespace MargamParkArchives.Explorer.DatabaseConnection;
+namespace MargamParkArchives.Data.Connections;
 
-internal class MySqlConnectionStringProvider(IOptions<DatabaseOptions> databaseOptions) : IConnectionStringProvider
+public class MySqlConnectionStringProvider(IOptions<DatabaseOptions> databaseOptions) : IConnectionStringProvider
 {
     private const string ConnectionStringTemplate = "Server={0}; Database={1}; Uid={2}; Pwd={3};";
 

@@ -1,12 +1,12 @@
 ﻿using MargamParkArchives.Data;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Explorer.DatabaseConnection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 using System.Diagnostics;
 using MargamParkArchives.SharedUI;
+using MargamParkArchives.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

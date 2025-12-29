@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.1" />
     <PackageReference Include="MySqlConnector" Version="2.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MargamParkArchives.Core\MargamParkArchives.Core.csproj" />
   </ItemGroup>
 
 </Project>
