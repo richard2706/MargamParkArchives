@@ -55,6 +55,7 @@ public partial class App : Application
                 .ValidateOnStart();
             services.AddTransient<IConnectionStringProvider, MySqlConnectionStringProvider>();
             services.AddSingleton<IPasswordProvider, ExplorerPasswordProvider>();
+            services.AddSingleton<IDatabasePasswordValidationService, MySqlPasswordValidationService>();
 
             // Data Access Services
             services.AddSingleton<IMySqlConnectionFactory, MySqlConnectionFactory>();
