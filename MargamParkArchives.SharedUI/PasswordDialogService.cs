@@ -1,24 +1,47 @@
-﻿using Microsoft.UI.Xaml;
+﻿using MargamParkArchives.Core;
+using Microsoft.Extensions.Options;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 
 namespace MargamParkArchives.SharedUI;
 
-public class PasswordDialogService(XamlRoot xamlRoot)
+public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions)
 {
-    private readonly XamlRoot _xamlRoot = xamlRoot;
+    private const string DialogTitle = "Database Password Required";
 
-    public async void ShowDialog()
+    private readonly DatabaseOptions _databaseOptions = databaseOptions.Value;
+
+    public async void ShowDialog(XamlRoot xamlRoot)
     {
         ContentDialog dialog = new()
         {
-            Title = "Database Password Required",
-            Content = "Please enter the database account password to continue.",
+            Title = DialogTitle,
+            Content = CreateDialogUI(),
             PrimaryButtonText = "Continue",
-            CloseButtonText = "Cancel",
             DefaultButton = ContentDialogButton.Primary,
-            XamlRoot = _xamlRoot
+            XamlRoot = xamlRoot
         };
         ContentDialogResult result = await dialog.ShowAsync();
+    }
+
+    private StackPanel CreateDialogUI()
+    {
+        TextBlock passwordPrompt = new()
+        {
+            Text = $"Enter the database password for {_databaseOptions.Uid} to continue."
+        };
+        PasswordBox passwordBox = new()
+        {
+            PlaceholderText = "Enter password"
+        };
+
+        StackPanel panel = new()
+        {
+            Spacing = 12
+        };
+        panel.Children.Add(passwordPrompt);
+        panel.Children.Add(passwordBox);
+        return panel;
     }
 }

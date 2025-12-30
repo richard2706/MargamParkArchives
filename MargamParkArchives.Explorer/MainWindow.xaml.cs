@@ -18,12 +18,16 @@ public sealed partial class MainWindow : Window
 
     // Services
     private readonly IArtefactReader _artefactReader;
+    private readonly PasswordDialogService _passwordDialogService;
+
     private ErrorDialogService? _databaseErrorDialogService;
 
-    public MainWindow(IArtefactReader artefactReader)
+    public MainWindow(IArtefactReader artefactReader, PasswordDialogService passwordDialogService)
     {
         this.InitializeComponent();
         _artefactReader = artefactReader;
+        _passwordDialogService = passwordDialogService;
+
         LoadRandomArtefacts();
     }
 
@@ -72,7 +76,7 @@ public sealed partial class MainWindow : Window
 
     private void ShowPasswordDialog()
     {
-        new PasswordDialogService(Content.XamlRoot).ShowDialog();
+        _passwordDialogService.ShowDialog(Content.XamlRoot);
         _showPasswordDialog = false;
     }
 }

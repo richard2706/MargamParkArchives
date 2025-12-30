@@ -46,6 +46,7 @@ public partial class App : Application
         AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
         {
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<PasswordDialogService>();
 
             // App specific database options and services
             services.AddOptions<DatabaseOptions>()
