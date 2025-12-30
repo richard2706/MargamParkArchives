@@ -18,15 +18,12 @@ namespace MargamParkArchives.Explorer;
 /// </summary>
 public sealed partial class MainWindow : Window
 {
-    private const string DatabaseErrorTitle = "A database error occurred";
-
+    // Services
     private readonly IArtefactReader _artefactReader;
+    private ErrorDialogService? _databaseErrorDialogService;
 
     private Artefact[] _artefacts = [];
     private bool _showPasswordDialog = false;
-
-    private string _errorTitle = string.Empty;
-    private string _errorDetails = string.Empty;
 
     public MainWindow(IArtefactReader artefactReader)
     {
@@ -35,12 +32,12 @@ public sealed partial class MainWindow : Window
         LoadRandomArtefacts();
     }
 
+    // Earliest point where XamlRoot is available
     private void RootGrid_Loaded(object sender, RoutedEventArgs e)
     {
         if (_showPasswordDialog)
         {
-            new PasswordDialogService(Content.XamlRoot).ShowDialog();
-            _showPasswordDialog = false;
+            ShowPasswordDialog();
         }
     }
 
@@ -61,9 +58,9 @@ public sealed partial class MainWindow : Window
             Debug.WriteLine(ex.Message);
             DatabaseConnectionFailedPopup.IsOpen = true;
 
-            // Store error details for dialog
-            _errorTitle = ex.GetType().Name;
-            _errorDetails = $"{ex.Message}\nStack Trace: {ex.StackTrace}\nSource: {ex.Source}\nInnerException: {ex.InnerException}";
+            string errorTitle = ex.GetType().Name;
+            string errorDetails = $"{ex.Message}\nStack Trace: {ex.StackTrace}\nSource: {ex.Source}\nInnerException: {ex.InnerException}";
+            _databaseErrorDialogService = new ErrorDialogService(errorTitle, errorDetails);
 
             return;
         }
@@ -75,27 +72,12 @@ public sealed partial class MainWindow : Window
 
     private void ViewErrorButton_Click(object sender, RoutedEventArgs e)
     {
-        DisplayErrorDetailsDialog();
+        _databaseErrorDialogService?.ShowDialog(Content.XamlRoot);
     }
 
-    private async void DisplayErrorDetailsDialog()
+    private void ShowPasswordDialog()
     {
-        ContentDialog errorDialog = new()
-        {
-            Title = DatabaseErrorTitle,
-            Content = $"{_errorTitle}\n{_errorDetails}",
-            PrimaryButtonText = "Copy",
-            CloseButtonText = "Close",
-            XamlRoot = this.Content.XamlRoot
-        };
-        ContentDialogResult result = await errorDialog.ShowAsync();
-
-        if (result == ContentDialogResult.Primary)
-        {
-            DataPackage dataPackage = new();
-            dataPackage.RequestedOperation = DataPackageOperation.Copy;
-            dataPackage.SetText($"{_errorTitle}: {_errorDetails}");
-            Clipboard.SetContent(dataPackage);
-        }
+        new PasswordDialogService(Content.XamlRoot).ShowDialog();
+        _showPasswordDialog = false;
     }
 }
