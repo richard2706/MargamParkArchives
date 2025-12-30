@@ -6,42 +6,87 @@ using System;
 
 namespace MargamParkArchives.SharedUI;
 
-public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions)
+public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
+    IDatabasePasswordValidationService passwordValidationService)
 {
     private const string DialogTitle = "Database Password Required";
 
     private readonly DatabaseOptions _databaseOptions = databaseOptions.Value;
+    private readonly IDatabasePasswordValidationService _passwordValidationService = passwordValidationService;
+
+    private ContentDialog dialog;
+    private PasswordBox passwordBox;
+    private StackPanel passwordPromptPanel;
+    private StackPanel passwordValidatingPanel;
 
     public async void ShowDialog(XamlRoot xamlRoot)
     {
-        ContentDialog dialog = new()
+        passwordPromptPanel = CreatePasswordPromptUI();
+        passwordValidatingPanel = CreatePasswordValidatingUI();
+
+        dialog = new()
         {
             Title = DialogTitle,
-            Content = CreateDialogUI(),
+            Content = passwordPromptPanel,
             PrimaryButtonText = "Continue",
             DefaultButton = ContentDialogButton.Primary,
             XamlRoot = xamlRoot
         };
+        dialog.PrimaryButtonClick += PrimaryButton_Clicked;
         ContentDialogResult result = await dialog.ShowAsync();
     }
 
-    private StackPanel CreateDialogUI()
+    private void PrimaryButton_Clicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        args.Cancel = true; // Prevent dialog from closing automatically
+        dialog.Content = passwordValidatingPanel;
+    }
+
+    private StackPanel CreatePasswordPromptUI()
     {
         TextBlock passwordPrompt = new()
         {
             Text = $"Enter the database password for {_databaseOptions.Uid} to continue."
         };
-        PasswordBox passwordBox = new()
+        passwordBox = new()
         {
             PlaceholderText = "Enter password"
         };
 
-        StackPanel panel = new()
+        passwordPromptPanel = new()
         {
             Spacing = 12
         };
-        panel.Children.Add(passwordPrompt);
-        panel.Children.Add(passwordBox);
-        return panel;
+        passwordPromptPanel.Children.Add(passwordPrompt);
+        passwordPromptPanel.Children.Add(passwordBox);
+        return passwordPromptPanel;
+    }
+
+    private StackPanel CreatePasswordValidatingUI()
+    {
+        ProgressRing progressRing = new()
+        {
+            IsActive = true,
+            Width = 28,
+            Height = 28
+        };
+        TextBlock validatingMessage = new()
+        {
+            Text = "Checking password..."
+        };
+        Grid messageContainer = new()
+        {
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        messageContainer.Children.Add(validatingMessage);
+
+        passwordValidatingPanel = new()
+        {
+            Orientation = Orientation.Horizontal,
+            Spacing = 12
+        };
+        passwordValidatingPanel.Children.Add(progressRing);
+        passwordValidatingPanel.Children.Add(messageContainer);
+        return passwordValidatingPanel;
     }
 }
