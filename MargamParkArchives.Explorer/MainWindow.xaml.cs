@@ -3,13 +3,8 @@ using MargamParkArchives.Data;
 using MargamParkArchives.Data.Entities;
 using MargamParkArchives.SharedUI;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
-using Windows.ApplicationModel.DataTransfer;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace MargamParkArchives.Explorer;
 
@@ -18,12 +13,12 @@ namespace MargamParkArchives.Explorer;
 /// </summary>
 public sealed partial class MainWindow : Window
 {
+    private Artefact[] _artefacts = [];
+    private bool _showPasswordDialog = false;
+
     // Services
     private readonly IArtefactReader _artefactReader;
     private ErrorDialogService? _databaseErrorDialogService;
-
-    private Artefact[] _artefacts = [];
-    private bool _showPasswordDialog = false;
 
     public MainWindow(IArtefactReader artefactReader)
     {
@@ -54,9 +49,9 @@ public sealed partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            // Display Error Message
+            // Display Error Message info bar
             Debug.WriteLine(ex.Message);
-            DatabaseConnectionFailedPopup.IsOpen = true;
+            DatabaseConnectionFailedInfoBar.IsOpen = true;
 
             string errorTitle = ex.GetType().Name;
             string errorDetails = $"{ex.Message}\nStack Trace: {ex.StackTrace}\nSource: {ex.Source}\nInnerException: {ex.InnerException}";
@@ -66,8 +61,8 @@ public sealed partial class MainWindow : Window
         }
 
         // Display success message
-        DatabaseConnectionSuccessPopup.Message = $"{_artefacts.Length} artefacts loaded.";
-        DatabaseConnectionSuccessPopup.IsOpen = true;
+        ArtefactsLoadedInfoBar.Message = $"{_artefacts.Length} artefacts loaded.";
+        ArtefactsLoadedInfoBar.IsOpen = true;
     }
 
     private void ViewErrorButton_Click(object sender, RoutedEventArgs e)

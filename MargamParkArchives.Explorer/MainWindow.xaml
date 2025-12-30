@@ -26,14 +26,14 @@
 
         <InfoBar
             Grid.Row="2"
-            x:Name="DatabaseConnectionSuccessPopup"
+            x:Name="ArtefactsLoadedInfoBar"
             IsOpen="False"
             Severity="Informational"
             Title="Database connection successful." />
 
         <InfoBar
             Grid.Row="2"
-            x:Name="DatabaseConnectionFailedPopup"
+            x:Name="DatabaseConnectionFailedInfoBar"
             IsOpen="False"
             Severity="Error"
             Title="Database Error"
