@@ -8,9 +8,16 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace MargamParkArchives.SharedUI;
 
-public static partial class DatabaseConfigErrorDialogService
+/// <summary>
+/// Display a dialog box to inform the user of startup errors. Is capable of being called independently of the app
+/// host and main window. Provides buttons to open the appsettings.json file or copy the error to clipboard.
+/// </summary>
+public partial class StartupErrorDialogService(string errorTitle, string errorDetails)
 {
-    public static async void ShowDialog(Exception exceptionThrown)
+    private readonly string _errorTitle = errorTitle;
+    private readonly string _errorDetails = errorDetails;
+
+    public async void ShowDialog(Exception exceptionThrown)
     {
         // Create a temporary window to host the dialog
         Window tempWindow = new();
@@ -25,8 +32,8 @@ public static partial class DatabaseConfigErrorDialogService
 
         ContentDialog dialog = new()
         {
-            Title = "Database Configuration Error",
-            Content = "The database configuration is invalid. Please check the settings in appsettings.json.",
+            Title = _errorTitle,
+            Content = _errorDetails,
             PrimaryButtonText = "Open settings file",
             SecondaryButtonText = "Copy error",
             CloseButtonText = "Close",

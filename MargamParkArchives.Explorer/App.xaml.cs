@@ -71,7 +71,9 @@ public partial class App : Application
         catch (OptionsValidationException ex)
         {
             Debug.WriteLine(ex.Message);
-            DatabaseConfigErrorDialogService.ShowDialog(ex);
+            const string ErrorTitle = "Database Configuration Error";
+            const string ErrorDetails = "The database configuration is invalid. Please check the settings in appsettings.json.";
+            new StartupErrorDialogService(ErrorTitle, ErrorDetails).ShowDialog(ex);
             return;
         }
 
