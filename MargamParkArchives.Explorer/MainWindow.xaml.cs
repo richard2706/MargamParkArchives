@@ -1,5 +1,7 @@
+using MargamParkArchives.Core;
 using MargamParkArchives.Data;
 using MargamParkArchives.Data.Entities;
+using MargamParkArchives.SharedUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -19,7 +21,9 @@ public sealed partial class MainWindow : Window
     private const string DatabaseErrorTitle = "A database error occurred";
 
     private readonly IArtefactReader _artefactReader;
+
     private Artefact[] _artefacts = [];
+    private bool _showPasswordDialog = false;
 
     private string _errorTitle = string.Empty;
     private string _errorDetails = string.Empty;
@@ -31,13 +35,25 @@ public sealed partial class MainWindow : Window
         LoadRandomArtefacts();
     }
 
+    private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (_showPasswordDialog)
+        {
+            new PasswordDialogService(Content.XamlRoot).ShowDialog();
+            _showPasswordDialog = false;
+        }
+    }
+
     private void LoadRandomArtefacts()
     {
         try
         {
             _artefacts = _artefactReader.GetRandomArtefacts();
-            DatabaseConnectionSuccessPopup.Message = $"{_artefacts.Length} artefacts loaded.";
-            DatabaseConnectionSuccessPopup.IsOpen = true;
+        }
+        catch (PasswordMissingException)
+        {
+            _showPasswordDialog = true;
+            return;
         }
         catch (Exception ex)
         {
@@ -45,9 +61,16 @@ public sealed partial class MainWindow : Window
             Debug.WriteLine(ex.Message);
             DatabaseConnectionFailedPopup.IsOpen = true;
 
+            // Store error details for dialog
             _errorTitle = ex.GetType().Name;
             _errorDetails = $"{ex.Message}\nStack Trace: {ex.StackTrace}\nSource: {ex.Source}\nInnerException: {ex.InnerException}";
+
+            return;
         }
+
+        // Display success message
+        DatabaseConnectionSuccessPopup.Message = $"{_artefacts.Length} artefacts loaded.";
+        DatabaseConnectionSuccessPopup.IsOpen = true;
     }
 
     private void ViewErrorButton_Click(object sender, RoutedEventArgs e)
