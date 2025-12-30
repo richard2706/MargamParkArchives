@@ -2,5 +2,5 @@
 
 public interface IDatabasePasswordValidationService
 {
-    public Task<bool> ValidatePasswordAsync(string password);
+    public Task<PasswordValidationResponse> ValidatePasswordAsync(string password);
 }
