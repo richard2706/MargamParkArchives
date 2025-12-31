@@ -10,6 +10,7 @@ using MargamParkArchives.Core.Database;
 using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Windows.UI.Dialogs;
 using MargamParkArchives.Core.Database.PasswordManagement.Validation;
+using Windows.ApplicationModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -57,7 +58,8 @@ public partial class App : Application
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
             services.AddSingleton<IPasswordFilePathProvider, DatabasePasswordFilePathProvider>(_ =>
-                new DatabasePasswordFilePathProvider(ExplorerConstants.DatabasePasswordFileName));
+                new DatabasePasswordFilePathProvider(ExplorerConstants.DatabasePasswordFileName,
+                Package.Current.DisplayName));
             services.AddSingleton<IPasswordProvider, DatabasePasswordProvider>();
             services.AddTransient<IConnectionStringProvider, MySqlConnectionStringProvider>();
             services.AddSingleton<IDatabasePasswordValidationService, MySqlPasswordValidationService>();

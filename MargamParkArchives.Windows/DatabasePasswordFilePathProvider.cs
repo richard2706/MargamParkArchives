@@ -2,13 +2,13 @@
 
 namespace MargamParkArchives.Windows;
 
-public class DatabasePasswordFilePathProvider(string fileName) : IPasswordFilePathProvider
+public class DatabasePasswordFilePathProvider(string fileName, string applicationName) : IPasswordFilePathProvider
 {
-    private readonly string _fileName = fileName;
-
     public string GetPasswordFilePath()
     {
-        string passwordFileLocation = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-        return Path.Combine(passwordFileLocation, _fileName);
+        string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+        string applicationDirectoryPath = Path.Combine(programDataPath, applicationName);
+        Directory.CreateDirectory(applicationDirectoryPath);
+        return Path.Combine(applicationDirectoryPath, fileName);
     }
 }
