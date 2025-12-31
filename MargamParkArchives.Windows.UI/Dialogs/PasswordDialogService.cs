@@ -79,6 +79,8 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
             // Store password and close dialog (if storage is successful)
             case PasswordValidationResult.Correct:
                 await SavePassword();
+                // Here, the password was stored successfully
+                dialog.Hide();
                 break;
 
             // Show incorrect password prompt
@@ -104,8 +106,6 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
         try
         {
             await _passwordStorageService.SavePasswordAsync(passwordBox.Password);
-            // Here, the password was stored successfully
-            dialog.Hide();
         }
         catch (CryptographicException ex)
         {
