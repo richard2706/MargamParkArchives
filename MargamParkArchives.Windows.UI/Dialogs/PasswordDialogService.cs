@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace MargamParkArchives.Windows.UI.Dialogs;
 
@@ -76,21 +77,7 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
         {
             // Store password and close dialog (if storage is successful)
             case PasswordValidationResult.Correct:
-                try
-                {
-                    await _passwordStorageService.SavePasswordAsync(passwordBox.Password);
-                }
-                catch (CryptographicException ex)
-                {
-                    UpdatePasswordPrompt(EncryptionFailedMessage, ex);
-                }
-                catch (Exception ex)
-                {
-                    UpdatePasswordPrompt(UnknownStorageErrorMessage, ex);
-                }
-
-                // Here, the password was stored successfully
-                dialog.Hide();
+                await SavePassword();
                 break;
 
             // Show incorrect password prompt
@@ -105,9 +92,27 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
                 break;
 
             // Show other error message
-            case PasswordValidationResult.OtherError:
+            default:
                 UpdatePasswordPrompt(OtherValidationErrorPrompt, validationResponse.ExceptionThrown);
                 break;
+        }
+    }
+
+    private async Task SavePassword()
+    {
+        try
+        {
+            await _passwordStorageService.SavePasswordAsync(passwordBox.Password);
+            // Here, the password was stored successfully
+            dialog.Hide();
+        }
+        catch (CryptographicException ex)
+        {
+            UpdatePasswordPrompt(EncryptionFailedMessage, ex);
+        }
+        catch (Exception ex)
+        {
+            UpdatePasswordPrompt(UnknownStorageErrorMessage, ex);
         }
     }
 
@@ -150,8 +155,7 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
             HorizontalAlignment = HorizontalAlignment.Stretch,
             Visibility = Visibility.Collapsed,
             Header = ErrorExpanderHeader,
-            Content = errorDetailsText,
-            Padding = new Thickness(0, 10, 0, 10)
+            Content = errorDetailsText
         };
         passwordBox = new()
         {
