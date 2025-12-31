@@ -70,6 +70,7 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
     {
         args.Cancel = true; // Prevent dialog from closing automatically
         dialog.Content = passwordValidatingPanel;
+        dialog.IsPrimaryButtonEnabled = false;
 
         PasswordValidationResponse validationResponse =
             await _passwordValidationService.ValidatePasswordAsync(passwordBox.Password);
@@ -121,6 +122,7 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
         passwordPrompt.Text = message;
         LoadErrorDetailsIntoExpander(exception);
         dialog.Content = passwordPromptPanel;
+        dialog.IsPrimaryButtonEnabled = true;
     }
 
     private void LoadErrorDetailsIntoExpander(Exception exceptionThrown)
