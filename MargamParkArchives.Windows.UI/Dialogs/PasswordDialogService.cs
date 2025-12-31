@@ -1,5 +1,6 @@
 ﻿using MargamParkArchives.Core.Database;
-using MargamParkArchives.Core.Database.PasswordManagement;
+using MargamParkArchives.Core.Database.PasswordManagement.Storage;
+using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -8,21 +9,36 @@ using System;
 namespace MargamParkArchives.Windows.UI.Dialogs;
 
 public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
-    IDatabasePasswordValidationService passwordValidationService)
+    IDatabasePasswordValidationService passwordValidationService,
+    IPasswordStorageService passwordStorageService)
 {
     private const string DialogTitle = "Database Password Required";
+    private const string ErrorExpanderHeader = "Show Error Details";
+    private const int DialogWidth = 400;
+
+    // Password validation error messages
     private const string InitialPasswordPrompt = "Enter the database password for user {0} to continue.";
     private const string IncorrectPasswordPrompt = "The password entered for user {0} is incorrect. Please try again.";
     private const string ServerUnreachablePrompt = "The database server is currently unreachable. Please check that" +
         "the database service is running and you have followed all database configuration steps.";
-    private const string OtherErrorPrompt = "An unexpected error occurred while validating the database password. " +
+    private const string OtherValidationErrorPrompt = "An unexpected error occurred while validating the database password. " +
         "Please check the error details then try again.";
-    private const string ErrorExpanderHeader = "Show Error Details";
-    private const int DialogWidth = 400;
 
+    // Password storage error messages
+    private const string EncryptionFailedMessage = "The password was correct but could not be stored securely. " +
+                                "Please the error details and try again.";
+    private const string FileWriterErrorMessage = "The password was correct but could not be saved. Please check the " +
+        "application has permission to write to the ProgramData folder. Check the error details below for more details" +
+        "then try again.";
+    private const string UnknownStorageErrorMessage = "The password was correct could not be saved. Please check the " +
+        "error details then try again.";
+
+    // Services
     private readonly DatabaseOptions _databaseOptions = databaseOptions.Value;
     private readonly IDatabasePasswordValidationService _passwordValidationService = passwordValidationService;
+    private readonly IPasswordStorageService _passwordStorageService = passwordStorageService;
 
+    // UI elements
     private ContentDialog dialog;
     private TextBlock passwordPrompt;
     private Expander errorExpander;
@@ -53,36 +69,58 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
         args.Cancel = true; // Prevent dialog from closing automatically
         dialog.Content = passwordValidatingPanel;
 
-        PasswordValidationResponse validationResult =
+        PasswordValidationResponse validationResponse =
             await _passwordValidationService.ValidatePasswordAsync(passwordBox.Password);
-        switch (validationResult.ValidationResult)
+        //switch (validationResult.ValidationResult)
+        switch (validationResponse.Result)
         {
-            // Close dialog if password is valid
+            // Store password and close dialog (if storage is successful)
             case PasswordValidationResult.Correct:
-                dialog.Hide();
+                PasswordStorageResponse storageResponse =
+                    await _passwordStorageService.SavePasswordAsync(passwordBox.Password);
+                switch (storageResponse.Result)
+                {
+                    case PasswordStorageResult.Success:
+                        dialog.Hide();
+                        return;
+
+                    case PasswordStorageResult.EncryptionFailed:
+                        UpdatePasswordPrompt(EncryptionFailedMessage, storageResponse.ExceptionThrown);
+                        return;
+
+                    case PasswordStorageResult.FileWriterError:
+                        UpdatePasswordPrompt(FileWriterErrorMessage, storageResponse.ExceptionThrown);
+                        return;
+
+                    case PasswordStorageResult.UnknownError:
+                        UpdatePasswordPrompt(UnknownStorageErrorMessage, storageResponse.ExceptionThrown);
+                        return;
+                }
                 break;
 
             // Show incorrect password prompt
             case PasswordValidationResult.Incorrect:
-                passwordPrompt.Text = string.Format(IncorrectPasswordPrompt, _databaseOptions.Uid);
-                LoadErrorDetailsIntoExpander(validationResult.exceptionThrown);
-                dialog.Content = passwordPromptPanel;
+                UpdatePasswordPrompt(string.Format(IncorrectPasswordPrompt, _databaseOptions.Uid),
+                    validationResponse.ExceptionThrown);
                 break;
 
             // Show server unreachable message
             case PasswordValidationResult.ServerUnreachable:
-                passwordPrompt.Text = ServerUnreachablePrompt;
-                LoadErrorDetailsIntoExpander(validationResult.exceptionThrown);
-                dialog.Content = passwordPromptPanel;
+                UpdatePasswordPrompt(ServerUnreachablePrompt, validationResponse.ExceptionThrown);
                 break;
 
             // Show other error message
             case PasswordValidationResult.OtherError:
-                passwordPrompt.Text = OtherErrorPrompt;
-                LoadErrorDetailsIntoExpander(validationResult.exceptionThrown);
-                dialog.Content = passwordPromptPanel;
+                UpdatePasswordPrompt(OtherValidationErrorPrompt, validationResponse.ExceptionThrown);
                 break;
         }
+    }
+
+    private void UpdatePasswordPrompt(string message, Exception exception)
+    {
+        passwordPrompt.Text = message;
+        LoadErrorDetailsIntoExpander(exception);
+        dialog.Content = passwordPromptPanel;
     }
 
     private void LoadErrorDetailsIntoExpander(Exception exceptionThrown)
@@ -93,6 +131,11 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
             string exceptionMessage = exceptionThrown.Message;
             errorDetailsText.Text = $"{exceptionName}: {exceptionMessage}";
             errorExpander.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            errorDetailsText.Text = string.Empty;
+            errorExpander.Visibility = Visibility.Collapsed;
         }
     }
 

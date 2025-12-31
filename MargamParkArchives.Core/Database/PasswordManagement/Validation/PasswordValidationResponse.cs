@@ -6,18 +6,18 @@
 /// </summary>
 public class PasswordValidationResponse
 {
-    public PasswordValidationResult ValidationResult { get; init; }
-    public Exception? exceptionThrown { get; init; }
+    public PasswordValidationResult Result { get; init; }
+    public Exception? ExceptionThrown { get; init; }
 
     public PasswordValidationResponse(PasswordValidationResult validationResult)
     {
-        ValidationResult = validationResult;
-        exceptionThrown = null;
+        Result = validationResult;
+        ExceptionThrown = null;
     }
 
     public PasswordValidationResponse(PasswordValidationResult validationResult, Exception? databaseException)
     {
-        ValidationResult = validationResult;
-        exceptionThrown = databaseException;
+        Result = validationResult;
+        ExceptionThrown = databaseException;
     }
 }
