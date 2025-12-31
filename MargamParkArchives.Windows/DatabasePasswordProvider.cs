@@ -1,4 +1,6 @@
-﻿namespace MargamParkArchives.Core.Database.PasswordManagement;
+﻿using MargamParkArchives.Core.Database.PasswordManagement;
+
+namespace MargamParkArchives.Windows;
 
 public class DatabasePasswordProvider(IPasswordFilePathProvider filePathProvider) : IPasswordProvider
 {
@@ -9,7 +11,7 @@ public class DatabasePasswordProvider(IPasswordFilePathProvider filePathProvider
         string _passwordFilePath = _filePathProvider.GetPasswordFilePath();
         if (!File.Exists(_passwordFilePath))
         {
-            throw new PasswordMissingException($"Password file not found at {_passwordFilePath}");
+            throw new PasswordFileMissingException($"Password file not found at {_passwordFilePath}");
         }
 
         return "";
