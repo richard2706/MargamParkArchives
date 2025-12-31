@@ -2,5 +2,5 @@
 
 public interface IPasswordProvider
 {
-    public string GetPassword();
+    public Task<string> GetPassword();
 }

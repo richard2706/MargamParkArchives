@@ -1,10 +1,11 @@
 ﻿using MargamParkArchives.Core.Database;
-using MargamParkArchives.Core.Database.PasswordManagement.Storage;
+using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Security.Cryptography;
 
 namespace MargamParkArchives.Windows.UI.Dialogs;
 
@@ -26,7 +27,7 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
 
     // Password storage error messages
     private const string EncryptionFailedMessage = "The password was correct but could not be stored securely. " +
-                                "Please the error details and try again.";
+                                "Please check the error details and try again.";
     private const string FileWriterErrorMessage = "The password was correct but could not be saved. Please check the " +
         "application has permission to write to the ProgramData folder. Check the error details below for more details" +
         "then try again.";
@@ -71,31 +72,25 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
 
         PasswordValidationResponse validationResponse =
             await _passwordValidationService.ValidatePasswordAsync(passwordBox.Password);
-        //switch (validationResult.ValidationResult)
         switch (validationResponse.Result)
         {
             // Store password and close dialog (if storage is successful)
             case PasswordValidationResult.Correct:
-                PasswordStorageResponse storageResponse =
-                    await _passwordStorageService.SavePasswordAsync(passwordBox.Password);
-                switch (storageResponse.Result)
+                try
                 {
-                    case PasswordStorageResult.Success:
-                        dialog.Hide();
-                        return;
-
-                    case PasswordStorageResult.EncryptionFailed:
-                        UpdatePasswordPrompt(EncryptionFailedMessage, storageResponse.ExceptionThrown);
-                        return;
-
-                    case PasswordStorageResult.FileWriterError:
-                        UpdatePasswordPrompt(FileWriterErrorMessage, storageResponse.ExceptionThrown);
-                        return;
-
-                    case PasswordStorageResult.UnknownError:
-                        UpdatePasswordPrompt(UnknownStorageErrorMessage, storageResponse.ExceptionThrown);
-                        return;
+                    await _passwordStorageService.SavePasswordAsync(passwordBox.Password);
                 }
+                catch (CryptographicException ex)
+                {
+                    UpdatePasswordPrompt(EncryptionFailedMessage, ex);
+                }
+                catch (Exception ex)
+                {
+                    UpdatePasswordPrompt(UnknownStorageErrorMessage, ex);
+                }
+
+                // Here, the password was stored successfully
+                dialog.Hide();
                 break;
 
             // Show incorrect password prompt

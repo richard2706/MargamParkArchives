@@ -4,5 +4,5 @@ namespace MargamParkArchives.Data;
 
 public interface IArtefactDataAccess
 {
-    Artefact[] GetArtefactList(string query);
+    public Task<Artefact[]> GetArtefactList(string query);
 }

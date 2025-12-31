@@ -40,11 +40,11 @@ public sealed partial class MainWindow : Window
         }
     }
 
-    private void LoadRandomArtefacts()
+    private async void LoadRandomArtefacts()
     {
         try
         {
-            _artefacts = _artefactReader.GetRandomArtefacts();
+            _artefacts = await _artefactReader.GetRandomArtefacts();
         }
         catch (PasswordFileMissingException)
         {

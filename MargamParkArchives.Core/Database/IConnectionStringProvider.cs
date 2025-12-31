@@ -2,6 +2,6 @@
 {
     public interface IConnectionStringProvider
     {
-        public string GetConnectionString();
+        public Task<string> GetConnectionString();
     }
 }

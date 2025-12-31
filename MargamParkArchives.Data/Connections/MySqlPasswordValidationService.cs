@@ -14,7 +14,7 @@ public class MySqlPasswordValidationService(IOptions<DatabaseOptions> databaseOp
     {
         DirectPasswordProvider passwordProvider = new(password);
         MySqlConnectionStringProvider connectionStringProvider = new(databaseOptions, passwordProvider);
-        string connectionString = connectionStringProvider.GetConnectionString();
+        string connectionString = await connectionStringProvider.GetConnectionString();
         await using MySqlConnection connection = new(connectionString);
         try
         {

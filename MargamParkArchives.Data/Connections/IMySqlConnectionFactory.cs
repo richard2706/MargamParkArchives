@@ -4,6 +4,6 @@ namespace MargamParkArchives.Data.Connections
 {
     public interface IMySqlConnectionFactory
     {
-        MySqlConnection CreateConnection();
+        public Task<MySqlConnection> CreateConnection();
     }
 }

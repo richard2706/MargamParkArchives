@@ -1,5 +1,4 @@
 ﻿using MargamParkArchives.Core.Database.PasswordManagement;
-using MargamParkArchives.Core.Database.PasswordManagement.Storage;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -9,46 +8,17 @@ public class DatabasePasswordStorageService(IPasswordFilePathProvider filePathPr
 {
     private readonly IPasswordFilePathProvider _filePathProvider = filePathProvider;
 
-    public async Task<PasswordStorageResponse> SavePasswordAsync(string password)
+    public async Task SavePasswordAsync(string password)
     {
         // Encrypt password
         byte[] passwordAsBytes = UnicodeEncoding.ASCII.GetBytes(password);
-        byte[] entropy = CreateRandomEntropy();
-        byte[] encryptedPassword;
-        try
-        {
-            encryptedPassword = ProtectedData.Protect(
-            passwordAsBytes,
-            entropy,
-            DataProtectionScope.LocalMachine);
-        }
-        catch (Exception ex)
-        {
-            return new PasswordStorageResponse(PasswordStorageResult.EncryptionFailed, ex);
-        }
-        if (encryptedPassword == null)
-        {
-            return new PasswordStorageResponse(PasswordStorageResult.EncryptionFailed, null);
-        }
+        byte[] encryptedPassword = ProtectedData.Protect(passwordAsBytes, null, DataProtectionScope.LocalMachine)
+            ?? throw new CryptographicException("The password was not encrypted. The encrypted value is null");
 
         // Store encrypted password
         string filePath = _filePathProvider.GetPasswordFilePath();
         using FileStream passwordWriterStream = new(filePath, FileMode.Create);
-        try
-        {
-            await passwordWriterStream.WriteAsync(encryptedPassword.AsMemory());
-            return new PasswordStorageResponse(PasswordStorageResult.Success, null);
-        }
-        catch (Exception ex)
-        {
-            return new PasswordStorageResponse(PasswordStorageResult.FileWriterError, ex);
-        }
-    }
-
-    private static byte[] CreateRandomEntropy()
-    {
-        byte[] entropy = new byte[16];
-        RandomNumberGenerator.Create().GetBytes(entropy);
-        return entropy;
+        //using FileStream passwordWriterStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None, useAsync: true);
+        await passwordWriterStream.WriteAsync(encryptedPassword.AsMemory());
     }
 }
