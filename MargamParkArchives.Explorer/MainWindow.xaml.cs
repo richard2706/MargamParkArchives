@@ -32,11 +32,17 @@ public sealed partial class MainWindow : Window
     }
 
     // Earliest point where XamlRoot is available
-    private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+    private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
     {
         if (_showPasswordDialog)
         {
-            ShowPasswordDialog();
+            _showPasswordDialog = false;
+
+            // Load the artefacts again if password was set successfully
+            if (await _passwordDialogService.ShowDialog(Content.XamlRoot))
+            {
+                LoadRandomArtefacts();
+            }
         }
     }
 
@@ -72,11 +78,5 @@ public sealed partial class MainWindow : Window
     private void ViewErrorButton_Click(object sender, RoutedEventArgs e)
     {
         _databaseErrorDialogService?.ShowDialog(Content.XamlRoot);
-    }
-
-    private void ShowPasswordDialog()
-    {
-        _passwordDialogService.ShowDialog(Content.XamlRoot);
-        _showPasswordDialog = false;
     }
 }

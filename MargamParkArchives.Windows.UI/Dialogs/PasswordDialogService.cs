@@ -49,7 +49,15 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
     private StackPanel passwordPromptPanel;
     private StackPanel passwordValidatingPanel;
 
-    public async void ShowDialog(XamlRoot xamlRoot)
+    private bool _passwordSetSuccessfully = false;
+
+    /// <summary>
+    /// Shows the dialog prompting the user for the database password. Returns true if the password was validated and
+    /// stored successfully, false otherwise.
+    /// </summary>
+    /// <param name="xamlRoot">XamlRoot element in which to show the dialog.</param>
+    /// <returns></returns>
+    public async Task<bool> ShowDialog(XamlRoot xamlRoot)
     {
         passwordPromptPanel = CreatePasswordPromptUI();
         passwordValidatingPanel = CreatePasswordValidatingUI();
@@ -63,7 +71,8 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
             XamlRoot = xamlRoot
         };
         dialog.PrimaryButtonClick += PrimaryButton_Clicked;
-        ContentDialogResult result = await dialog.ShowAsync();
+        await dialog.ShowAsync();
+        return _passwordSetSuccessfully;
     }
 
     private async void PrimaryButton_Clicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -80,6 +89,7 @@ public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
             case PasswordValidationResult.Correct:
                 await SavePassword();
                 // Here, the password was stored successfully
+                _passwordSetSuccessfully = true;
                 dialog.Hide();
                 break;
 
