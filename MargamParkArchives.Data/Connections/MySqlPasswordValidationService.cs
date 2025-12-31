@@ -18,6 +18,7 @@ public class MySqlPasswordValidationService(IOptions<DatabaseOptions> databaseOp
         try
         {
             await connection.OpenAsync();
+            // If we reach here, the password is correct
             return new PasswordValidationResponse(PasswordValidationResult.Correct);
         }
         catch (MySqlException ex)

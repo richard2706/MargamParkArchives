@@ -1,6 +1,4 @@
-﻿using MargamParkArchives.Core.Database.PasswordManagement;
-
-namespace MargamParkArchives.Data.Connections;
+﻿namespace MargamParkArchives.Core.Database.PasswordManagement;
 
 public class DirectPasswordProvider(string password) : IPasswordProvider
 {

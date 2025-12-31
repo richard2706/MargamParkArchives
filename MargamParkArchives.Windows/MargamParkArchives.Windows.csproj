@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MargamParkArchives.Core\MargamParkArchives.Core.csproj" />
+  </ItemGroup>
+
 </Project>

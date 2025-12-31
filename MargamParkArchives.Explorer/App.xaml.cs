@@ -1,5 +1,6 @@
 ﻿using MargamParkArchives.Data;
 using MargamParkArchives.Data.Connections;
+using MargamParkArchives.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -54,8 +55,10 @@ public partial class App : Application
                 .Bind(hostContext.Configuration.GetSection("DatabaseOptions"))
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
+            services.AddSingleton<IPasswordFilePathProvider, DatabasePasswordFilePathProvider>(_ =>
+                new DatabasePasswordFilePathProvider(ExplorerConstants.DatabasePasswordFileName));
+            services.AddSingleton<IPasswordProvider, DatabasePasswordProvider>();
             services.AddTransient<IConnectionStringProvider, MySqlConnectionStringProvider>();
-            services.AddSingleton<IPasswordProvider, ExplorerPasswordProvider>();
             services.AddSingleton<IDatabasePasswordValidationService, MySqlPasswordValidationService>();
 
             // Data Access Services
