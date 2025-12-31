@@ -46,7 +46,7 @@ public sealed partial class MainWindow : Window
         {
             _artefacts = _artefactReader.GetRandomArtefacts();
         }
-        catch (PasswordMissingException)
+        catch (PasswordFileMissingException)
         {
             _showPasswordDialog = true;
             return;
