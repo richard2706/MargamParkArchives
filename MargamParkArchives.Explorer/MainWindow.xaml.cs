@@ -57,6 +57,11 @@ public sealed partial class MainWindow : Window
             _showPasswordDialog = true;
             return;
         }
+        catch (DatabasePasswordInvalidException)
+        {
+            _showPasswordDialog = true;
+            return;
+        }
         catch (Exception ex)
         {
             // Display Error Message info bar

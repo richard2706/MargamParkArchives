@@ -1,4 +1,5 @@
-﻿using MargamParkArchives.Data.Connections;
+﻿using MargamParkArchives.Core.Database.PasswordManagement;
+using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities;
 using MySqlConnector;
 using System.Data;
@@ -25,6 +26,17 @@ public class MySqlArtefactDataAccess(IMySqlConnectionFactory connectionFactory) 
         try
         {
             connection.Open();
+        }
+        catch (MySqlException ex)
+        {
+            if (ex.SqlState == "28000")
+            {
+                throw new DatabasePasswordInvalidException(ex.Message);
+            }
+            else
+            {
+                throw;
+            }
         }
         catch (Exception ex)
         {
