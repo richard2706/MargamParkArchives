@@ -1,10 +1,11 @@
-﻿using MargamParkArchives.Core;
+﻿using MargamParkArchives.Core.Database;
+using MargamParkArchives.Core.Database.PasswordManagement;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 
-namespace MargamParkArchives.SharedUI;
+namespace MargamParkArchives.SharedUI.Dialogs;
 
 public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
     IDatabasePasswordValidationService passwordValidationService)

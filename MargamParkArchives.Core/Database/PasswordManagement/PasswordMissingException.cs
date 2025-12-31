@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Core;
+﻿namespace MargamParkArchives.Core.Database.PasswordManagement;
 
 public class PasswordMissingException : Exception
 {

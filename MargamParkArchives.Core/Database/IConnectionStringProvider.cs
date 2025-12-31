@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Data.Connections
+﻿namespace MargamParkArchives.Core.Database
 {
     public interface IConnectionStringProvider
     {

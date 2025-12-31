@@ -1,7 +1,7 @@
-using MargamParkArchives.Core;
+using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Data;
 using MargamParkArchives.Data.Entities;
-using MargamParkArchives.SharedUI;
+using MargamParkArchives.SharedUI.Dialogs;
 using Microsoft.UI.Xaml;
 using System;
 using System.Diagnostics;

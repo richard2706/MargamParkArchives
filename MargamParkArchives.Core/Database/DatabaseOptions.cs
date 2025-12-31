@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MargamParkArchives.Core;
+namespace MargamParkArchives.Core.Database;
 
 public sealed class DatabaseOptions
 {

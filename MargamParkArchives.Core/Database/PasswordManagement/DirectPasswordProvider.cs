@@ -1,4 +1,4 @@
-﻿using MargamParkArchives.Core;
+﻿using MargamParkArchives.Core.Database.PasswordManagement;
 
 namespace MargamParkArchives.Data.Connections;
 
