@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Core.Database.PasswordManagement;
+﻿namespace MargamParkArchives.Core.Database.PasswordManagement.Validation;
 
 /// <summary>
 /// Response object for database password validation attempts. The ValidationResult property indicates is the

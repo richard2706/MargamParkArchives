@@ -9,6 +9,7 @@ using System.Diagnostics;
 using MargamParkArchives.Core.Database;
 using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Windows.UI.Dialogs;
+using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

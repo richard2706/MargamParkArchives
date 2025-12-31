@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Core.Database.PasswordManagement;
+﻿namespace MargamParkArchives.Core.Database.PasswordManagement.Validation;
 
 public interface IDatabasePasswordValidationService
 {
