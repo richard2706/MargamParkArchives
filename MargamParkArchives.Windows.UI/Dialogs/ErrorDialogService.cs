@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.ApplicationModel.DataTransfer;
 
-namespace MargamParkArchives.SharedUI.Dialogs;
+namespace MargamParkArchives.Windows.UI.Dialogs;
 
 public class ErrorDialogService(string errorTitle, string errorDetails)
 {

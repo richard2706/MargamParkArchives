@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 
-namespace MargamParkArchives.SharedUI.Dialogs;
+namespace MargamParkArchives.Windows.UI.Dialogs;
 
 public class PasswordDialogService(IOptions<DatabaseOptions> databaseOptions,
     IDatabasePasswordValidationService passwordValidationService)

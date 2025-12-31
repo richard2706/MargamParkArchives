@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 
-namespace MargamParkArchives.SharedUI.Dialogs;
+namespace MargamParkArchives.Windows.UI.Dialogs;
 
 /// <summary>
 /// Display a dialog box to inform the user of startup errors. Is capable of being called independently of the app

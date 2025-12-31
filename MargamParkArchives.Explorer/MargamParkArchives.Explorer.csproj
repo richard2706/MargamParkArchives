@@ -45,7 +45,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MargamParkArchives.Core\MargamParkArchives.Core.csproj" />
     <ProjectReference Include="..\MargamParkArchives.Data\MargamParkArchives.Data.csproj" />
-    <ProjectReference Include="..\MargamParkArchives.SharedUI\MargamParkArchives.SharedUI.csproj" />
+    <ProjectReference Include="..\MargamParkArchives.Windows.UI\MargamParkArchives.Windows.UI.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
