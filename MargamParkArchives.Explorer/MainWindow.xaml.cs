@@ -44,7 +44,7 @@ public sealed partial class MainWindow : Window
     {
         try
         {
-            _artefacts = await _artefactReader.GetRandomArtefacts();
+            _artefacts = await _artefactReader.GetRandomArtefactsAsync();
         }
         catch (PasswordFileMissingException)
         {

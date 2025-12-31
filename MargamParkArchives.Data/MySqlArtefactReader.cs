@@ -9,9 +9,9 @@ public class MySqlArtefactReader(IArtefactDataAccess dataAccess) : IArtefactRead
 
     private const string _getRandomArtefactsQuery = "select * from {0} order by rand() limit {1};";
 
-    public async Task<Artefact[]> GetRandomArtefacts(int numArtefacts = 3)
+    public async Task<Artefact[]> GetRandomArtefactsAsync(int numArtefacts = 3)
     {
         string query = string.Format(_getRandomArtefactsQuery, ArtefactDetailsViewName, numArtefacts);
-        return await _dataAccess.GetArtefactList(query);
+        return await _dataAccess.GetArtefactListAsync(query);
     }
 }

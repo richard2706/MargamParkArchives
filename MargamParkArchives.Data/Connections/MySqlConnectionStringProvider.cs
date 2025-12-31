@@ -11,9 +11,9 @@ public class MySqlConnectionStringProvider(IOptions<DatabaseOptions> databaseOpt
     private readonly DatabaseOptions _databaseOptions = databaseOptions.Value;
     private readonly IPasswordProvider _passwordProvider = passwordProvider;
 
-    public async Task<string> GetConnectionString()
+    public async Task<string> GetConnectionStringAsync()
     {
-        string password = await _passwordProvider.GetPassword();
+        string password = await _passwordProvider.GetPasswordAsync();
         return string.Format(
             ConnectionStringTemplate,
             _databaseOptions.Server,

@@ -4,5 +4,5 @@ namespace MargamParkArchives.Data;
 
 public interface IArtefactReader
 {
-    public Task<Artefact[]> GetRandomArtefacts(int numArtefacts = 3);
+    public Task<Artefact[]> GetRandomArtefactsAsync(int numArtefacts = 3);
 }

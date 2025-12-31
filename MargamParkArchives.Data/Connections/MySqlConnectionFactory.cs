@@ -10,9 +10,9 @@ public class MySqlConnectionFactory(IConnectionStringProvider connectionStringPr
 {
     private readonly IConnectionStringProvider _connectionStringProvider = connectionStringProvider;
 
-    public async Task<MySqlConnection> CreateConnection()
+    public async Task<MySqlConnection> CreateConnectionAsync()
     {
-        string connectionString = await _connectionStringProvider.GetConnectionString();
+        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
         return new MySqlConnection(connectionString);
     }
 }

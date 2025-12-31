@@ -4,7 +4,7 @@ public class DirectPasswordProvider(string password) : IPasswordProvider
 {
     private readonly string _password = password;
 
-    public async Task<string> GetPassword()
+    public async Task<string> GetPasswordAsync()
     {
         return _password;
     }

@@ -2,6 +2,6 @@
 {
     public interface IConnectionStringProvider
     {
-        public Task<string> GetConnectionString();
+        public Task<string> GetConnectionStringAsync();
     }
 }

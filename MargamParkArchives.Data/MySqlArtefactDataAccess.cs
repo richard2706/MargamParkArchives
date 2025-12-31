@@ -19,9 +19,9 @@ public class MySqlArtefactDataAccess(IMySqlConnectionFactory connectionFactory) 
     /// </summary>
     /// <param name="query">SQL query to execute on the database. Must be on the ArtefactDetails view or</param>
     /// <returns></returns>
-    public async Task<Artefact[]> GetArtefactList(string query)
+    public async Task<Artefact[]> GetArtefactListAsync(string query)
     {
-        using MySqlConnection connection = await _connectionFactory.CreateConnection();
+        using MySqlConnection connection = await _connectionFactory.CreateConnectionAsync();
         try
         {
             connection.Open();

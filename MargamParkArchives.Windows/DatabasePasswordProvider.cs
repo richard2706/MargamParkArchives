@@ -8,7 +8,7 @@ public class DatabasePasswordProvider(IPasswordFilePathProvider filePathProvider
 {
     private readonly IPasswordFilePathProvider _filePathProvider = filePathProvider;
 
-    public async Task<string> GetPassword()
+    public async Task<string> GetPasswordAsync()
     {
         string _passwordFilePath = _filePathProvider.GetPasswordFilePath();
         if (!File.Exists(_passwordFilePath))
