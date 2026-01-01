@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Data.Entities;
+﻿namespace MargamParkArchives.Data.Entities.SpecificLocation;
 
 internal record SpecificLocationDto
 {
