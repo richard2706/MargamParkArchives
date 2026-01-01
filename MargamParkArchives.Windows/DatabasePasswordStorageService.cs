@@ -17,8 +17,7 @@ public class DatabasePasswordStorageService(IPasswordFilePathProvider filePathPr
 
         // Store encrypted password
         string filePath = _filePathProvider.GetPasswordFilePath();
-        using FileStream passwordWriterStream = new(filePath, FileMode.Create);
-        //using FileStream passwordWriterStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None, useAsync: true);
+        using FileStream passwordWriterStream = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true);
         await passwordWriterStream.WriteAsync(encryptedPassword.AsMemory());
     }
 }
