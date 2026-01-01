@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dapper;
+using MargamParkArchives.Core.Database;
+using MySqlConnector;
 
 namespace MargamParkArchives.Data.Connections;
 
-public class MySqlDataAccess : IMySqlDataAccess
+public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider) : IMySqlDataAccess
 {
+    private readonly IConnectionStringProvider _connectionStringProvider = connectionStringProvider;
+
     /// <summary>
     /// Gets a collection of items of the specified type T from the database asynchronously.
     /// </summary>
@@ -18,12 +18,14 @@ public class MySqlDataAccess : IMySqlDataAccess
     /// T of items being returned.</param>
     /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
     /// structure should match the parameters in the query.</param>
-    /// <param name="connectionString">The connection string used to connect to the database.</param>
     /// <returns>A task that represents the asynchronous operation, which will return a collection of items of type T
     /// returned by the query.</returns>
-    public async Task<IEnumerable<T>> GetManyItemsAsync<T, P>(string sqlQuery, P parameters, string connectionString)
+    public async Task<IEnumerable<T>> GetManyItemsAsync<T, P>(string sqlQuery, P parameters)
     {
-        throw new NotImplementedException();
+        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
+        using MySqlConnection connection = new(connectionString);
+        IEnumerable<T> items = await connection.QueryAsync<T>(sqlQuery, parameters);
+        return items;
     }
 
     /// <summary>
@@ -37,11 +39,13 @@ public class MySqlDataAccess : IMySqlDataAccess
     /// T of items being returned.</param>
     /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
     /// structure should match the parameters in the query.</param>
-    /// <param name="connectionString">The connection string used to connect to the database.</param>
     /// <returns>A task that represents the asynchronous operation, which will return an item of type T
     /// returned by the query, or the first item if the query returns multiple items.</returns>
-    public async Task<T?> GetOneItemAsync<T, P>(string sqlQuery, P parameters, string connectionString)
+    public async Task<T?> GetOneItemAsync<T, P>(string sqlQuery, P parameters)
     {
-        throw new NotImplementedException();
+        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
+        using MySqlConnection connection = new(connectionString);
+        T item = await connection.QueryFirstAsync<T>(sqlQuery, parameters);
+        return item;
     }
 }
