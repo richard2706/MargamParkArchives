@@ -5,6 +5,7 @@ using MargamParkArchives.Windows.UI.Dialogs;
 using Microsoft.UI.Xaml;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace MargamParkArchives.Explorer;
 
@@ -15,6 +16,7 @@ public sealed partial class MainWindow : Window
 {
     private Artefact[] _artefacts = [];
     private bool _showPasswordDialog = false;
+    private bool _uiLoaded = false;
 
     // Services
     private readonly IArtefactReader _artefactReader;
@@ -34,15 +36,10 @@ public sealed partial class MainWindow : Window
     // Earliest point where XamlRoot is available
     private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
     {
+        _uiLoaded = true;
         if (_showPasswordDialog)
         {
-            _showPasswordDialog = false;
-
-            // Load the artefacts again if password was set successfully
-            if (await _passwordDialogService.ShowDialog(Content.XamlRoot))
-            {
-                LoadRandomArtefacts();
-            }
+            await ShowPasswordDialogThenReloadAsync();
         }
     }
 
@@ -52,14 +49,9 @@ public sealed partial class MainWindow : Window
         {
             _artefacts = await _artefactReader.GetRandomArtefactsAsync();
         }
-        catch (PasswordFileMissingException)
+        catch (Exception ex) when (ex is PasswordFileMissingException or DatabasePasswordInvalidException)
         {
-            _showPasswordDialog = true;
-            return;
-        }
-        catch (DatabasePasswordInvalidException)
-        {
-            _showPasswordDialog = true;
+            await ShowPasswordDialogThenReloadAsync();
             return;
         }
         catch (Exception ex)
@@ -78,6 +70,23 @@ public sealed partial class MainWindow : Window
         // Display success message
         ArtefactsLoadedInfoBar.Message = $"{_artefacts.Length} artefacts loaded.";
         ArtefactsLoadedInfoBar.IsOpen = true;
+    }
+
+    /// <summary>
+    /// Attempts to show the password dialog then reload the artefacts if the dialog returns successfully. If the UI is
+    /// not yet loaded, sets the _showPasswordDialog flag to true.
+    /// </summary>
+    /// <returns></returns>
+    private async Task ShowPasswordDialogThenReloadAsync()
+    {
+        if (_uiLoaded && await _passwordDialogService.ShowDialog(Content.XamlRoot))
+        {
+            LoadRandomArtefacts();
+        }
+        else
+        {
+            _showPasswordDialog = true;
+        }
     }
 
     private void ViewErrorButton_Click(object sender, RoutedEventArgs e)
