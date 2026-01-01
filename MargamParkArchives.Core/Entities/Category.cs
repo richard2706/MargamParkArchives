@@ -23,10 +23,6 @@ public class Category
         {
             throw new ArgumentException(string.Format(NameTooLongMessage, MaxNameLength);
         }
-        if (dateModified < dateCreated)
-        {
-            throw new ArgumentException("Date modified cannot be earlier than date created");
-        }
 
         Id = id;
         Name = name;
