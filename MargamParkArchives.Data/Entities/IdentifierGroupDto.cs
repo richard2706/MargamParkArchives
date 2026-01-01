@@ -1,8 +1,8 @@
-﻿namespace MargamParkArchives.Data.Entities.DataTransferObjects;
+﻿namespace MargamParkArchives.Data.Entities;
 
-internal record CreatorDto
+internal record IdentifierGroupDto
 {
-    internal required int CreatorId { get; init; }
+    internal required string IdentifierGroupId { get; init; }
     internal required string Name { get; init; }
     internal DateTime? DateCreated { get; init; }
     internal DateTime? DateModified { get; init; }

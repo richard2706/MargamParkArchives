@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Data.Entities.DataTransferObjects;
+﻿namespace MargamParkArchives.Data.Entities;
 
 internal record PeriodDto
 {
