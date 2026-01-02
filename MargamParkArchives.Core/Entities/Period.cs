@@ -4,8 +4,6 @@ namespace MargamParkArchives.Core.Entities;
 
 public class Period
 {
-    private const int DatesMaxLength = 50;
-
     public int Id { get; }
     public string Dates { get; }
     public DateTime? DateCreated { get; }
@@ -13,14 +11,9 @@ public class Period
 
     public Period(int id, string dates, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (dates.Length == 0)
+        if (!PeriodRules.IsValidDates(dates, out string error))
         {
-            throw new ArgumentException(string.Format(ValidationMessages.ValueEmptyMessage, nameof(Dates)));
-        }
-        else if (dates.Length > DatesMaxLength)
-        {
-            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(Dates),
-                DatesMaxLength));
+            throw new ArgumentException(error);
         }
 
         Id = id;
