@@ -1,12 +1,11 @@
-﻿namespace MargamParkArchives.Core.Entities;
+﻿using MargamParkArchives.Core.Entities.Validation;
+
+namespace MargamParkArchives.Core.Entities;
 
 public class Category
 {
-    private const int MaxIdLength = 2;
-    private const int MaxNameLength = 50;
-
-    private const string IdTooLongMessage = "Category IDs cannot be longer than {0} characters";
-    private const string NameTooLongMessage = "Category name cannot be longer than {0} characters";
+    private const int IdMaxLength = 2;
+    private const int NameMaxLength = 50;
 
     public string Id { get; }
     public string Name { get; }
@@ -15,13 +14,23 @@ public class Category
 
     public Category(string id, string name, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (id.Length > MaxIdLength)
+        if (id.Length == 0)
         {
-            throw new ArgumentException(string.Format(IdTooLongMessage, IdTooLongMessage));
+            throw new ArgumentException(string.Format(ValidationMessages.ValueEmptyMessage, nameof(Id)));
         }
-        if (name.Length > MaxNameLength)
+        else if (id.Length > IdMaxLength)
         {
-            throw new ArgumentException(string.Format(NameTooLongMessage, MaxNameLength);
+            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(Id),
+                IdMaxLength));
+        }
+        if (name.Length == 0)
+        {
+            throw new ArgumentException(string.Format(ValidationMessages.ValueEmptyMessage, nameof(Name)));
+        }
+        else if (name.Length > NameMaxLength)
+        {
+            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(Name),
+                NameMaxLength));
         }
 
         Id = id;

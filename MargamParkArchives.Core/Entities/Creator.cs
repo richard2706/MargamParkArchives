@@ -1,8 +1,10 @@
-﻿namespace MargamParkArchives.Core.Entities;
+﻿using MargamParkArchives.Core.Entities.Validation;
+
+namespace MargamParkArchives.Core.Entities;
 
 public class Creator
 {
-    private const string NameEmptyMessage = "Name must be at least 1 character in length.";
+    private const int NameMaxLength = 255;
 
     public int Id { get; }
     public string Name { get; }
@@ -13,7 +15,12 @@ public class Creator
     {
         if (name.Length == 0)
         {
-            throw new ArgumentException(NameEmptyMessage);
+            throw new ArgumentException(string.Format(ValidationMessages.ValueEmptyMessage, nameof(Name)));
+        }
+        else if (name.Length > NameMaxLength)
+        {
+            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(Name),
+                NameMaxLength)));
         }
 
         Id = id;
