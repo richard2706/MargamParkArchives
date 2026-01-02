@@ -2,6 +2,8 @@
 
 internal static class StringLengthHelper
 {
+    private const string MaxLengthInvalidMessage = "Max length cannot be less than 1";
+
     /// <summary>
     /// Returns true if the specified string is not empty, not null and does not exceed the maximum length specified.
     /// </summary>
@@ -12,7 +14,11 @@ internal static class StringLengthHelper
     /// <returns>true if the string is not empty, not null and its length does not exceed the specified maximum; otherwise, false.</returns>
     internal static bool ValidateNotEmptyOrTooLong(string? value, int maxLength, string propertyName, out string error)
     {
-        if (value == null || value.Length == 0)
+        if (maxLength <= 0)
+        {
+            throw new ArgumentException(MaxLengthInvalidMessage);
+        }
+        else if (value == null || value.Length == 0)
         {
             error = string.Format(ValidationMessages.ValueEmptyMessage, propertyName);
             return false;
@@ -39,7 +45,11 @@ internal static class StringLengthHelper
     /// <returns>true if the string length does not exceed the specified maximum (including if the string is empty or null); otherwise, false.</returns>
     internal static bool ValidateNotTooLong(string? value, int maxLength, string propertyName, out string error)
     {
-        if (value != null && value.Length > maxLength)
+        if (maxLength <= 0)
+        {
+            throw new ArgumentException(MaxLengthInvalidMessage);
+        }
+        else if (value != null && value.Length > maxLength)
         {
             error = string.Format(ValidationMessages.ValueTooLongMessage, propertyName, maxLength);
             return false;
