@@ -4,7 +4,7 @@ namespace MargamParkArchives.Core.Entities.PeriodEntity;
 
 public static class PeriodRules
 {
-    private const int DatesMaxLength = 50;
+    public const int DatesMaxLength = 50;
 
     public static bool IsValidDates(string? dates, string propertyName, out string error)
     {

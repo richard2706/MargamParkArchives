@@ -4,8 +4,8 @@ namespace MargamParkArchives.Core.Entities.IdentifierGroupEntity;
 
 public static class IdentifierGroupRules
 {
-    private const int IdMaxLength = 3;
-    private const int NameMaxLength = 255;
+    public const int IdMaxLength = 3;
+    public const int NameMaxLength = 255;
 
     public static bool IsValidId(string? id, string propertyName, out string error)
     {
