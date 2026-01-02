@@ -4,11 +4,6 @@ namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
 public class ArtefactClassification
 {
-    private const int ParentIdMaxLength = 50;
-    private const int TagsCyMaxLength = 255;
-    private const int CultureTagEnMaxLength = 255;
-    private const int LocationCoverageMaxLength = 255;
-
     public string? ParentId { get; }
     public string? TagsCy { get; }
     public string? CultureTagEn { get; }
