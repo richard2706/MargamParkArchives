@@ -9,11 +9,11 @@ public class IdentifierGroup
 
     public IdentifierGroup(string id, string name, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (!IdentifierGroupRules.IsValidId(id, out string error))
+        if (!IdentifierGroupRules.IsValidId(id, nameof(id), out string error))
         {
             throw new ArgumentException(error);
         }
-        else if (!IdentifierGroupRules.IsValidName(name, out error))
+        else if (!IdentifierGroupRules.IsValidName(name, nameof(id), out error))
         {
             throw new ArgumentException(error);
         }

@@ -9,7 +9,7 @@ public class Category
 
     public Category(string id, string name, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (!CategoryRules.IsValidId(id, out string error))
+        if (!CategoryRules.IsValidId(id, nameof(id), out string error))
         {
             throw new ArgumentException(error);
         }

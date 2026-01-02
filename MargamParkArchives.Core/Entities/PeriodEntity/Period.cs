@@ -9,7 +9,7 @@ public class Period
 
     public Period(int id, string dates, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (!PeriodRules.IsValidDates(dates, out string error))
+        if (!PeriodRules.IsValidDates(dates, nameof(dates), out string error))
         {
             throw new ArgumentException(error);
         }
