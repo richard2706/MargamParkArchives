@@ -6,6 +6,6 @@ public static class SpecificLocationRules
 
     public static bool IsValidSummary(string summary, out string error)
     {
-        return StringLengthHelper.ValidateStringNotEmptyOrTooLong(summary, SummaryMaxLength, out error);
+        return StringLengthHelper.ValidateNotEmptyOrTooLong(summary, SummaryMaxLength, nameof(summary), out error);
     }
 }
