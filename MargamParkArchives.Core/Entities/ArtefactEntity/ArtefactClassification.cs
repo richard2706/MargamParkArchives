@@ -1,6 +1,4 @@
-﻿using MargamParkArchives.Core.Entities.Validation;
-
-namespace MargamParkArchives.Core.Entities.ArtefactEntity;
+﻿namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
 public class ArtefactClassification
 {
@@ -13,21 +11,21 @@ public class ArtefactClassification
     public ArtefactClassification(string? parentId = null, string? tagsCy = null, string? cultureTagEn = null,
         string? locationCoverage = null, bool? visualArtefact = null)
     {
-        if (parentId != null && parentId.Length > ParentIdMaxLength)
+        if (!ArtefactClassificationRules.IsValidParentId(parentId, nameof(parentId), out string error))
         {
-            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(ParentId), ParentIdMaxLength));
+            throw new ArgumentException(error, nameof(parentId));
         }
-        if (tagsCy != null && tagsCy.Length > TagsCyMaxLength)
+        else if (!ArtefactClassificationRules.IsValidClassificaionText(tagsCy, nameof(tagsCy), out error))
         {
-            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(TagsCy), TagsCyMaxLength));
+            throw new ArgumentException(error, nameof(tagsCy));
         }
-        if (cultureTagEn != null && cultureTagEn.Length > CultureTagEnMaxLength)
+        else if (!ArtefactClassificationRules.IsValidClassificaionText(cultureTagEn, nameof(cultureTagEn), out error))
         {
-            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(CultureTagEn), CultureTagEnMaxLength));
+            throw new ArgumentException(error, nameof(cultureTagEn));
         }
-        if (locationCoverage != null && locationCoverage.Length > LocationCoverageMaxLength)
+        else if (!ArtefactClassificationRules.IsValidClassificaionText(locationCoverage, nameof(locationCoverage), out error))
         {
-            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(LocationCoverage), LocationCoverageMaxLength));
+            throw new ArgumentException(error, nameof(locationCoverage));
         }
 
         ParentId = parentId;
