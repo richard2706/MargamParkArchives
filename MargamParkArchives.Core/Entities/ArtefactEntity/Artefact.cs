@@ -4,6 +4,7 @@ using MargamParkArchives.Core.Entities.GeneralLocationEntity;
 using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
 using MargamParkArchives.Core.Entities.PeriodEntity;
 using MargamParkArchives.Core.Entities.SpecificLocationEntity;
+using MargamParkArchives.Core.Entities.Validation;
 
 namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
@@ -29,7 +30,7 @@ public class Artefact
     public ArtefactContent? Content { get; }
     public ArtefactClassification? Classification { get; }
 
-    public Artefact(IdentifierGroup identifierGroup, int identifierNumber, string identifierKey,
+    public Artefact(IdentifierGroup identifierGroup, int identifierNumber, string? identifierKey = null,
         Category? category = null, Period? period = null, Creator? creator = null,
         GeneralLocation? generalLocation = null, SpecificLocation? specificLocation = null, string? filePath = null,
         DateTime? dateCreated = null, DateTime? dateModified = null, ArtefactRightsInformation? rightsInformation = null,
@@ -37,7 +38,7 @@ public class Artefact
     {
         IdentifierGroup = identifierGroup;
         IdentifierNumber = identifierNumber;
-        IdentifierKey = identifierKey;
+        IdentifierKey = identifierKey ?? IdentifierKeyBuilder.Build(identifierGroup.Id, identifierNumber);
         Category = category;
         Period = period;
         Creator = creator;
