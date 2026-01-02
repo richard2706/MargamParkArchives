@@ -1,4 +1,6 @@
-﻿namespace MargamParkArchives.Core.Entities.Validation;
+﻿using MargamParkArchives.Core.Entities.Validation;
+
+namespace MargamParkArchives.Core.Entities.PeriodEntity;
 
 public static class PeriodRules
 {

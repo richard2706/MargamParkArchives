@@ -1,9 +1,11 @@
-﻿namespace MargamParkArchives.Core.Entities.Validation;
+﻿using MargamParkArchives.Core.Entities.Validation;
 
-public static class IdentifierGroupRules
+namespace MargamParkArchives.Core.Entities.CategoryEntity;
+
+public static class CategoryRules
 {
-    private const int IdMaxLength = 3;
-    private const int NameMaxLength = 255;
+    public const int IdMaxLength = 2;
+    public const int NameMaxLength = 50;
 
     public static bool IsValidId(string id, out string error)
     {

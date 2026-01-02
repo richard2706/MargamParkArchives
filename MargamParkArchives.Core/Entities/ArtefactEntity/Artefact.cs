@@ -1,6 +1,11 @@
-﻿using MargamParkArchives.Core.Entities.ArtefactSubEntities;
+﻿using MargamParkArchives.Core.Entities.CategoryEntity;
+using MargamParkArchives.Core.Entities.CreatorEntity;
+using MargamParkArchives.Core.Entities.GeneralLocationEntity;
+using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
+using MargamParkArchives.Core.Entities.PeriodEntity;
+using MargamParkArchives.Core.Entities.SpecificLocationEntity;
 
-namespace MargamParkArchives.Core.Entities;
+namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
 public class Artefact
 {
@@ -20,14 +25,14 @@ public class Artefact
     public string? FilePath { get; }
     public DateTime? DateCreated { get; }
     public DateTime? DateModified { get; }
-    public RightsInformation? RightsInformation { get; }
+    public ArtefactRightsInformation? RightsInformation { get; }
     public ArtefactContent? Content { get; }
     public ArtefactClassification? Classification { get; }
 
     public Artefact(IdentifierGroup identifierGroup, int identifierNumber, string identifierKey,
         Category? category = null, Period? period = null, Creator? creator = null,
         GeneralLocation? generalLocation = null, SpecificLocation? specificLocation = null, string? filePath = null,
-        DateTime? dateCreated = null, DateTime? dateModified = null, RightsInformation? rightsInformation = null,
+        DateTime? dateCreated = null, DateTime? dateModified = null, ArtefactRightsInformation? rightsInformation = null,
         ArtefactContent? content = null, ArtefactClassification? classification = null)
     {
         IdentifierGroup = identifierGroup;

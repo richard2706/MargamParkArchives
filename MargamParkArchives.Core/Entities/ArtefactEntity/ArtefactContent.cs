@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Core.Entities.ArtefactSubEntities;
+﻿namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
 public class ArtefactContent
 {

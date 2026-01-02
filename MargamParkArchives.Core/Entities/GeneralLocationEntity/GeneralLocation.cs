@@ -1,6 +1,4 @@
-﻿using MargamParkArchives.Core.Entities.Validation;
-
-namespace MargamParkArchives.Core.Entities;
+﻿namespace MargamParkArchives.Core.Entities.GeneralLocationEntity;
 
 public class GeneralLocation
 {

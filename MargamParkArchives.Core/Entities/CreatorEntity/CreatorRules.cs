@@ -1,4 +1,6 @@
-﻿namespace MargamParkArchives.Core.Entities.Validation;
+﻿using MargamParkArchives.Core.Entities.Validation;
+
+namespace MargamParkArchives.Core.Entities.CreatorEntity;
 
 public static class CreatorRules
 {
