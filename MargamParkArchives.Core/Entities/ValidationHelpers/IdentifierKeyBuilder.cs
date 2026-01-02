@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Core.Entities.Validation;
+﻿namespace MargamParkArchives.Core.Entities.ValidationHelpers;
 
 internal static class IdentifierKeyBuilder
 {

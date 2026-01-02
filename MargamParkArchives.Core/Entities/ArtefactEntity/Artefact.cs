@@ -4,7 +4,7 @@ using MargamParkArchives.Core.Entities.GeneralLocationEntity;
 using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
 using MargamParkArchives.Core.Entities.PeriodEntity;
 using MargamParkArchives.Core.Entities.SpecificLocationEntity;
-using MargamParkArchives.Core.Entities.Validation;
+using MargamParkArchives.Core.Entities.ValidationHelpers;
 
 namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 

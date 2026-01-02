@@ -1,4 +1,4 @@
-﻿using MargamParkArchives.Core.Entities.Validation;
+﻿using MargamParkArchives.Core.Entities.ValidationHelpers;
 
 namespace MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 
