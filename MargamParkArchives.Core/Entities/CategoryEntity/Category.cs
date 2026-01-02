@@ -13,6 +13,10 @@ public class Category
         {
             throw new ArgumentException(error);
         }
+        else if (!CategoryRules.IsValidName(name, nameof(name), out error))
+        {
+            throw new ArgumentException(error);
+        }
 
         Id = id;
         Name = name;
