@@ -1,6 +1,6 @@
 ﻿namespace MargamParkArchives.Core.Entities.ArtefactSubEntities;
 
-public class RightsInformation
+public class ArtefactRightsInformation
 {
     public string? RightType1 { get; }
     public string? RightHolder1En { get; }
