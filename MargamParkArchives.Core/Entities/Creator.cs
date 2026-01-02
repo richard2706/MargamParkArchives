@@ -4,8 +4,6 @@ namespace MargamParkArchives.Core.Entities;
 
 public class Creator
 {
-    private const int NameMaxLength = 255;
-
     public int Id { get; }
     public string Name { get; }
     public DateTime? DateCreated { get; }
@@ -13,14 +11,9 @@ public class Creator
 
     public Creator(int id, string name, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (name.Length == 0)
+        if (!CreatorRules.IsValidName(name, out string error))
         {
-            throw new ArgumentException(string.Format(ValidationMessages.ValueEmptyMessage, nameof(Name)));
-        }
-        else if (name.Length > NameMaxLength)
-        {
-            throw new ArgumentException(string.Format(ValidationMessages.ValueTooLongMessage, nameof(Name),
-                NameMaxLength)));
+            throw new ArgumentException(error);
         }
 
         Id = id;
