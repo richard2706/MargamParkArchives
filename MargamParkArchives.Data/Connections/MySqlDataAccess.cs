@@ -1,11 +1,14 @@
 ﻿using Dapper;
 using MargamParkArchives.Core.Database;
+using MargamParkArchives.Core.Database.PasswordManagement;
 using MySqlConnector;
 
 namespace MargamParkArchives.Data.Connections;
 
 public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider) : IMySqlDataAccess
 {
+    private const string InvalidAuthSqlState = "28000";
+
     private readonly IConnectionStringProvider _connectionStringProvider = connectionStringProvider;
 
     /// <summary>
@@ -24,7 +27,22 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
     {
         string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
         using MySqlConnection connection = new(connectionString);
-        IEnumerable<T> items = await connection.QueryAsync<T>(sqlQuery, parameters);
+        IEnumerable<T> items;
+        try
+        {
+            items = await connection.QueryAsync<T>(sqlQuery, parameters);
+        }
+        catch (MySqlException ex)
+        {
+            if (ex.SqlState == InvalidAuthSqlState)
+            {
+                throw new DatabasePasswordInvalidException(ex.Message);
+            }
+            else
+            {
+                throw;
+            }
+        }
         return items;
     }
 
@@ -45,7 +63,22 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
     {
         string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
         using MySqlConnection connection = new(connectionString);
-        T item = await connection.QueryFirstAsync<T>(sqlQuery, parameters);
+        T item;
+        try
+        {
+            item = await connection.QueryFirstAsync<T>(sqlQuery, parameters);
+        }
+        catch (MySqlException ex)
+        {
+            if (ex.SqlState == InvalidAuthSqlState)
+            {
+                throw new DatabasePasswordInvalidException(ex.Message);
+            }
+            else
+            {
+                throw;
+            }
+        }
         return item;
     }
 }
