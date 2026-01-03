@@ -11,6 +11,7 @@ using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Windows.UI.Dialogs;
 using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 using Windows.ApplicationModel;
+using MargamParkArchives.Core.Database.DataAccess;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -66,9 +67,8 @@ public partial class App : Application
             services.AddSingleton<IPasswordStorageService, DatabasePasswordStorageService>();
 
             // Data Access Services
-            services.AddSingleton<IMySqlConnectionFactory, MySqlConnectionFactory>();
-            services.AddTransient<IArtefactDataAccess, MySqlArtefactDataAccess>();
-            services.AddTransient<IArtefactReader, MySqlArtefactReader>();
+            services.AddTransient<IMySqlDataAccess, MySqlDataAccess>();
+            services.AddTransient<IArtefactDetailsReader, MySqlArtefactDetailsReader>();
         }).Build();
     }
 

@@ -1,6 +1,6 @@
+using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Database.PasswordManagement;
-using MargamParkArchives.Data;
-using MargamParkArchives.Data.Entities;
+using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 using MargamParkArchives.Windows.UI.Dialogs;
 using Microsoft.UI.Xaml;
 using System;
@@ -14,17 +14,17 @@ namespace MargamParkArchives.Explorer;
 /// </summary>
 public sealed partial class MainWindow : Window
 {
-    private Artefact[] _artefacts = [];
+    private ArtefactDetailsReadModel[] _artefacts = [];
     private bool _showPasswordDialog = false;
     private bool _uiLoaded = false;
 
     // Services
-    private readonly IArtefactReader _artefactReader;
+    private readonly IArtefactDetailsReader _artefactReader;
     private readonly PasswordDialogService _passwordDialogService;
 
     private ErrorDialogService? _databaseErrorDialogService;
 
-    public MainWindow(IArtefactReader artefactReader, PasswordDialogService passwordDialogService)
+    public MainWindow(IArtefactDetailsReader artefactReader, PasswordDialogService passwordDialogService)
     {
         this.InitializeComponent();
         _artefactReader = artefactReader;
