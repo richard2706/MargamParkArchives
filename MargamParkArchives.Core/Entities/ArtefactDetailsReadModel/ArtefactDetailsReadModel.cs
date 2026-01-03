@@ -8,7 +8,7 @@ public class ArtefactDetailsReadModel
     public string IdentifierGroupId { get; }
     public int IdentifierNumber { get; }
     public string IdentifierKey { get; }
-    public string IdentifierGroupName { get; }
+    public string? IdentifierGroupName { get; }
 
     // Linked entity details
     public string? CategoryId { get; }
@@ -41,7 +41,7 @@ public class ArtefactDetailsReadModel
     public bool? VisualArtefact { get; }
 
     public ArtefactDetailsReadModel(string identifierGroupId, int identifierNumber, string? identifierKey,
-        string identifierGroupName, string? categoryId = null, string? categoryName = null, int? creatorId = null,
+        string? identifierGroupName, string? categoryId = null, string? categoryName = null, int? creatorId = null,
         string? creatorName = null, int? generalLocationId = null, string? generalLocationName = null,
         int? specificLocationId = null, string? specificLocationSummary = null, int? periodId = null,
         string? periodDates = null, string? filePath = null, DateTime? dateArtefactCreated = null,
