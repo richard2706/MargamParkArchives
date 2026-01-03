@@ -17,23 +17,16 @@ namespace MargamParkArchives.Data.Tests
             _artefactDetailsReader = new MySqlArtefactDetailsReader(_dataAccessMock.Object);
         }
 
-        //  results if num artefacts requested is greater than number available OR at boundary (2 available, 2 requested) OR normal (3 available, 2 requested)
-
-        [Fact]
-        public async Task GetRandomArtefactsAsync_OneExistsOneRequested_ReturnsArtefactsArray()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public async Task GetRandomArtefactsAsync_RequestMany_ReturnsArtefactsArray(int numArtefactsRequested)
         {
-            ArtefactDetailsReadModel[] expectedArtefacts = // Method under test should return read models
-            [
-                new("A", 1, "A-000001", "Apple")
-            ];
+            ArtefactDetailsReadModel[] expectedArtefacts = GetArtefactDetailsReadModels(numArtefactsRequested);
 
             // Set up data access mock
-            const int numArtefactsRequested = 1;
             const string sqlQuery = "select * from artefact_details order by rand() limit @Limit;";
-            ArtefactDetailsDto[] randomArtefactDetailsDtos = // Data access mocked method returns random Dto types
-            [
-                new ArtefactDetailsDto() { IdentifierGroupId = "A", IdentifierNumber = 1, IdentifierKey = "A-000001", IdentiferGroupName = "Apple" }
-            ];
+            ArtefactDetailsDto[] randomArtefactDetailsDtos = GetArtefactDetailsDtos(numArtefactsRequested);
             _dataAccessMock
                 .Setup(x => x.GetManyItemsAsync<ArtefactDetailsDto, object>(
                     sqlQuery,
@@ -42,15 +35,43 @@ namespace MargamParkArchives.Data.Tests
                     ))
                 .ReturnsAsync(randomArtefactDetailsDtos);
 
+            // Execute reader method
             ArtefactDetailsReadModel[] actual = await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested);
 
-            // Verify data access method was called exactly once
-            _dataAccessMock.Verify(x => x.GetManyItemsAsync<ArtefactDetailsDto, object>(
-                sqlQuery, It.Is<object>(p => (int)p.GetType().GetProperty("Limit")!.GetValue(p)! == numArtefactsRequested)),
+            _dataAccessMock.Verify( // Verify data access method was called exactly once
+                x => x.GetManyItemsAsync<ArtefactDetailsDto, object>(sqlQuery, It.Is<object>(
+                    p => (int)p.GetType().GetProperty("Limit")!.GetValue(p)! == numArtefactsRequested)),
                 Times.Once);
-
-            Assert.Single(actual); // Array should contain one item
+            Assert.Equal(expectedArtefacts.Length, actual.Length); // Array should contain correct number of artefacts
             Assert.Equal(expectedArtefacts, actual);
+        }
+
+        private static ArtefactDetailsReadModel[] GetArtefactDetailsReadModels(int numItems)
+        {
+            ArtefactDetailsReadModel[] expectedArtefacts = // Method under test should return read models
+            [
+                new("A", 1, "A-000001", "Apple"),
+                new("B", 1, "B-000001", "Banana")
+            ];
+            return expectedArtefacts[0..numItems];
+        }
+
+        private static ArtefactDetailsDto[] GetArtefactDetailsDtos(int numItems)
+        {
+            ArtefactDetailsDto[] randomArtefactDetailsDtos = // Data access mocked method returns random Dto types
+            [
+                new ArtefactDetailsDto()
+                {
+                    IdentifierGroupId = "A", IdentifierNumber = 1, IdentifierKey = "A-000001",
+                    IdentiferGroupName = "Apple"
+                },
+                new ArtefactDetailsDto()
+                {
+                    IdentifierGroupId = "B", IdentifierNumber = 1, IdentifierKey = "B-000001",
+                    IdentiferGroupName = "Banana"
+                }
+            ];
+            return randomArtefactDetailsDtos[0..numItems];
         }
     }
 }
