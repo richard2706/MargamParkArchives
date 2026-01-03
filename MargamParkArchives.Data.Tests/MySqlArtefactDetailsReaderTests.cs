@@ -55,6 +55,48 @@ namespace MargamParkArchives.Data.Tests
                 async () => await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested));
         }
 
+        [Theory]
+        [InlineData("", 1)] // Identifier group cannot be empty
+        [InlineData("A", -1)] // Identifier number must be >= 0
+        public async Task GetOneArtefactAsync_InvalidArtefactIdentifiers_ThrowsException(string identiferGroupId,
+            int identifierNumber)
+        {
+            await Assert.ThrowsAnyAsync<ArgumentException>(
+                async () => await _artefactDetailsReader.GetOneArtefactAsync(identiferGroupId, identifierNumber));
+        }
+
+        [Fact]
+        public async Task GetOneArtefactAsync_ValidCall_ReturnsArtefact()
+        {
+            ArtefactDetailsReadModel expectedArtefact = GetArtefactDetailsReadModels(1)[0];
+
+            // Set up data access mock
+            const string sqlQuery = "select * from artefact_details where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
+            ArtefactDetailsDto artefactDetailsDto = GetArtefactDetailsDtos(1)[0];
+            string identifierGroupId = artefactDetailsDto.IdentifierGroupId;
+            int identifierNumber = artefactDetailsDto.IdentifierNumber;
+            _dataAccessMock
+                .Setup(x => x.GetOneItemAsync<ArtefactDetailsDto, object>(
+                    sqlQuery,
+                    It.Is<object>(p => // Check anonymous object contains correct properties with correct values
+                        p.GetType().GetProperty("IdentifierGroupId")!.GetValue(p)!.Equals(identifierGroupId)
+                        && (int)p.GetType().GetProperty("IdentifierNumber")!.GetValue(p)! == identifierNumber)))
+                .ReturnsAsync(artefactDetailsDto);
+
+            // Execute reader method
+            ArtefactDetailsReadModel? actual = await _artefactDetailsReader.GetOneArtefactAsync(identifierGroupId, identifierNumber);
+
+            _dataAccessMock.Verify( // Verify data access method was called exactly once
+                x => x.GetOneItemAsync<ArtefactDetailsDto, object>(
+                    sqlQuery,
+                    It.Is<object>(
+                        p => p.GetType().GetProperty("IdentifierGroupId")!.GetValue(p)!.Equals(identifierGroupId)
+                        && (int)p.GetType().GetProperty("IdentifierNumber")!.GetValue(p)! == identifierNumber)),
+                Times.Once);
+            Assert.NotNull(actual);
+            Assert.Equal(expectedArtefact, actual);
+        }
+
         private static ArtefactDetailsReadModel[] GetArtefactDetailsReadModels(int numItems)
         {
             ArtefactDetailsReadModel[] expectedArtefacts = // Method under test should return read models

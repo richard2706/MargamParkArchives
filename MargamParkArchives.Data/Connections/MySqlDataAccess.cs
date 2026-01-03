@@ -48,7 +48,7 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
 
     /// <summary>
     /// Gets a single item of the specified type T from the database asynchronously. Will return the first item if the
-    /// query returns multiple items.
+    /// query returns multiple items or null if the item doesn't exist.
     /// </summary>
     /// <typeparam name="T">The type of the item to be returned which should correspond to the database
     /// entity.</typeparam>
@@ -57,16 +57,17 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
     /// T of items being returned.</param>
     /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
     /// structure should match the parameters in the query.</param>
-    /// <returns>A task that represents the asynchronous operation, which will return an item of type T
-    /// returned by the query, or the first item if the query returns multiple items.</returns>
+    /// <returns>A task that represents the asynchronous operation, which will return an item of type T?
+    /// returned by the query, or the first item if the query returns multiple items, or null if the item doesn't
+    /// exist.</returns>
     public async Task<T?> GetOneItemAsync<T, P>(string sqlQuery, P parameters)
     {
         string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
         using MySqlConnection connection = new(connectionString);
-        T item;
+        T? item;
         try
         {
-            item = await connection.QueryFirstAsync<T>(sqlQuery, parameters);
+            item = await connection.QueryFirstOrDefaultAsync<T>(sqlQuery, parameters);
         }
         catch (MySqlException ex)
         {
