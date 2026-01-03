@@ -2,7 +2,7 @@
 
 namespace MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 
-public class ArtefactDetailsReadModel
+public record ArtefactDetailsReadModel
 {
     // Identifying attributes
     public string IdentifierGroupId { get; }
