@@ -46,6 +46,15 @@ namespace MargamParkArchives.Data.Tests
             Assert.Equal(expectedArtefacts, actual);
         }
 
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public async Task GetRandomArtefactsAsync_InvalidNumArtefacts_ThrowsException(int numArtefactsRequested)
+        {
+            await Assert.ThrowsAnyAsync<ArgumentException>(
+                async () => await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested));
+        }
+
         private static ArtefactDetailsReadModel[] GetArtefactDetailsReadModels(int numItems)
         {
             ArtefactDetailsReadModel[] expectedArtefacts = // Method under test should return read models

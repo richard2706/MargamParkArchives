@@ -14,6 +14,11 @@ public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefact
 
     public async Task<ArtefactDetailsReadModel[]> GetRandomArtefactsAsync(int numArtefacts = 3)
     {
+        if (numArtefacts <= 0)
+        {
+            throw new ArgumentException("Number of artefacts must be greater than 0.");
+        }
+
         string sqlQuery = string.Format(GetRandomArtefactsQuery, ArtefactDetailsViewName);
         IEnumerable<ArtefactDetailsDto> artefacts = await _dataAccess.GetManyItemsAsync<ArtefactDetailsDto, dynamic>(
             sqlQuery, new { Limit = numArtefacts });
