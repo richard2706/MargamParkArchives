@@ -1,4 +1,6 @@
-﻿namespace MargamParkArchives.Data.Entities.Artefact;
+﻿using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
+
+namespace MargamParkArchives.Data.Entities.Artefact;
 
 internal class ArtefactDetailsDto
 {
@@ -32,4 +34,10 @@ internal class ArtefactDetailsDto
     internal string? SpecificLocationSummary { get; init; }
     internal int? PeriodId { get; init; }
     internal string? PeriodDates { get; init; }
+
+    internal ArtefactDetailsReadModel ToArtefactDetailsReadModel() => new(IdentifierGroupId, IdentifierNumber,
+        IdentifierKey, IdentiferGroupName, CategoryId, CategoryName, CreatorId, CreatorName, GeneralLocationId,
+        GeneralLocationName, SpecificLocationId, SpecificLocationSummary, PeriodId, PeriodDates, FilePath, DateCreated,
+        DateModified, ParentId, Notes, TitleEn, TitleCy, DescriptionEn, DescriptionCy, TagsCy, CultureTagEn,
+        LocationCoverage, RightType1, RightHolder1En, RightHolder1Cy, VisualArtefact);
 }
