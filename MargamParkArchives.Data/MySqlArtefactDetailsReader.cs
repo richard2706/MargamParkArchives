@@ -27,7 +27,7 @@ public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefact
     }
 
     /// <summary>
-    /// Gets one Artefact Details record from the database.
+    /// Gets one Artefact Details record from the database, or null if it doesn't exist.
     /// </summary>
     /// <param name="identiferGroupId">Id of the identifier group used to uniquely identify the artefact jointly with the identifier number.</param>
     /// <param name="identifierNumber">Value used to uniquely identify the artefact along with the identifier group id.</param>

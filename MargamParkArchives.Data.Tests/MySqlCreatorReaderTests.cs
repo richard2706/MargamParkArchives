@@ -45,4 +45,54 @@ public class MySqlCreatorReaderTests
             expectedCreators.Select(creator => (creator.Id, creator.Name)).OrderBy(item => item.Id),
             actual.Select(creator => (creator.Id, creator.Name)).OrderBy(item => item.Id));
     }
+
+    [Fact]
+    public async Task GetOneCreatorAsync_InvalidId_ThrowsException()
+    {
+        await Assert.ThrowsAnyAsync<ArgumentException>(async () => await _creatorReader.GetOneCreatorAsync(-1));
+    }
+
+    [Fact]
+    public async Task GetOneCreatorAsync_CreatorExists_ReturnsCreator()
+    {
+        const int creatorId = 1;
+        Creator? expected = new(creatorId, "Jane Smith");
+
+        // Set up data access mock
+        const string sqlQuery = "select * from creator where creator_id = @CreatorId;";
+        CreatorDto? creatorDto = new() { CreatorId = 1, Name = "Jane Smith" };
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<CreatorDto?, object>(
+                sqlQuery,
+                // Check anonymous object contains CreatorId property with correct value
+                It.Is<object>(p => (int)p.GetType().GetProperty("CreatorId")!.GetValue(p)! == creatorId)))
+            .ReturnsAsync(creatorDto);
+
+        // Execute reader method
+        Creator? actual = await _creatorReader.GetOneCreatorAsync(creatorId);
+
+        Assert.NotNull(actual);
+        Assert.Equal((expected.Id, expected.Name), (actual.Id, actual.Name)); // Check property values
+    }
+
+    [Fact]
+    public async Task GetOneCreatorAsync_CreatorDoesNotExist_ReturnsNull()
+    {
+        const int creatorId = 1;
+
+        // Set up data access mock
+        const string sqlQuery = "select * from creator where creator_id = @CreatorId;";
+        CreatorDto? creatorDto = null;
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<CreatorDto?, object>(
+                sqlQuery,
+                // Check anonymous object contains CreatorId property with correct value
+                It.Is<object>(p => (int)p.GetType().GetProperty("CreatorId")!.GetValue(p)! == creatorId)))
+            .ReturnsAsync(creatorDto);
+
+        // Execute reader method
+        Creator? actual = await _creatorReader.GetOneCreatorAsync(creatorId);
+
+        Assert.Null(actual);
+    }
 }
