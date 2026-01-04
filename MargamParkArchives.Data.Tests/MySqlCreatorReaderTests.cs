@@ -18,7 +18,7 @@ public class MySqlCreatorReaderTests
     }
 
     [Fact]
-    public async Task GetAllCreatorsAsync_ReturnsAllCreators()
+    public async Task GetAllCreatorsAsync_CreatorsExist_ReturnsAllCreators()
     {
         Creator[] expectedCreators =
         [
@@ -44,6 +44,25 @@ public class MySqlCreatorReaderTests
         Assert.Equal( // Assert actual contains creators with correct property values in any order
             expectedCreators.Select(creator => (creator.Id, creator.Name)).OrderBy(item => item.Id),
             actual.Select(creator => (creator.Id, creator.Name)).OrderBy(item => item.Id));
+    }
+
+    [Fact]
+    public async Task GetAllCreatorsAsync_NoCreatorsExist_ReturnsAllCreators()
+    {
+        Creator[] expectedCreators = [];
+
+        // Set up data access mock
+        const string sqlQuery = "select * from creator;";
+        CreatorDto[] creatorDtos = [];
+        _dataAccessMock
+            .Setup(x => x.GetManyItemsAsync<CreatorDto>(sqlQuery))
+            .ReturnsAsync(creatorDtos);
+
+        // Execute reader method
+        Creator[] actual = await _creatorReader.GetAllCreatorsAsync();
+
+        Assert.NotNull(actual);
+        Assert.Empty(actual);
     }
 
     [Fact]

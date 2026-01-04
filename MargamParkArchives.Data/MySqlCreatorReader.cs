@@ -14,9 +14,9 @@ public class MySqlCreatorReader(IMySqlDataAccess dataAccess) : ICreatorReader
     private const string GetOneCreatorQuery = "select * from {0} where creator_id = @CreatorId;";
 
     /// <summary>
-    /// Returns an array of all creators in the database.
+    /// Returns an array of all creators in the database which will be empty if the database contains no creators.
     /// </summary>
-    /// <returns>An array of all creators in the database.</returns>
+    /// <returns>An array of all creators in the database which will be empty if the database contains no creators.</returns>
     public async Task<Creator[]> GetAllCreatorsAsync()
     {
         string sqlQuery = string.Format(GetAllCreatorsQuery, CreatorTableName);
