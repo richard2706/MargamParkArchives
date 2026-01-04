@@ -64,4 +64,55 @@ public class MySqlSpecificLocationTests
         Assert.NotNull(actual);
         Assert.Empty(actual);
     }
+
+    [Fact]
+    public async Task GetOneSpecificLocationAsync_InvalidId_ThrowsException()
+    {
+        const int invalidId = -1; // Id cannot be less than 0
+        await Assert.ThrowsAnyAsync<ArgumentException>(async () => await _specificLocationReader.GetOneSpecificLocationAsync(invalidId));
+    }
+
+    [Fact]
+    public async Task GetOneSpecificLocationAsync_SpecificLocationExists_ReturnsSpecificLocation()
+    {
+        const int specificLocationId = 1;
+        SpecificLocation? expected = new(specificLocationId, "Shelf 1");
+
+        // Set up data access mock
+        const string sqlQuery = "select * from specific_location where specific_location_id = @SpecificLocationId;";
+        SpecificLocationDto? specificLocationDto = new() { SpecificLocationId = 1, Summary = "Shelf 1" };
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<SpecificLocationDto?, object>(
+                sqlQuery,
+                // Check anonymous object contains SpecificLocationId property with correct value
+                It.Is<object>(p => (int)p.GetType().GetProperty("SpecificLocationId")!.GetValue(p)! == specificLocationId)))
+            .ReturnsAsync(specificLocationDto);
+
+        // Execute reader method
+        SpecificLocation? actual = await _specificLocationReader.GetOneSpecificLocationAsync(specificLocationId);
+
+        Assert.NotNull(actual);
+        Assert.Equal((expected.Id, expected.Summary), (actual.Id, actual.Summary)); // Check property values
+    }
+
+    [Fact]
+    public async Task GetOneSpecificLocationAsync_SpecificLocationDoesNotExist_ReturnsNull()
+    {
+        const int specificLocationId = 1;
+
+        // Set up data access mock
+        const string sqlQuery = "select * from specific_location where specific_location_id = @SpecificLocationId;";
+        SpecificLocationDto? specificLocationDto = null;
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<SpecificLocationDto?, object>(
+                sqlQuery,
+                // Check anonymous object contains SpecificLocationId property with correct value
+                It.Is<object>(p => (int)p.GetType().GetProperty("SpecificLocationId")!.GetValue(p)! == specificLocationId)))
+            .ReturnsAsync(specificLocationDto);
+
+        // Execute reader method
+        SpecificLocation? actual = await _specificLocationReader.GetOneSpecificLocationAsync(specificLocationId);
+
+        Assert.Null(actual);
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.SpecificLocationEntity;
 using MargamParkArchives.Data.Connections;
+using MargamParkArchives.Data.Entities.GeneralLocationEntity;
 using MargamParkArchives.Data.Entities.SpecificLocationEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
@@ -11,6 +12,7 @@ public class MySqlSpecificLocationReader(IMySqlDataAccess dataAccess) : ISpecifi
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
 
     private const string GetAllSpecificLocationsQuery = "select * from {0};";
+    private const string GetOneSpecificLocationQuery = "select * from {0} where specific_location_id = @SpecificLocationId;";
 
     public async Task<SpecificLocation[]> GetAllSpecificLocationsAsync()
     {
@@ -19,8 +21,15 @@ public class MySqlSpecificLocationReader(IMySqlDataAccess dataAccess) : ISpecifi
         return specificLocationDtos.Select(dto => dto.ToSpecificLocation()).ToArray();
     }
 
-    public Task<SpecificLocation?> GetOneSpecificLocationAsync(int id)
+    public async Task<SpecificLocation?> GetOneSpecificLocationAsync(int id)
     {
-        throw new NotImplementedException();
+        if (id < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(id), "Id cannot be less than 0.");
+        }
+
+        string sqlQuery = string.Format(GetOneSpecificLocationQuery, SpecificLocationTableName);
+        SpecificLocationDto? specificLocationDto = await _dataAccess.GetOneItemAsync<SpecificLocationDto?, object>(sqlQuery, new { SpecificLocationId = id });
+        return specificLocationDto?.ToSpecificLocation();
     }
 }
