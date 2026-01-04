@@ -13,6 +13,12 @@ public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefact
     private const string GetRandomArtefactsQuery = "select * from {0} order by rand() limit @Limit;";
     private const string GetOneArtefactQuery = "select * from {0} where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
 
+    /// <summary>
+    /// Returns an array of the specified number of artefact details items chosen at random from the database.
+    /// </summary>
+    /// <param name="numArtefacts">Number of random artefacts to return.</param>
+    /// <returns>An array of the specified number of artefact details items chosen at random from the database.</returns>
+    /// <exception cref="ArgumentException">If the number of artefacts requested is less than 1.</exception>
     public async Task<ArtefactDetailsReadModel[]> GetRandomArtefactsAsync(int numArtefacts = 3)
     {
         if (numArtefacts <= 0)
