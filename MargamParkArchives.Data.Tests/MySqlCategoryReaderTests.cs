@@ -1,10 +1,6 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.CategoryEntity;
-using MargamParkArchives.Core.Entities.CategoryEntity;
-using MargamParkArchives.Core.Entities.CategoryEntity;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Data.Entities.CategoryEntity;
-using MargamParkArchives.Data.Entities.CategoryEntity;
 using MargamParkArchives.Data.Entities.CategoryEntity;
 using Moq;
 
