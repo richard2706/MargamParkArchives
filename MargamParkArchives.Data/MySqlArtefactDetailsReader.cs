@@ -35,9 +35,9 @@ public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefact
     /// <summary>
     /// Gets one Artefact Details record from the database, or null if it doesn't exist.
     /// </summary>
-    /// <param name="identiferGroupId">Id of the identifier group used to uniquely identify the artefact jointly with the identifier number.</param>
-    /// <param name="identifierNumber">Value used to uniquely identify the artefact along with the identifier group id.</param>
-    /// <returns></returns>
+    /// <param name="identiferGroupId">Id of the identifier group used to uniquely identify the artefact (jointly with the identifier number).</param>
+    /// <param name="identifierNumber">Value used to uniquely identify the artefact (along with the identifier group id).</param>
+    /// <returns>The artefact details record identified by the identifier group id and identifier number, or null if it doesn't exist.</returns>
     public async Task<ArtefactDetailsReadModel?> GetOneArtefactAsync(string identiferGroupId, int identifierNumber)
     {
         if (string.IsNullOrEmpty(identiferGroupId))
