@@ -55,6 +55,36 @@ public class MySqlArtefactDetailsReaderTests
             async () => await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested));
     }
 
+    [Fact]
+    public async Task GetRandomArtefactsAsync_NoArtefactsExists_ReturnsEmptyArray()
+    {
+        const int numArtefactsRequested = 2;
+        ArtefactDetailsReadModel[] expectedArtefacts = [];
+
+        // Set up data access mock
+        const string sqlQuery = "select * from artefact_details order by rand() limit @Limit;";
+        ArtefactDetailsDto[] randomArtefactDetailsDtos = [];
+        _dataAccessMock
+            .Setup(x => x.GetManyItemsAsync<ArtefactDetailsDto, object>(
+                sqlQuery,
+                // Checks the anonymous object contains a property called Limit that is set to numArtefactsRequested
+                It.Is<object>(o => (int)o.GetType().GetProperty("Limit")!.GetValue(o)! != numArtefactsRequested)
+                ))
+            .ReturnsAsync(randomArtefactDetailsDtos);
+
+        // Execute reader method
+        ArtefactDetailsReadModel[] actual = await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested);
+
+        _dataAccessMock.Verify( // Verify data access method was called exactly once
+            x => x.GetManyItemsAsync<ArtefactDetailsDto, object>(
+                sqlQuery,
+                It.Is<object>(o => (int)o.GetType().GetProperty("Limit")!.GetValue(o)! == numArtefactsRequested)),
+            Times.Once);
+
+        Assert.NotNull(actual);
+        Assert.Empty(actual);
+    }
+
     [Theory]
     [InlineData("", 1)] // Identifier group cannot be empty
     [InlineData("A", -1)] // Identifier number must be >= 0
