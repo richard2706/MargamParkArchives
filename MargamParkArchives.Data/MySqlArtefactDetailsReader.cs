@@ -44,7 +44,7 @@ public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefact
         }
 
         string sqlQuery = string.Format(GetOneArtefactQuery, ArtefactDetailsViewName);
-        ArtefactDetailsDto? artefact = await _dataAccess.GetOneItemAsync<ArtefactDetailsDto, object>(sqlQuery,
+        ArtefactDetailsDto? artefact = await _dataAccess.GetOneItemAsync<ArtefactDetailsDto?, object>(sqlQuery,
             new { IdentifierGroupId = identiferGroupId, IdentifierNumber = identifierNumber });
         return artefact?.ToArtefactDetailsReadModel();
     }

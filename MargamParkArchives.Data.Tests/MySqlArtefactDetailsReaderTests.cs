@@ -66,17 +66,17 @@ public class MySqlArtefactDetailsReaderTests
     }
 
     [Fact]
-    public async Task GetOneArtefactAsync_ValidCall_ReturnsArtefact()
+    public async Task GetOneArtefactAsync_ArtefactExists_ReturnsArtefact()
     {
         ArtefactDetailsReadModel expectedArtefact = GetArtefactDetailsReadModels(1)[0];
 
         // Set up data access mock
         const string sqlQuery = "select * from artefact_details where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
-        ArtefactDetailsDto artefactDetailsDto = GetArtefactDetailsDtos(1)[0];
+        ArtefactDetailsDto? artefactDetailsDto = GetArtefactDetailsDtos(1)[0];
         string identifierGroupId = artefactDetailsDto.IdentifierGroupId;
         int identifierNumber = artefactDetailsDto.IdentifierNumber;
         _dataAccessMock
-            .Setup(x => x.GetOneItemAsync<ArtefactDetailsDto, object>(
+            .Setup(x => x.GetOneItemAsync<ArtefactDetailsDto?, object>(
                 sqlQuery,
                 It.Is<object>(p => // Check anonymous object contains correct properties with correct values
                     p.GetType().GetProperty("IdentifierGroupId")!.GetValue(p)!.Equals(identifierGroupId)
@@ -87,7 +87,7 @@ public class MySqlArtefactDetailsReaderTests
         ArtefactDetailsReadModel? actual = await _artefactDetailsReader.GetOneArtefactAsync(identifierGroupId, identifierNumber);
 
         _dataAccessMock.Verify( // Verify data access method was called exactly once
-            x => x.GetOneItemAsync<ArtefactDetailsDto, object>(
+            x => x.GetOneItemAsync<ArtefactDetailsDto?, object>(
                 sqlQuery,
                 It.Is<object>(
                     p => p.GetType().GetProperty("IdentifierGroupId")!.GetValue(p)!.Equals(identifierGroupId)
