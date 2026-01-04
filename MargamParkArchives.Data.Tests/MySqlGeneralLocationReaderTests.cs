@@ -1,8 +1,6 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.GeneralLocationEntity;
-using MargamParkArchives.Core.Entities.GeneralLocationEntity;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Data.Entities.GeneralLocationEntity;
 using MargamParkArchives.Data.Entities.GeneralLocationEntity;
 using Moq;
 
@@ -65,5 +63,56 @@ public class MySqlGeneralLocationReaderTests
 
         Assert.NotNull(actual);
         Assert.Empty(actual);
+    }
+
+    [Fact]
+    public async Task GetOneGeneralLocationAsync_InvalidId_ThrowsException()
+    {
+        const int invalidId = -1; // Id cannot be less than 0
+        await Assert.ThrowsAnyAsync<ArgumentException>(async () => await _generalLocationReader.GetOneGeneralLocationAsync(invalidId));
+    }
+
+    [Fact]
+    public async Task GetOneGeneralLocationAsync_GeneralLocationExists_ReturnsGeneralLocation()
+    {
+        const int generalLocationId = 1;
+        GeneralLocation? expected = new(generalLocationId, "Cabinet A");
+
+        // Set up data access mock
+        const string sqlQuery = "select * from general_location where general_location_id = @GeneralLocationId;";
+        GeneralLocationDto? generalLocationDto = new() { GeneralLocationId = 1, Name = "Cabinet A" };
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<GeneralLocationDto?, object>(
+                sqlQuery,
+                // Check anonymous object contains GeneralLocationId property with correct value
+                It.Is<object>(p => (int)p.GetType().GetProperty("GeneralLocationId")!.GetValue(p)! == generalLocationId)))
+            .ReturnsAsync(generalLocationDto);
+
+        // Execute reader method
+        GeneralLocation? actual = await _generalLocationReader.GetOneGeneralLocationAsync(generalLocationId);
+
+        Assert.NotNull(actual);
+        Assert.Equal((expected.Id, expected.Name), (actual.Id, actual.Name)); // Check property values
+    }
+
+    [Fact]
+    public async Task GetOneGeneralLocationAsync_GeneralLocationDoesNotExist_ReturnsNull()
+    {
+        const int generalLocationId = 1;
+
+        // Set up data access mock
+        const string sqlQuery = "select * from general_location where general_location_id = @GeneralLocationId;";
+        GeneralLocationDto? generalLocationDto = null;
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<GeneralLocationDto?, object>(
+                sqlQuery,
+                // Check anonymous object contains GeneralLocationId property with correct value
+                It.Is<object>(p => (int)p.GetType().GetProperty("GeneralLocationId")!.GetValue(p)! == generalLocationId)))
+            .ReturnsAsync(generalLocationDto);
+
+        // Execute reader method
+        GeneralLocation? actual = await _generalLocationReader.GetOneGeneralLocationAsync(generalLocationId);
+
+        Assert.Null(actual);
     }
 }

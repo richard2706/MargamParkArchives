@@ -11,6 +11,7 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
 
     private const string GetAllGeneralLocationsQuery = "select * from {0};";
+    private const string GetOneGeneralLocationQuery = "select * from {0} where general_location_id = @GeneralLocationId;";
 
     /// <summary>
     /// Returns an array of all general locations in the database. The array will be empty if the database contains no general locations.
@@ -31,6 +32,13 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
     /// <exception cref="ArgumentException">If the id is less than 0 it is invalid.</exception>
     public async Task<GeneralLocation?> GetOneGeneralLocationAsync(int id)
     {
-        throw new NotImplementedException();
+        if (id < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(id), "Id cannot be less than 0.");
+        }
+
+        string sqlQuery = string.Format(GetOneGeneralLocationQuery, GeneralLocationTableName);
+        GeneralLocationDto? generalLocationDto = await _dataAccess.GetOneItemAsync<GeneralLocationDto?, object>(sqlQuery, new { GeneralLocationId = id });
+        return generalLocationDto?.ToGeneralLocation();
     }
 }
