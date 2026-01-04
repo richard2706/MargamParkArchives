@@ -24,6 +24,12 @@ public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
         return categoryDtos.Select(dto => dto.ToCategory()).ToArray();
     }
 
+    /// <summary>
+    /// Returns one category from the database specified by its id, or null if it doesn't exist.
+    /// </summary>
+    /// <param name="id">Id that uniquely identifies the category.</param>
+    /// <returns>The category identified by the given id, or null if it doesn't exist.</returns>
+    /// <exception cref="ArgumentException">If the id is an empty string then it is invalid.</exception>
     public async Task<Category?> GetOneCategoryAsync(string id)
     {
         if (string.IsNullOrEmpty(id))
