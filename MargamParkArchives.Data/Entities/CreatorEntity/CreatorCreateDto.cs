@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Data.Entities.Creator;
+﻿namespace MargamParkArchives.Data.Entities.CreatorEntity;
 
 internal record CreatorCreateDto
 {

@@ -11,6 +11,11 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
 
     private readonly IConnectionStringProvider _connectionStringProvider = connectionStringProvider;
 
+    public async Task<IEnumerable<T>> GetManyItemsAsync<T>(string sqlQuery)
+    {
+        return await GetManyItemsAsync<T, object>(sqlQuery, new { });
+    }
+
     /// <summary>
     /// Gets a collection of items of the specified type T from the database asynchronously.
     /// </summary>
@@ -44,6 +49,11 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
             }
         }
         return items;
+    }
+
+    public async Task<T?> GetOneItemAsync<T>(string sqlQuery)
+    {
+        return await GetOneItemAsync<T, object>(sqlQuery, new { });
     }
 
     /// <summary>
