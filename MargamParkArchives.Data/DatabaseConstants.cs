@@ -6,4 +6,5 @@ internal static class DatabaseConstants
     internal const string ArtefactDetailsViewName = "artefact_details";
     internal const string CreatorTableName = "creator";
     internal const string CategoryTableName = "category";
+    internal const string GeneralLocationTableName = "general_location";
 }
