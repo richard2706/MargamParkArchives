@@ -25,10 +25,10 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
     }
 
     /// <summary>
-    /// Returns one general locations from the database specified by its id, or null if it doesn't exist.
+    /// Returns one general location from the database specified by its id, or null if it doesn't exist.
     /// </summary>
     /// <param name="id">Id that uniquely identifies the general location.</param>
-    /// <returns>The general locations identified by the given id, or null if it doesn't exist.</returns>
+    /// <returns>The general location identified by the given id, or null if it doesn't exist.</returns>
     /// <exception cref="ArgumentException">If the id is less than 0 it is invalid.</exception>
     public async Task<GeneralLocation?> GetOneGeneralLocationAsync(int id)
     {
