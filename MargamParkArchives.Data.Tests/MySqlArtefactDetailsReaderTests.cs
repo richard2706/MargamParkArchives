@@ -86,8 +86,8 @@ public class MySqlArtefactDetailsReaderTests
     }
 
     [Theory]
-    [InlineData("", 1)] // Identifier group cannot be empty
-    [InlineData("A", -1)] // Identifier number must be >= 0
+    [InlineData("", 1)] // Invalid identifier group (cannot be empty)
+    [InlineData("A", -1)] // Invalid identifier number (must be >= 0)
     public async Task GetOneArtefactAsync_InvalidArtefactIdentifiers_ThrowsException(string identiferGroupId,
         int identifierNumber)
     {
