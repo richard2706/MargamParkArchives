@@ -7,4 +7,5 @@ internal static class DatabaseConstants
     internal const string CreatorTableName = "creator";
     internal const string CategoryTableName = "category";
     internal const string GeneralLocationTableName = "general_location";
+    internal const string SpecificLocationTableName = "specific_location";
 }
