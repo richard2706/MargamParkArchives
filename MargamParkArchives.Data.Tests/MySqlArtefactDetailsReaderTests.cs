@@ -97,6 +97,29 @@ public class MySqlArtefactDetailsReaderTests
         Assert.Equal(expectedArtefact, actual);
     }
 
+    [Fact]
+    public async Task GetOneArtefactAsync_ArtefactDoesNotExist_ReturnsNull()
+    {
+        const string identifierGroupId = "A";
+        const int identifierNumber = 1;
+
+        // Set up data access mock
+        const string sqlQuery = "select * from artefact_details where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
+        ArtefactDetailsDto? artefactDetailsDto = null;
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<ArtefactDetailsDto?, object>(
+                sqlQuery,
+                It.Is<object>(p => // Check anonymous object contains correct properties with correct values
+                    p.GetType().GetProperty("IdentifierGroupId")!.GetValue(p)!.Equals(identifierGroupId)
+                    && (int)p.GetType().GetProperty("IdentifierNumber")!.GetValue(p)! == identifierNumber)))
+            .ReturnsAsync(artefactDetailsDto);
+
+        // Execute reader method
+        ArtefactDetailsReadModel? actual = await _artefactDetailsReader.GetOneArtefactAsync(identifierGroupId, identifierNumber);
+
+        Assert.Null(actual);
+    }
+
     private static ArtefactDetailsReadModel[] GetArtefactDetailsReadModels(int numItems)
     {
         ArtefactDetailsReadModel[] expectedArtefacts = // Method under test should return read models
