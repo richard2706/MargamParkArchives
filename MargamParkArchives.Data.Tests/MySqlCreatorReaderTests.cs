@@ -47,7 +47,7 @@ public class MySqlCreatorReaderTests
     }
 
     [Fact]
-    public async Task GetAllCreatorsAsync_NoCreatorsExist_ReturnsAllCreators()
+    public async Task GetAllCreatorsAsync_NoCreatorsExist_ReturnsEmptyArray()
     {
         Creator[] expectedCreators = [];
 
@@ -68,7 +68,8 @@ public class MySqlCreatorReaderTests
     [Fact]
     public async Task GetOneCreatorAsync_InvalidId_ThrowsException()
     {
-        await Assert.ThrowsAnyAsync<ArgumentException>(async () => await _creatorReader.GetOneCreatorAsync(-1));
+        const int invalidId = -1;
+        await Assert.ThrowsAnyAsync<ArgumentException>(async () => await _creatorReader.GetOneCreatorAsync(invalidId));
     }
 
     [Fact]
