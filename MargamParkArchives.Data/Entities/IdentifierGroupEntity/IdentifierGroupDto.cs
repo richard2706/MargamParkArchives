@@ -1,4 +1,6 @@
-﻿namespace MargamParkArchives.Data.Entities.IdentifierGroupEntity;
+﻿using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
+
+namespace MargamParkArchives.Data.Entities.IdentifierGroupEntity;
 
 internal record IdentifierGroupDto
 {
@@ -6,4 +8,6 @@ internal record IdentifierGroupDto
     internal required string Name { get; init; }
     internal DateTime? DateCreated { get; init; }
     internal DateTime? DateModified { get; init; }
+
+    internal IdentifierGroup ToIdentifierGroup() => new(IdentifierGroupId, Name, DateCreated, DateModified);
 }

@@ -9,4 +9,5 @@ internal static class DatabaseConstants
     internal const string GeneralLocationTableName = "general_location";
     internal const string SpecificLocationTableName = "specific_location";
     internal const string PeriodTableName = "period";
+    internal const string IdentifierGroupTableName = "identifier_group";
 }
