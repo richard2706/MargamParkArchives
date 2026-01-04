@@ -1,4 +1,6 @@
-﻿namespace MargamParkArchives.Data.Entities.CategoryEntity;
+﻿using MargamParkArchives.Core.Entities.CategoryEntity;
+
+namespace MargamParkArchives.Data.Entities.CategoryEntity;
 
 internal record CategoryDto
 {
@@ -6,4 +8,6 @@ internal record CategoryDto
     internal required string Name { get; init; }
     internal DateTime? DateCreated { get; init; }
     internal DateTime? DateModified { get; init; }
+
+    internal Category ToCategory() => new(CategoryId, Name, DateCreated, DateModified);
 }
