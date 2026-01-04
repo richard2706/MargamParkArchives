@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Data.Entities.Period;
+﻿namespace MargamParkArchives.Data.Entities.PeriodEntity;
 
 internal record PeriodCreateDto
 {

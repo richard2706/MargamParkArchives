@@ -1,13 +1,10 @@
-﻿namespace MargamParkArchives.Data.Entities.Artefact;
+﻿namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
-internal record ArtefactDto
+internal record ArtefactCreateDto
 {
     internal required string IdentifierGroupId { get; init; }
-    internal required int IdentifierNumber { get; init; }
-    internal string? IdentifierKey { get; init; }
+    // identifier_number and identifier_key are automatically generated
     internal string? FilePath { get; init; }
-    internal DateTime? DateCreated { get; init; }
-    internal DateTime? DateModified { get; init; }
     internal string? ParentId { get; init; }
     internal string? Notes { get; init; }
     internal string? TitleEn { get; init; }

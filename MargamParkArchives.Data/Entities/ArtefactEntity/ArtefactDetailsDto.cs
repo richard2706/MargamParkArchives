@@ -1,6 +1,6 @@
 ﻿using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 
-namespace MargamParkArchives.Data.Entities.Artefact;
+namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
 internal class ArtefactDetailsDto
 {

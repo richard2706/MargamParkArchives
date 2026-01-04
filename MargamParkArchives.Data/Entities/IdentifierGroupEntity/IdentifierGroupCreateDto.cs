@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Data.Entities.IdentifierGroup;
+﻿namespace MargamParkArchives.Data.Entities.IdentifierGroupEntity;
 
 internal record IdentifierGroupCreateDto
 {

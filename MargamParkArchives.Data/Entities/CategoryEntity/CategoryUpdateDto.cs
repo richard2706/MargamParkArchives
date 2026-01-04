@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Data.Entities.Category;
+﻿namespace MargamParkArchives.Data.Entities.CategoryEntity;
 
 internal record CategoryUpdateDto
 {

@@ -1,4 +1,4 @@
-﻿namespace MargamParkArchives.Data.Entities.Artefact;
+﻿namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
 internal record ArtefactUpdateDto
 {
