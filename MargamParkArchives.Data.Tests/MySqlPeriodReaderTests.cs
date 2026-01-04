@@ -64,4 +64,50 @@ public class MySqlPeriodReaderTests
         Assert.NotNull(actual);
         Assert.Empty(actual);
     }
+
+    // Negative id numbers allowed since period id can be freely chosen by user
+
+    [Fact]
+    public async Task GetOnePeriodAsync_PeriodExists_ReturnsPeriod()
+    {
+        const int periodId = 1;
+        Period? expected = new(periodId, "1800s");
+
+        // Set up data access mock
+        const string sqlQuery = "select * from period where period_id = @PeriodId;";
+        PeriodDto? periodDto = new() { PeriodId = 1, Dates = "1800s" };
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<PeriodDto?, object>(
+                sqlQuery,
+                // Check anonymous object contains PeriodId property with correct value
+                It.Is<object>(p => (int)p.GetType().GetProperty("PeriodId")!.GetValue(p)! == periodId)))
+            .ReturnsAsync(periodDto);
+
+        // Execute reader method
+        Period? actual = await _periodReader.GetOnePeriodAsync(periodId);
+
+        Assert.NotNull(actual);
+        Assert.Equal((expected.Id, expected.Dates), (actual.Id, actual.Dates)); // Check property values
+    }
+
+    [Fact]
+    public async Task GetOnePeriodAsync_PeriodDoesNotExist_ReturnsNull()
+    {
+        const int periodId = 1;
+
+        // Set up data access mock
+        const string sqlQuery = "select * from period where period_id = @PeriodId;";
+        PeriodDto? periodDto = null;
+        _dataAccessMock
+            .Setup(x => x.GetOneItemAsync<PeriodDto?, object>(
+                sqlQuery,
+                // Check anonymous object contains PeriodId property with correct value
+                It.Is<object>(p => (int)p.GetType().GetProperty("PeriodId")!.GetValue(p)! == periodId)))
+            .ReturnsAsync(periodDto);
+
+        // Execute reader method
+        Period? actual = await _periodReader.GetOnePeriodAsync(periodId);
+
+        Assert.Null(actual);
+    }
 }

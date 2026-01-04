@@ -1,6 +1,7 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.PeriodEntity;
 using MargamParkArchives.Data.Connections;
+using MargamParkArchives.Data.Entities.CreatorEntity;
 using MargamParkArchives.Data.Entities.PeriodEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
@@ -11,6 +12,7 @@ public class MySqlPeriodReader(IMySqlDataAccess dataAccess) : IPeriodReader
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
 
     private const string GetAllPeriodsQuery = "select * from {0};";
+    private const string GetOnePeriodQuery = "select * from {0} where period_id = @PeriodId;";
 
     /// <summary>
     /// Returns an array of all periods in the database. The array will be empty if the database contains no periods.
@@ -28,9 +30,10 @@ public class MySqlPeriodReader(IMySqlDataAccess dataAccess) : IPeriodReader
     /// </summary>
     /// <param name="id">Id that uniquely identifies the period.</param>
     /// <returns>The period identified by the given id, or null if it doesn't exist.</returns>
-    /// <exception cref="ArgumentException">If the id is less than 0 it is invalid.</exception>
-    public Task<Period?> GetOnePeriodAsync(int id)
+    public async Task<Period?> GetOnePeriodAsync(int id)
     {
-        throw new NotImplementedException();
+        string sqlQuery = string.Format(GetOnePeriodQuery, PeriodTableName);
+        PeriodDto? periodDto = await _dataAccess.GetOneItemAsync<PeriodDto?, object>(sqlQuery, new { PeriodId = id });
+        return periodDto?.ToPeriod();
     }
 }
