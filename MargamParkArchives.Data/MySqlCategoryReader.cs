@@ -11,6 +11,7 @@ public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
 
     private const string GetAllCategoriesQuery = "select * from {0};";
+    private const string GetOneCategoryQuery = "select * from {0} where category_id = @CategoryId;";
 
     /// <summary>
     /// Returns an array of all categories in the database which will be empty if the database contains no categories.
@@ -25,6 +26,13 @@ public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
 
     public async Task<Category?> GetOneCategoryAsync(string id)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(id))
+        {
+            throw new ArgumentException("Id cannot be an empty string.", nameof(id));
+        }
+
+        string sqlQuery = string.Format(GetOneCategoryQuery, CategoryTableName);
+        CategoryDto? categoryDto = await _dataAccess.GetOneItemAsync<CategoryDto?, object>(sqlQuery, new { CategoryId = id });
+        return categoryDto?.ToCategory();
     }
 }
