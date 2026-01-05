@@ -1,8 +1,8 @@
 ﻿namespace MargamParkArchives.Core.Entities.ValidationHelpers;
 
-internal static class IdentifierKeyBuilder
+public static class IdentifierKeyBuilder
 {
-    internal static string Build(string identiferGroupId, int identiferNumber)
+    public static string Build(string identiferGroupId, int identiferNumber)
     {
         return $"{identiferGroupId}-{identiferNumber:D6}";
     }

@@ -1,4 +1,12 @@
-﻿namespace MargamParkArchives.Data.Entities.ArtefactEntity;
+﻿using MargamParkArchives.Core.Entities.ArtefactEntity;
+using MargamParkArchives.Core.Entities.CategoryEntity;
+using MargamParkArchives.Core.Entities.CreatorEntity;
+using MargamParkArchives.Core.Entities.GeneralLocationEntity;
+using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
+using MargamParkArchives.Core.Entities.PeriodEntity;
+using MargamParkArchives.Core.Entities.SpecificLocationEntity;
+
+namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
 internal record ArtefactDto
 {
@@ -26,4 +34,15 @@ internal record ArtefactDto
     internal bool? VisualArtefact { get; init; }
     internal int? GeneralLocationId { get; init; }
     internal int? SpecificLocationId { get; init; }
+
+    internal Artefact ToArtefact(IdentifierGroup identifierGroup, Category? category, Period? period, Creator? creator,
+        GeneralLocation? generalLocation, SpecificLocation? specificLocation)
+    {
+        ArtefactRightsInformation rightsInformation = new(RightType1, RightHolder1En, RightHolder1Cy);
+        ArtefactContent content = new(TitleEn, TitleCy, DescriptionEn, DescriptionCy, Notes);
+        ArtefactClassification classification = new(ParentId, TagsCy, CultureTagEn, LocationCoverage, VisualArtefact);
+
+        return new(identifierGroup, IdentifierNumber, IdentifierKey, category, period, creator, generalLocation,
+            specificLocation, FilePath, DateCreated, DateModified, rightsInformation, content, classification);
+    }
 }
