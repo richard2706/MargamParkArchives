@@ -3,10 +3,9 @@ using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.CategoryEntity;
 using MargamParkArchives.Data.Entities.CreatorEntity;
-using MargamParkArchives.Data.Entities.IdentifierGroupEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
-namespace MargamParkArchives.Data;
+namespace MargamParkArchives.Data.Entities.IdentifierGroupEntity;
 
 public class MySqlIdentifierGroupReader(IMySqlDataAccess dataAccess) : IIdentifierGroupReader
 {

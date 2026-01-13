@@ -1,10 +1,9 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Data.Entities.ArtefactEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
-namespace MargamParkArchives.Data;
+namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
 public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefactDetailsReader
 {

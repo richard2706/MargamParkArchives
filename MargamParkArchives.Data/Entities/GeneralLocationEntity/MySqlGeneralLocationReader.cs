@@ -1,10 +1,9 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.GeneralLocationEntity;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Data.Entities.GeneralLocationEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
-namespace MargamParkArchives.Data;
+namespace MargamParkArchives.Data.Entities.GeneralLocationEntity;
 
 public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralLocationReader
 {

@@ -1,10 +1,9 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.CreatorEntity;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Data.Entities.CreatorEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
-namespace MargamParkArchives.Data;
+namespace MargamParkArchives.Data.Entities.CreatorEntity;
 
 public class MySqlCreatorReader(IMySqlDataAccess dataAccess) : ICreatorReader
 {

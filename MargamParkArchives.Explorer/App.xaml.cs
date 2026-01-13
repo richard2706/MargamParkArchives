@@ -1,5 +1,4 @@
-﻿using MargamParkArchives.Data;
-using MargamParkArchives.Data.Connections;
+﻿using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +11,7 @@ using MargamParkArchives.Windows.UI.Dialogs;
 using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 using Windows.ApplicationModel;
 using MargamParkArchives.Core.Database.DataAccess;
+using MargamParkArchives.Data.Entities.ArtefactEntity;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

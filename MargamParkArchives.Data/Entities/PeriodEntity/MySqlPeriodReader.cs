@@ -2,10 +2,9 @@
 using MargamParkArchives.Core.Entities.PeriodEntity;
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.CreatorEntity;
-using MargamParkArchives.Data.Entities.PeriodEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
-namespace MargamParkArchives.Data;
+namespace MargamParkArchives.Data.Entities.PeriodEntity;
 
 public class MySqlPeriodReader(IMySqlDataAccess dataAccess) : IPeriodReader
 {

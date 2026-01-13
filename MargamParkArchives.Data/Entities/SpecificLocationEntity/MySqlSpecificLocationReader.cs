@@ -1,10 +1,9 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.SpecificLocationEntity;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Data.Entities.SpecificLocationEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
-namespace MargamParkArchives.Data;
+namespace MargamParkArchives.Data.Entities.SpecificLocationEntity;
 
 public class MySqlSpecificLocationReader(IMySqlDataAccess dataAccess) : ISpecificLocationReader
 {

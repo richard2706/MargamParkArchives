@@ -1,10 +1,9 @@
 ﻿using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.CategoryEntity;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Data.Entities.CategoryEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
-namespace MargamParkArchives.Data;
+namespace MargamParkArchives.Data.Entities.CategoryEntity;
 
 public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
 {
