@@ -1,6 +1,6 @@
 ﻿using MargamParkArchives.Core.Entities.SpecificLocationEntity;
 
-namespace MargamParkArchives.Core.Database.DataAccess;
+namespace MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
 
 public interface ISpecificLocationReader
 {

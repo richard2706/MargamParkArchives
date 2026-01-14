@@ -1,4 +1,4 @@
-﻿using MargamParkArchives.Core.Database.DataAccess;
+﻿using MargamParkArchives.Core.DataAccess.PeriodEntity;
 using MargamParkArchives.Core.Entities.PeriodEntity;
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.PeriodEntity;

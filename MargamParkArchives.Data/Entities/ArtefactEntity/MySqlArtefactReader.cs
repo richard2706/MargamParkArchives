@@ -1,5 +1,11 @@
-﻿using MargamParkArchives.Core.Database;
-using MargamParkArchives.Core.Database.DataAccess;
+﻿using MargamParkArchives.Core.DataAccess.ArtefactEntity;
+using MargamParkArchives.Core.DataAccess.CategoryEntity;
+using MargamParkArchives.Core.DataAccess.CreatorEntity;
+using MargamParkArchives.Core.DataAccess.GeneralLocationEntity;
+using MargamParkArchives.Core.DataAccess.IdentifierGroupEntity;
+using MargamParkArchives.Core.DataAccess.PeriodEntity;
+using MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
+using MargamParkArchives.Core.Database;
 using MargamParkArchives.Core.Entities.ArtefactEntity;
 using MargamParkArchives.Core.Entities.CategoryEntity;
 using MargamParkArchives.Core.Entities.CreatorEntity;

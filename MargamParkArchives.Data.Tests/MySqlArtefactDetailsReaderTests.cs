@@ -1,8 +1,8 @@
-using MargamParkArchives.Core.Database.DataAccess;
 using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 using MargamParkArchives.Data.Entities.ArtefactEntity;
 using MargamParkArchives.Data.Connections;
 using Moq;
+using MargamParkArchives.Core.DataAccess.ArtefactEntity;
 
 namespace MargamParkArchives.Data.Tests;
 

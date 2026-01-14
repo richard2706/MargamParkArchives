@@ -1,6 +1,6 @@
 ﻿using MargamParkArchives.Core.Entities.PeriodEntity;
 
-namespace MargamParkArchives.Core.Database.DataAccess;
+namespace MargamParkArchives.Core.DataAccess.PeriodEntity;
 
 public interface IPeriodReader
 {

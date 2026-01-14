@@ -1,6 +1,6 @@
 ﻿using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
 
-namespace MargamParkArchives.Core.Database.DataAccess;
+namespace MargamParkArchives.Core.DataAccess.IdentifierGroupEntity;
 
 public interface IIdentifierGroupReader
 {

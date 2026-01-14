@@ -1,4 +1,4 @@
-using MargamParkArchives.Core.Database.DataAccess;
+using MargamParkArchives.Core.DataAccess.ArtefactEntity;
 using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 using MargamParkArchives.Windows.UI.Dialogs;

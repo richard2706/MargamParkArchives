@@ -1,4 +1,4 @@
-﻿using MargamParkArchives.Core.Database.DataAccess;
+﻿using MargamParkArchives.Core.DataAccess.ArtefactEntity;
 using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 using MargamParkArchives.Data.Connections;
 using static MargamParkArchives.Data.DatabaseConstants;

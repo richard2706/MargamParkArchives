@@ -1,8 +1,6 @@
-﻿using MargamParkArchives.Core.Database.DataAccess;
+﻿using MargamParkArchives.Core.DataAccess.IdentifierGroupEntity;
 using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
 using MargamParkArchives.Data.Connections;
-using MargamParkArchives.Data.Entities.CategoryEntity;
-using MargamParkArchives.Data.Entities.CreatorEntity;
 using static MargamParkArchives.Data.DatabaseConstants;
 
 namespace MargamParkArchives.Data.Entities.IdentifierGroupEntity;

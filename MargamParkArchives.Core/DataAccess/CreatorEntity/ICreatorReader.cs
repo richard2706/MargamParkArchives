@@ -1,6 +1,6 @@
 ﻿using MargamParkArchives.Core.Entities.CreatorEntity;
 
-namespace MargamParkArchives.Core.Database.DataAccess;
+namespace MargamParkArchives.Core.DataAccess.CreatorEntity;
 
 public interface ICreatorReader
 {

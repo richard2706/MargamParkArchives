@@ -1,6 +1,6 @@
 ﻿using MargamParkArchives.Core.Entities.CategoryEntity;
 
-namespace MargamParkArchives.Core.Database.DataAccess;
+namespace MargamParkArchives.Core.DataAccess.CategoryEntity;
 
 public interface ICategoryReader
 {

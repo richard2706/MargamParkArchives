@@ -1,6 +1,6 @@
 ﻿using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
 
-namespace MargamParkArchives.Core.Database.DataAccess;
+namespace MargamParkArchives.Core.DataAccess.ArtefactEntity;
 
 public interface IArtefactDetailsReader
 {

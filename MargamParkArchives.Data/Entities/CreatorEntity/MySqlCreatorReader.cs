@@ -1,4 +1,4 @@
-﻿using MargamParkArchives.Core.Database.DataAccess;
+﻿using MargamParkArchives.Core.DataAccess.CreatorEntity;
 using MargamParkArchives.Core.Entities.CreatorEntity;
 using MargamParkArchives.Data.Connections;
 using static MargamParkArchives.Data.DatabaseConstants;

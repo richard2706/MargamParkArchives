@@ -1,4 +1,4 @@
-﻿using MargamParkArchives.Core.Database.DataAccess;
+﻿using MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
 using MargamParkArchives.Core.Entities.SpecificLocationEntity;
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.SpecificLocationEntity;
