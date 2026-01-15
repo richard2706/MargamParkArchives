@@ -1,6 +1,6 @@
 ﻿namespace MargamParkArchives.Core.Database;
 
-public class DataIntegrityException : Exception
+public class DataIntegrityException : DatabaseException
 {
     public DataIntegrityException() { }
     public DataIntegrityException(string message) : base(message) { }
