@@ -80,15 +80,27 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
     }
 
     /// <summary>
-    /// Inserts an item into the database asynchronously. Does not return the inserted item's ID.
+    /// Inserts an item into the database asynchronously. Does not return the inserted item's ID. Useful for items
+    /// where the id is not auto-generated.
     /// </summary>
     /// <typeparam name="P">The type of the parameters object used to supply values for the SQL query.</typeparam>
     /// <param name="sqlQuery">The SQL insert query to execute.</param>
     /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
     /// property names in the object should match the parameter names in the query.</param>
     /// <returns>True if the item was inserted sucessfully, false otherwise.</returns>
-    public Task<bool> InsertAsync<P>(string sqlQuery, P parameters)
+    public async Task<bool> InsertAsync<P>(string sqlQuery, P parameters)
     {
-        throw new NotImplementedException();
+        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
+        using MySqlConnection connection = new(connectionString);
+        int rowsAffected = 0;
+        try
+        {
+            rowsAffected = await connection.ExecuteAsync(sqlQuery, parameters);
+        }
+        catch (MySqlException ex)
+        {
+            throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
+        }
+        return rowsAffected > 0;
     }
 }
