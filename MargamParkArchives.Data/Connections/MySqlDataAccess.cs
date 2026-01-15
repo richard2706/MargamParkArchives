@@ -39,9 +39,7 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
         }
         catch (MySqlException ex)
         {
-            if (ex.SqlState == InvalidAuthSqlState)
-            {
-                throw new DatabasePasswordInvalidException(ex.Message);
+            throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
             }
             else
             {
@@ -81,9 +79,7 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
         }
         catch (MySqlException ex)
         {
-            if (ex.SqlState == InvalidAuthSqlState)
-            {
-                throw new DatabasePasswordInvalidException(ex.Message);
+            throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
             }
             else
             {
