@@ -25,7 +25,7 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
     /// <param name="sqlQuery">The SQL select query to execute. The entity being selected must correspond to the type
     /// T of items being returned.</param>
     /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
-    /// structure should match the parameters in the query.</param>
+    /// property names in the object should match the parameter names in the query.</param>
     /// <returns>A task that represents the asynchronous operation, which will return a collection of items of type T
     /// returned by the query.</returns>
     public async Task<IEnumerable<T>> GetManyItemsAsync<T, P>(string sqlQuery, P parameters)
@@ -40,11 +40,6 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
         catch (MySqlException ex)
         {
             throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
-            }
-            else
-            {
-                throw;
-            }
         }
         return items;
     }
@@ -64,7 +59,7 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
     /// <param name="sqlQuery">The SQL select query to execute. The entity being selected must correspond to the type
     /// T of items being returned.</param>
     /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
-    /// structure should match the parameters in the query.</param>
+    /// property names in the object should match the parameter names in the query.</param>
     /// <returns>A task that represents the asynchronous operation, which will return an item of type T?
     /// returned by the query, or the first item if the query returns multiple items, or null if the item doesn't
     /// exist.</returns>
@@ -80,12 +75,20 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
         catch (MySqlException ex)
         {
             throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
-            }
-            else
-            {
-                throw;
-            }
         }
         return item;
+    }
+
+    /// <summary>
+    /// Inserts an item into the database asynchronously. Does not return the inserted item's ID.
+    /// </summary>
+    /// <typeparam name="P">The type of the parameters object used to supply values for the SQL query.</typeparam>
+    /// <param name="sqlQuery">The SQL insert query to execute.</param>
+    /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
+    /// property names in the object should match the parameter names in the query.</param>
+    /// <returns>True if the item was inserted sucessfully, false otherwise.</returns>
+    public Task<bool> InsertAsync<P>(string sqlQuery, P parameters)
+    {
+        throw new NotImplementedException();
     }
 }
