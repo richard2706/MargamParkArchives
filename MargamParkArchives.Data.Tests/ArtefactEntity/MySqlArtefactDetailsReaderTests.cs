@@ -4,7 +4,7 @@ using MargamParkArchives.Data.Connections;
 using Moq;
 using MargamParkArchives.Core.DataAccess.ArtefactEntity;
 
-namespace MargamParkArchives.Data.Tests;
+namespace MargamParkArchives.Data.Tests.ArtefactEntity;
 
 public class MySqlArtefactDetailsReaderTests
 {

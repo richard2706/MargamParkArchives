@@ -10,4 +10,5 @@ public interface IMySqlDataAccess
 
     // Write methods
     public Task<bool> InsertAsync<P>(string sqlQuery, P parameters); // For records with user-specified IDs
+    public Task<bool> UpdateAsync<P>(string sqlQuery, P parameters);
 }

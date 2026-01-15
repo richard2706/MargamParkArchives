@@ -6,14 +6,14 @@ using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.CategoryEntity;
 using Moq;
 
-namespace MargamParkArchives.Data.Tests;
+namespace MargamParkArchives.Data.Tests.CategoryEntity;
 
-public class MySqlCategoryWriterTests
+public class MySqlCreateCategoryTests
 {
     private readonly Mock<IMySqlDataAccess> _dataAccessMock; // Dependency of the class under test
     private readonly ICategoryWriter _categoryWriter; // Instance of the class under test
 
-    public MySqlCategoryWriterTests()
+    public MySqlCreateCategoryTests()
     {
         _dataAccessMock = new Mock<IMySqlDataAccess>();
         _categoryWriter = new MySqlCategoryWriter(_dataAccessMock.Object);

@@ -4,7 +4,7 @@ using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.CategoryEntity;
 using Moq;
 
-namespace MargamParkArchives.Data.Tests;
+namespace MargamParkArchives.Data.Tests.CategoryEntity;
 
 public class MySqlCategoryReaderTests
 {

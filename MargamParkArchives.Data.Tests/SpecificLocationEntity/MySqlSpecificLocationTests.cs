@@ -4,7 +4,7 @@ using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.SpecificLocationEntity;
 using Moq;
 
-namespace MargamParkArchives.Data.Tests;
+namespace MargamParkArchives.Data.Tests.SpecificLocationEntity;
 
 public class MySqlSpecificLocationTests
 {

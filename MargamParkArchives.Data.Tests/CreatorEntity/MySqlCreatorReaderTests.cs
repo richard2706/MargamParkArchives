@@ -1,10 +1,9 @@
 ﻿using MargamParkArchives.Core.DataAccess.CreatorEntity;
-using MargamParkArchives.Core.Entities.CreatorEntity;
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.CreatorEntity;
 using Moq;
 
-namespace MargamParkArchives.Data.Tests;
+namespace MargamParkArchives.Data.Tests.CreatorEntity;
 
 public class MySqlCreatorReaderTests
 {

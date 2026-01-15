@@ -13,7 +13,7 @@ using MargamParkArchives.Data.Entities;
 using MargamParkArchives.Data.Entities.ArtefactEntity;
 using Moq;
 
-namespace MargamParkArchives.Data.Tests;
+namespace MargamParkArchives.Data.Tests.ArtefactEntity;
 
 public class MySqlArtefactReaderTests
 {

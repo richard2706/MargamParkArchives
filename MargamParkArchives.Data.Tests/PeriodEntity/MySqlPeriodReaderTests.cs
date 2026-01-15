@@ -4,7 +4,7 @@ using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.PeriodEntity;
 using Moq;
 
-namespace MargamParkArchives.Data.Tests;
+namespace MargamParkArchives.Data.Tests.PeriodEntity;
 
 public class MySqlPeriodReaderTests
 {

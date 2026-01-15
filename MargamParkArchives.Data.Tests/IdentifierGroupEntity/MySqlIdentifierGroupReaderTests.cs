@@ -4,7 +4,7 @@ using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.IdentifierGroupEntity;
 using Moq;
 
-namespace MargamParkArchives.Data.Tests;
+namespace MargamParkArchives.Data.Tests.IdentifierGroupEntity;
 
 public class MySqlIdentifierGroupReaderTests
 {
