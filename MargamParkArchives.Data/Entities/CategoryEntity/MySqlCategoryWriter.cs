@@ -13,6 +13,7 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
     private const string InsertCategoryQuery = "insert into {0} (category_id, name) values (@CategoryId, @Name);";
     private const string CreateCategoryFailedMessage = "Failed to create the new category in the database.";
 
+    private const string UpdateCategoryQuery = "update {0} set category_id = @NewCategoryId, name = @Name where category_id = @ExistingCategoryId;";
 
     /// <summary>
     /// Creates a new category in the database asynchronously.
@@ -36,5 +37,28 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
         string sqlQuery = string.Format(InsertCategoryQuery, DatabaseConstants.CategoryTableName);
         bool success = await _dataAccess.InsertAsync<CategoryCreateDto>(sqlQuery, category);
         return success ? category.CategoryId : throw new DatabaseException(CreateCategoryFailedMessage);
+    }
+
+    /// <summary>
+    /// Updates an existing category in the database asynchronously.
+    /// </summary>
+    /// <param name="category">Object containing the updated values for the category.</param>
+    /// <returns>True if the category was updated successfully or false if the category was not found.</returns>
+    public async Task<bool> UpdateCategoryAsync(CategoryUpdateDto category)
+    {
+        bool isNewIdValid = CategoryRules.IsValidId(category.NewCategoryId, nameof(category.NewCategoryId), out string newIdError);
+        if (!isNewIdValid)
+        {
+            throw new ValidationException(newIdError, nameof(category.NewCategoryId));
+        }
+
+        bool isNameValid = CategoryRules.IsValidName(category.Name, nameof(category.Name), out string nameError);
+        if (!isNameValid)
+        {
+            throw new ValidationException(nameError, nameof(category.Name));
+        }
+
+        string sqlQuery = string.Format(UpdateCategoryQuery, DatabaseConstants.CategoryTableName);
+        return await _dataAccess.UpdateAsync<CategoryUpdateDto>(sqlQuery, category);
     }
 }

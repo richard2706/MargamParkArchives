@@ -103,4 +103,28 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
         }
         return rowsAffected > 0;
     }
+
+    /// <summary>
+    /// Updates an item in the database as specified by the sqlQuery and parameters.
+    /// </summary>
+    /// <typeparam name="P">The type of the parameters object used to supply values for the SQL query.</typeparam>
+    /// <param name="sqlQuery">The SQL update query to execute.</param>
+    /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
+    /// property names in the object should match the parameter names in the query.</param>
+    /// <returns>True if the item was updated sucessfully, false otherwise.</returns>
+    public async Task<bool> UpdateAsync<P>(string sqlQuery, P parameters)
+    {
+        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
+        using MySqlConnection connection = new(connectionString);
+        int rowsAffected = 0;
+        try
+        {
+            rowsAffected = await connection.ExecuteAsync(sqlQuery, parameters);
+        }
+        catch (MySqlException ex)
+        {
+            throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
+        }
+        return rowsAffected > 0;
+    }
 }

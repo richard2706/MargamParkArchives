@@ -19,8 +19,6 @@ public class MySqlCreateCategoryTests
         _categoryWriter = new MySqlCategoryWriter(_dataAccessMock.Object);
     }
 
-    // invalid values throws exception
-
     [Theory]
     [InlineData("", "Book")]
     [InlineData("B", "")]
