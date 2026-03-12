@@ -9,7 +9,7 @@ public class GeneralLocation
 
     public GeneralLocation(int id, string name, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (!GeneralLocationRules.IsValidName(name, nameof(name), out string error))
+        if (!GeneralLocationValidationRules.IsValidName(name, nameof(name), out string error))
         {
             throw new ArgumentException(error);
         }

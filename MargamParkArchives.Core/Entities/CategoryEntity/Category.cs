@@ -9,11 +9,11 @@ public class Category
 
     public Category(string id, string name, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (!CategoryRules.IsValidId(id, nameof(id), out string error))
+        if (!CategoryValidationRules.IsValidCategoryId(id, nameof(id), out string error))
         {
             throw new ArgumentException(error);
         }
-        else if (!CategoryRules.IsValidName(name, nameof(name), out error))
+        else if (!CategoryValidationRules.IsValidName(name, nameof(name), out error))
         {
             throw new ArgumentException(error);
         }

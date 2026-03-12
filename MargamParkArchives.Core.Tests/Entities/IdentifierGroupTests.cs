@@ -26,14 +26,14 @@ public class IdentifierGroupTests
     [Fact]
     public void Constructor_WithTooLongId_ThrowsException()
     {
-        string tooLongId = new('a', IdentifierGroupRules.IdMaxLength + 1);
+        string tooLongId = new('a', IdentifierGroupValidationRules.IdentifierGroupIdMaxLength + 1);
         Assert.ThrowsAny<ArgumentException>(() => new IdentifierGroup(tooLongId, "Apple"));
     }
 
     [Fact]
     public void Constructor_WithTooLongName_ThrowsException()
     {
-        string tooLongName = new('a', IdentifierGroupRules.NameMaxLength + 1);
+        string tooLongName = new('a', IdentifierGroupValidationRules.NameMaxLength + 1);
         Assert.ThrowsAny<ArgumentException>(() => new IdentifierGroup("A", tooLongName));
     }
 }

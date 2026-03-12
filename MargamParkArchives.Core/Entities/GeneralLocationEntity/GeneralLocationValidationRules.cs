@@ -1,8 +1,8 @@
 ﻿using MargamParkArchives.Core.Entities.ValidationHelpers;
 
-namespace MargamParkArchives.Core.Entities.CreatorEntity;
+namespace MargamParkArchives.Core.Entities.GeneralLocationEntity;
 
-public static class CreatorRules
+public class GeneralLocationValidationRules
 {
     public const int NameMaxLength = 255;
 

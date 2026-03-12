@@ -15,7 +15,7 @@ public class GeneralLocationTests
     [Fact]
     public void Constructor_WithMaxLengthName_CreatesObject()
     {
-        string maxLengthName = new('a', GeneralLocationRules.NameMaxLength);
+        string maxLengthName = new('a', GeneralLocationValidationRules.NameMaxLength);
         GeneralLocation actual = new(1, maxLengthName);
         Assert.NotNull(actual);
     }
@@ -30,7 +30,7 @@ public class GeneralLocationTests
     [Fact]
     public void Constructor_WithTooLongName_ThrowsException()
     {
-        string tooLongName = new('a', GeneralLocationRules.NameMaxLength + 1);
+        string tooLongName = new('a', GeneralLocationValidationRules.NameMaxLength + 1);
         Assert.ThrowsAny<ArgumentException>(() => new GeneralLocation(1, tooLongName));
     }
 }

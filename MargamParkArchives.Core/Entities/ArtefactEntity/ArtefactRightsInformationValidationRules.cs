@@ -2,7 +2,7 @@
 
 namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
-public static class ArtefactRightsInformationRules
+public static class ArtefactRightsInformationValidationRules
 {
     public const int RightsInformationMaxLength = 255;
 

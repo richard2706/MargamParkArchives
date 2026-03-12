@@ -15,7 +15,7 @@ public class SpecificLocationTests
     [Fact]
     public void Constructor_WithMaxLengthSummary_CreatesObject()
     {
-        string maxLengthSummary = new('a', SpecificLocationRules.SummaryMaxLength);
+        string maxLengthSummary = new('a', SpecificLocationValidationRules.SummaryMaxLength);
         SpecificLocation actual = new(1, maxLengthSummary);
         Assert.NotNull(actual);
     }
@@ -30,7 +30,7 @@ public class SpecificLocationTests
     [Fact]
     public void Constructor_WithTooLongSummary_ThrowsException()
     {
-        string longSummary = new('a', SpecificLocationRules.SummaryMaxLength + 1);
+        string longSummary = new('a', SpecificLocationValidationRules.SummaryMaxLength + 1);
         Assert.ThrowsAny<ArgumentException>(() => new SpecificLocation(1, longSummary));
     }
 }

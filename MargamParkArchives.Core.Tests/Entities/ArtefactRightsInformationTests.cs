@@ -25,8 +25,8 @@ public class ArtefactRightsInformationTests
     public static TheoryData<string?, string?, string?> TooLongStringPropertyTestData =>
         new()
         {
-            { new string('a', ArtefactRightsInformationRules.RightsInformationMaxLength + 1), null, null },
-            { null, new string('a', ArtefactRightsInformationRules.RightsInformationMaxLength + 1), null },
-            { null, null, new string('a', ArtefactRightsInformationRules.RightsInformationMaxLength + 1) }
+            { new string('a', ArtefactRightsInformationValidationRules.RightsInformationMaxLength + 1), null, null },
+            { null, new string('a', ArtefactRightsInformationValidationRules.RightsInformationMaxLength + 1), null },
+            { null, null, new string('a', ArtefactRightsInformationValidationRules.RightsInformationMaxLength + 1) }
         };
 }

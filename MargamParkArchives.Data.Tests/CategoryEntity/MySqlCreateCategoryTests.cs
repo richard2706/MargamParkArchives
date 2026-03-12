@@ -31,7 +31,7 @@ public class MySqlCreateCategoryTests
     [Fact]
     public async Task CreateCategoryAsync_WithTooLongId_ThrowsException()
     {
-        string tooLongId = new('A', CategoryRules.IdMaxLength + 1);
+        string tooLongId = new('A', CategoryValidationRules.CategoryIdMaxLength + 1);
         CategoryCreateDto newCategory = new() { CategoryId = tooLongId, Name = "Book" };
         await Assert.ThrowsAnyAsync<ValidationException>(async () => await _categoryWriter.CreateCategoryAsync(newCategory));
     }
@@ -39,7 +39,7 @@ public class MySqlCreateCategoryTests
     [Fact]
     public async Task CreateCategoryAsync_WithTooLongName_ThrowsException()
     {
-        string tooLongName = new('A', CategoryRules.NameMaxLength + 1);
+        string tooLongName = new('A', CategoryValidationRules.NameMaxLength + 1);
         CategoryCreateDto newCategory = new() { CategoryId = "B", Name = tooLongName };
         await Assert.ThrowsAnyAsync<ValidationException>(async () => await _categoryWriter.CreateCategoryAsync(newCategory));
     }

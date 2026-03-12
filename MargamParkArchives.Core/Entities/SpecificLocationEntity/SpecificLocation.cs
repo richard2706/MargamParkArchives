@@ -9,7 +9,7 @@ public class SpecificLocation
 
     public SpecificLocation(int id, string summary, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (!SpecificLocationRules.IsValidSummary(summary, nameof(summary), out string error))
+        if (!SpecificLocationValidationRules.IsValidSummary(summary, nameof(summary), out string error))
         {
             throw new ArgumentException(error);
         }

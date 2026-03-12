@@ -9,7 +9,7 @@ public class Creator
 
     public Creator(int id, string name, DateTime? dateCreated = null, DateTime? dateModified = null)
     {
-        if (!CreatorRules.IsValidName(name, nameof(name), out string error))
+        if (!CreatorValidationRules.IsValidName(name, nameof(name), out string error))
         {
             throw new ArgumentException(error);
         }

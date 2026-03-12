@@ -25,9 +25,9 @@ public class ArtefactClassificationTests
     public static TheoryData<string?, string?, string?, string?> TooLongStringPropertyTestData =>
         new()
         {
-            { new string('a', ArtefactClassificationRules.ParentIdMaxLength + 1), null, null, null },
-            { null, new string('a', ArtefactClassificationRules.ClassificationTextMaxLength + 1), null, null },
-            { null, null, new string('a', ArtefactClassificationRules.ClassificationTextMaxLength + 1), null },
-            { null, null, null, new string('a', ArtefactClassificationRules.ClassificationTextMaxLength + 1) }
+            { new string('a', ArtefactClassificationValidationRules.ParentIdMaxLength + 1), null, null, null },
+            { null, new string('a', ArtefactClassificationValidationRules.ClassificationTextMaxLength + 1), null, null },
+            { null, null, new string('a', ArtefactClassificationValidationRules.ClassificationTextMaxLength + 1), null },
+            { null, null, null, new string('a', ArtefactClassificationValidationRules.ClassificationTextMaxLength + 1) }
         };
 }

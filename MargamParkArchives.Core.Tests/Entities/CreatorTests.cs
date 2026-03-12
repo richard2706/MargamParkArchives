@@ -15,7 +15,7 @@ public class CreatorTests
     [Fact]
     public void Constructor_WithMaxLengthName_CreatesObject()
     {
-        string maxLengthName = new('a', CreatorRules.NameMaxLength);
+        string maxLengthName = new('a', CreatorValidationRules.NameMaxLength);
         Creator actual = new(1, maxLengthName);
         Assert.NotNull(actual);
     }
@@ -30,7 +30,7 @@ public class CreatorTests
     [Fact]
     public void Constructor_WithTooLongName_ThrowsException()
     {
-        string tooLongName = new('a', CreatorRules.NameMaxLength + 1);
+        string tooLongName = new('a', CreatorValidationRules.NameMaxLength + 1);
         Assert.ThrowsAny<ArgumentException>(() => new Creator(1, tooLongName));
     }
 }

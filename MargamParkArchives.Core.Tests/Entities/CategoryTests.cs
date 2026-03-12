@@ -26,14 +26,14 @@ public class CategoryTests
     [Fact]
     public void Constructor_WithTooLongId_ThrowsException()
     {
-        string tooLongId = new('a', CategoryRules.IdMaxLength + 1);
+        string tooLongId = new('a', CategoryValidationRules.CategoryIdMaxLength + 1);
         Assert.ThrowsAny<ArgumentException>(() => new Category(tooLongId, "Book"));
     }
 
     [Fact]
     public void Constructor_WithTooLongName_ThrowsException()
     {
-        string tooLongName = new('a', CategoryRules.NameMaxLength + 1);
+        string tooLongName = new('a', CategoryValidationRules.NameMaxLength + 1);
         Assert.ThrowsAny<ArgumentException>(() => new Category("B", tooLongName));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace MargamParkArchives.Core.Entities.PeriodEntity;
 
-public static class PeriodRules
+public static class PeriodValidationRules
 {
     public const int DatesMaxLength = 50;
 

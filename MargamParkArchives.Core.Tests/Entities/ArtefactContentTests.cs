@@ -26,10 +26,10 @@ public class ArtefactContentTests
     public static TheoryData<string?, string?, string?, string?, string?> TooLongStringPropertyTestData =>
         new()
         {
-            { new string('a', ArtefactContentRules.TitleMaxLength + 1), null, null, null, null },
-            { null, new string('a', ArtefactContentRules.TitleMaxLength + 1), null, null, null },
-            { null, null, new string('a', ArtefactContentRules.DescriptionMaxLength + 1), null, null },
-            { null, null, null, new string('a', ArtefactContentRules.DescriptionMaxLength + 1), null },
-            { null, null, null, null, new string('a', ArtefactContentRules.NotesMaxLength + 1) }
+            { new string('a', ArtefactContentValidationRules.TitleMaxLength + 1), null, null, null, null },
+            { null, new string('a', ArtefactContentValidationRules.TitleMaxLength + 1), null, null, null },
+            { null, null, new string('a', ArtefactContentValidationRules.DescriptionMaxLength + 1), null, null },
+            { null, null, null, new string('a', ArtefactContentValidationRules.DescriptionMaxLength + 1), null },
+            { null, null, null, null, new string('a', ArtefactContentValidationRules.NotesMaxLength + 1) }
         };
 }

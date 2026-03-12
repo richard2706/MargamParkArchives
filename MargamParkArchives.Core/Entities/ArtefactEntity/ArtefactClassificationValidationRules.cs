@@ -2,7 +2,7 @@
 
 namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
-public static class ArtefactClassificationRules
+public static class ArtefactClassificationValidationRules
 {
     public const int ParentIdMaxLength = 50;
     public const int ClassificationTextMaxLength = 255; // Applies to TagsCy, CultureTagEn, LocationCoverage

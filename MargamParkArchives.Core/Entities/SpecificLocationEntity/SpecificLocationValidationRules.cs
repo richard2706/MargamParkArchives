@@ -2,7 +2,7 @@
 
 namespace MargamParkArchives.Core.Entities.SpecificLocationEntity;
 
-public static class SpecificLocationRules
+public static class SpecificLocationValidationRules
 {
     public const int SummaryMaxLength = 255;
 

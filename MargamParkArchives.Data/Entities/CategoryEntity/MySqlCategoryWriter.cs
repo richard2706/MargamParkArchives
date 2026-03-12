@@ -22,13 +22,13 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
     /// <returns>The id of the newly created category.</returns>
     public async Task<string> CreateCategoryAsync(CategoryCreateDto category)
     {
-        bool idIsValid = CategoryRules.IsValidId(category.CategoryId, nameof(category.CategoryId), out string idError);
+        bool idIsValid = CategoryValidationRules.IsValidCategoryId(category.CategoryId, nameof(category.CategoryId), out string idError);
         if (!idIsValid)
         {
             throw new ValidationException(idError, nameof(category.CategoryId));
         }
 
-        bool nameIsValid = CategoryRules.IsValidName(category.Name, nameof(category.Name), out string nameError);
+        bool nameIsValid = CategoryValidationRules.IsValidName(category.Name, nameof(category.Name), out string nameError);
         if (!nameIsValid)
         {
             throw new ValidationException(nameError, nameof(category.Name));
@@ -46,13 +46,13 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
     /// <returns>True if the category was updated successfully or false if the category was not found.</returns>
     public async Task<bool> UpdateCategoryAsync(CategoryUpdateDto category)
     {
-        bool isNewIdValid = CategoryRules.IsValidId(category.NewCategoryId, nameof(category.NewCategoryId), out string newIdError);
+        bool isNewIdValid = CategoryValidationRules.IsValidCategoryId(category.NewCategoryId, nameof(category.NewCategoryId), out string newIdError);
         if (!isNewIdValid)
         {
             throw new ValidationException(newIdError, nameof(category.NewCategoryId));
         }
 
-        bool isNameValid = CategoryRules.IsValidName(category.Name, nameof(category.Name), out string nameError);
+        bool isNameValid = CategoryValidationRules.IsValidName(category.Name, nameof(category.Name), out string nameError);
         if (!isNameValid)
         {
             throw new ValidationException(nameError, nameof(category.Name));

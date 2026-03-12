@@ -15,7 +15,7 @@ public class PeriodTests
     [Fact]
     public void Constructor_WithMaxLengthDates_CreatesObject()
     {
-        string maxLengthDates = new('a', PeriodRules.DatesMaxLength);
+        string maxLengthDates = new('a', PeriodValidationRules.DatesMaxLength);
         Period actual = new(1, maxLengthDates);
         Assert.NotNull(actual);
     }
@@ -30,7 +30,7 @@ public class PeriodTests
     [Fact]
     public void Constructor_WithTooLongDates_ThrowsException()
     {
-        string tooLongDates = new('a', PeriodRules.DatesMaxLength + 1);
+        string tooLongDates = new('a', PeriodValidationRules.DatesMaxLength + 1);
         Assert.ThrowsAny<ArgumentException>(() => new Period(1, tooLongDates));
     }
 }

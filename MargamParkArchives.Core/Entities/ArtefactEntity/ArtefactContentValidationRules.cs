@@ -2,7 +2,7 @@
 
 namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
-public static class ArtefactContentRules
+public static class ArtefactContentValidationRules
 {
     public const int TitleMaxLength = 255;
     public const int DescriptionMaxLength = 500;

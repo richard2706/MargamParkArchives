@@ -11,19 +11,19 @@ public class ArtefactClassification
     public ArtefactClassification(string? parentId = null, string? tagsCy = null, string? cultureTagEn = null,
         string? locationCoverage = null, bool? visualArtefact = null)
     {
-        if (!ArtefactClassificationRules.IsValidParentId(parentId, nameof(parentId), out string error))
+        if (!ArtefactClassificationValidationRules.IsValidParentId(parentId, nameof(parentId), out string error))
         {
             throw new ArgumentException(error, nameof(parentId));
         }
-        else if (!ArtefactClassificationRules.IsValidClassificaionText(tagsCy, nameof(tagsCy), out error))
+        else if (!ArtefactClassificationValidationRules.IsValidClassificaionText(tagsCy, nameof(tagsCy), out error))
         {
             throw new ArgumentException(error, nameof(tagsCy));
         }
-        else if (!ArtefactClassificationRules.IsValidClassificaionText(cultureTagEn, nameof(cultureTagEn), out error))
+        else if (!ArtefactClassificationValidationRules.IsValidClassificaionText(cultureTagEn, nameof(cultureTagEn), out error))
         {
             throw new ArgumentException(error, nameof(cultureTagEn));
         }
-        else if (!ArtefactClassificationRules.IsValidClassificaionText(locationCoverage, nameof(locationCoverage), out error))
+        else if (!ArtefactClassificationValidationRules.IsValidClassificaionText(locationCoverage, nameof(locationCoverage), out error))
         {
             throw new ArgumentException(error, nameof(locationCoverage));
         }
