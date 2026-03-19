@@ -9,8 +9,8 @@ public class MySqlGeneralLocationWriter(IMySqlDataAccess dataAccess) : IGeneralL
 {
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
 
-    private const string InsertCreatorQuery = "insert into {0} (name) values (@Name);";
-    private const string UpdateCreatorQuery = "update {0} set name = @Name where general_location_id = @GeneralLocationId;";
+    private const string InsertGeneralLocationQuery = "insert into {0} (name) values (@Name);";
+    private const string UpdateGeneralLocationQuery = "update {0} set name = @Name where general_location_id = @GeneralLocationId;";
 
     public async Task<int> CreateGeneralLocationAsync(GeneralLocationCreateDto generalLocation)
     {
@@ -20,7 +20,7 @@ public class MySqlGeneralLocationWriter(IMySqlDataAccess dataAccess) : IGeneralL
             throw new ValidationException(nameError, nameof(generalLocation.Name));
         }
 
-        string sqlQuery = string.Format(InsertCreatorQuery, DatabaseConstants.GeneralLocationTableName);
+        string sqlQuery = string.Format(InsertGeneralLocationQuery, DatabaseConstants.GeneralLocationTableName);
         return await _dataAccess.InsertAndReturnIdAsync(sqlQuery, generalLocation);
     }
 
@@ -32,7 +32,7 @@ public class MySqlGeneralLocationWriter(IMySqlDataAccess dataAccess) : IGeneralL
             throw new ValidationException(nameError, nameof(generalLocation.Name));
         }
 
-        string sqlQuery = string.Format(UpdateCreatorQuery, DatabaseConstants.GeneralLocationTableName);
+        string sqlQuery = string.Format(UpdateGeneralLocationQuery, DatabaseConstants.GeneralLocationTableName);
         return await _dataAccess.UpdateAsync<GeneralLocationUpdateDto>(sqlQuery, generalLocation);
     }
 }
