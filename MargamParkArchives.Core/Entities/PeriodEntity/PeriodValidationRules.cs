@@ -2,6 +2,10 @@
 
 namespace MargamParkArchives.Core.Entities.PeriodEntity;
 
+/// <summary>
+/// Static methods for validating properties of a period entity.
+/// Note the id is an int freely chosen by the user, so no validation is required.
+/// </summary>
 public static class PeriodValidationRules
 {
     public const int DatesMaxLength = 50;
