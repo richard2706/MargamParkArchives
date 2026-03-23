@@ -12,6 +12,7 @@ namespace MargamParkArchives.Data.Entities.PeriodEntity;
 public class MySqlPeriodWriter(IMySqlDataAccess dataAccess) : IPeriodWriter
 {
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
+
     private const string InsertPeriodQuery = "insert into {0} (period_id, dates) values (@PeriodId, @Dates);";
     private const string CreatePeriodFailedMessage = "Failed to create the new category in the database.";
     private const string UpdatePeriodQuery = "update {0} set period_id = @NewPeriodId, dates = @Dates where period_id = @ExistingPeriodId;";
@@ -21,7 +22,7 @@ public class MySqlPeriodWriter(IMySqlDataAccess dataAccess) : IPeriodWriter
         bool datesIsValid = PeriodValidationRules.IsValidDates(period.Dates, nameof(period.Dates), out string datesError);
         if (!datesIsValid)
         {
-            throw new ValidationException(datesError, nameof(datesError));
+            throw new ValidationException(datesError, nameof(period.Dates));
         }
 
         string sqlQuery = string.Format(InsertPeriodQuery, DatabaseConstants.PeriodTableName);
@@ -34,7 +35,7 @@ public class MySqlPeriodWriter(IMySqlDataAccess dataAccess) : IPeriodWriter
         bool datesIsValid = PeriodValidationRules.IsValidDates(period.Dates, nameof(period.Dates), out string datesError);
         if (!datesIsValid)
         {
-            throw new ValidationException(datesError, nameof(datesError));
+            throw new ValidationException(datesError, nameof(period.Dates));
         }
 
         string sqlQuery = string.Format(UpdatePeriodQuery, DatabaseConstants.PeriodTableName);
