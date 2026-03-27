@@ -11,11 +11,9 @@ public class MySqlCreatorReader(IMySqlDataAccess dataAccess) : ICreatorReader
 
     private const string GetAllCreatorsQuery = "select * from {0};";
     private const string GetOneCreatorQuery = "select * from {0} where creator_id = @CreatorId;";
+    private const string CheckCreatorExistsQuery = "select exists(select 1 from {0} where creator_id = @CreatorId);";
+    private const string InvalidIdErrorMessage = "Id cannot be less than 0.";
 
-    /// <summary>
-    /// Returns an array of all creators in the database which will be empty if the database contains no creators.
-    /// </summary>
-    /// <returns>An array of all creators in the database which will be empty if the database contains no creators.</returns>
     public async Task<Creator[]> GetAllCreatorsAsync()
     {
         string sqlQuery = string.Format(GetAllCreatorsQuery, CreatorTableName);
@@ -23,12 +21,6 @@ public class MySqlCreatorReader(IMySqlDataAccess dataAccess) : ICreatorReader
         return creatorDtos.Select(dto => dto.ToCreator()).ToArray();
     }
 
-    /// <summary>
-    /// Returns one creator from the database specified by its id, or null if it doesn't exist.
-    /// </summary>
-    /// <param name="id">Id that uniquely identifies the creator.</param>
-    /// <returns>The creator identified by the given id, or null if it doesn't exist.</returns>
-    /// <exception cref="ArgumentException">If the id is less than 0 it is invalid.</exception>
     public async Task<Creator?> GetOneCreatorAsync(int id)
     {
         if (id < 0)
@@ -39,5 +31,16 @@ public class MySqlCreatorReader(IMySqlDataAccess dataAccess) : ICreatorReader
         string sqlQuery = string.Format(GetOneCreatorQuery, CreatorTableName);
         CreatorDto? creatorDto = await _dataAccess.GetOneItemAsync<CreatorDto?, object>(sqlQuery, new { CreatorId = id });
         return creatorDto?.ToCreator();
+    }
+
+    public async Task<bool> CreatorExists(int id)
+    {
+        if (id < 0)
+        {
+            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+        }
+
+        string sqlQuery = string.Format(CheckCreatorExistsQuery, DatabaseConstants.CreatorTableName);
+        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { CreatorId = id });
     }
 }

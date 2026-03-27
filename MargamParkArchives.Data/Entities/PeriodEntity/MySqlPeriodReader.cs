@@ -11,11 +11,8 @@ public class MySqlPeriodReader(IMySqlDataAccess dataAccess) : IPeriodReader
 
     private const string GetAllPeriodsQuery = "select * from {0};";
     private const string GetOnePeriodQuery = "select * from {0} where period_id = @PeriodId;";
+    private const string CheckPeriodExistsQuery = "select exists(select 1 from {0} where period_id = @PeriodId);";
 
-    /// <summary>
-    /// Returns an array of all periods in the database. The array will be empty if the database contains no periods.
-    /// </summary>
-    /// <returns>An array of all periods in the database. The array will be empty if the database contains no periods.</returns>
     public async Task<Period[]> GetAllPeriodsAsync()
     {
         string sqlQuery = string.Format(GetAllPeriodsQuery, PeriodTableName);
@@ -23,15 +20,19 @@ public class MySqlPeriodReader(IMySqlDataAccess dataAccess) : IPeriodReader
         return periodDtos.Select(dto => dto.ToPeriod()).ToArray();
     }
 
-    /// <summary>
-    /// Returns one period from the database specified by its id, or null if it doesn't exist.
-    /// </summary>
-    /// <param name="id">Id that uniquely identifies the period.</param>
-    /// <returns>The period identified by the given id, or null if it doesn't exist.</returns>
     public async Task<Period?> GetOnePeriodAsync(int id)
     {
         string sqlQuery = string.Format(GetOnePeriodQuery, PeriodTableName);
         PeriodDto? periodDto = await _dataAccess.GetOneItemAsync<PeriodDto?, object>(sqlQuery, new { PeriodId = id });
         return periodDto?.ToPeriod();
+    }
+
+    public async Task<bool> PeriodExists(int id)
+    {
+        // Note that the id is freely chosen by the user, so negative numbers are valid ids and we don't throw an
+        // error for them.
+
+        string sqlQuery = string.Format(CheckPeriodExistsQuery, DatabaseConstants.PeriodTableName);
+        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { PeriodId = id });
     }
 }

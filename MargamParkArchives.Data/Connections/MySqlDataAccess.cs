@@ -55,6 +55,48 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
         return item;
     }
 
+    public async Task<bool> ExistsAsync(string sqlQuery)
+    {
+        return await ExistsAsync(sqlQuery, new { });
+    }
+
+    public async Task<bool> ExistsAsync<P>(string sqlQuery, P parameters)
+    {
+        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
+        using MySqlConnection connection = new(connectionString);
+        bool recordExists;
+        try
+        {
+            recordExists = await connection.ExecuteScalarAsync<bool>(sqlQuery, parameters);
+        }
+        catch (MySqlException ex)
+        {
+            throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
+        }
+        return recordExists;
+    }
+
+    public async Task<T?> GetSingleValueAsync<T>(string sqlQuery)
+    {
+        return await GetSingleValueAsync<T, object>(sqlQuery, new { });
+    }
+
+    public async Task<T?> GetSingleValueAsync<T, P>(string sqlQuery, P parameters)
+    {
+        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
+        using MySqlConnection connection = new(connectionString);
+        T? value;
+        try
+        {
+            value = await connection.ExecuteScalarAsync<T>(sqlQuery, parameters);
+        }
+        catch (MySqlException ex)
+        {
+            throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
+        }
+        return value;
+    }
+
     #endregion Read methods
 
     #region Write methods

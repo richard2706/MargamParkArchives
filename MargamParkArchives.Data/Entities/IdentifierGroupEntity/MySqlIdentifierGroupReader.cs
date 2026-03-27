@@ -11,11 +11,9 @@ public class MySqlIdentifierGroupReader(IMySqlDataAccess dataAccess) : IIdentifi
 
     private const string GetAllIdentifierGroupsQuery = "select * from {0};";
     private const string GetOneIdentifierGroupQuery = "select * from {0} where identifier_group_id = @IdentifierGroupId;";
+    private const string CheckIdentifierGroupExistsQuery = "select exists(select 1 from {0} where identifier_group_id = @IdentifierGroupId);";
+    private const string InvalidIdErrorMessage = "Id cannot be an empty string.";
 
-    /// <summary>
-    /// Returns an array of all identifier groups in the database. The array will be empty if the database contains no creators.
-    /// </summary>
-    /// <returns>An array of all identifier groups in the database. The array will be empty if the database contains no creators.</returns>
     public async Task<IdentifierGroup[]> GetAllIdentifierGroupsAsync()
     {
         string sqlQuery = string.Format(GetAllIdentifierGroupsQuery, IdentifierGroupTableName);
@@ -23,21 +21,26 @@ public class MySqlIdentifierGroupReader(IMySqlDataAccess dataAccess) : IIdentifi
         return identifierGroupDtos.Select(dto => dto.ToIdentifierGroup()).ToArray();
     }
 
-    /// <summary>
-    /// Returns one identifier group from the database specified by its id, or null if it doesn't exist.
-    /// </summary>
-    /// <param name="id">Id that uniquely identifies the identifier group.</param>
-    /// <returns>The identifier group identified by the given id, or null if it doesn't exist.</returns>
-    /// <exception cref="ArgumentException">If the id is an empty string then it is invalid.</exception>
     public async Task<IdentifierGroup?> GetOneIdentifierGroupAsync(string id)
     {
         if (string.IsNullOrEmpty(id))
         {
-            throw new ArgumentException("Id cannot be an empty string.", nameof(id));
+            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
         }
 
         string sqlQuery = string.Format(GetOneIdentifierGroupQuery, IdentifierGroupTableName);
         IdentifierGroupDto? identifierGroupDto = await _dataAccess.GetOneItemAsync<IdentifierGroupDto?, object>(sqlQuery, new { IdentifierGroupId = id });
         return identifierGroupDto?.ToIdentifierGroup();
+    }
+
+    public async Task<bool> IdentifierGroupExists(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+        }
+
+        string sqlQuery = string.Format(CheckIdentifierGroupExistsQuery, DatabaseConstants.IdentifierGroupTableName);
+        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { IdentifierGroupId = id });
     }
 }

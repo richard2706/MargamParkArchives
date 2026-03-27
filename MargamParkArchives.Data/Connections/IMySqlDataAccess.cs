@@ -58,6 +58,42 @@ public interface IMySqlDataAccess
     /// exist.</returns>
     public Task<T?> GetOneItemAsync<T, P>(string sqlQuery, P parameters);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sqlQuery"></param>
+    /// <returns></returns>
+    public Task<bool> ExistsAsync(string sqlQuery);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="P"></typeparam>
+    /// <param name="sqlQuery"></param>
+    /// <param name="parameters"></param>
+    /// <returns></returns>
+    public Task<bool> ExistsAsync<P>(string sqlQuery, P parameters);
+
+    /// <summary>
+    /// Gets a single value of the specified type T from the database asynchronously or null if the value doesn't exist.
+    /// Useful for queries that return a single value such as count queries.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="sqlQuery"></param>
+    /// <returns></returns>
+    public Task<T?> GetSingleValueAsync<T>(string sqlQuery);
+
+    /// <summary>
+    /// Gets a single value of the specified type T from the database asynchronously or null if the value doesn't exist.
+    /// Useful for queries that return a single value such as count queries.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="P"></typeparam>
+    /// <param name="sqlQuery"></param>
+    /// <param name="parameters"
+    /// <returns></returns>
+    public Task<T?> GetSingleValueAsync<T, P>(string sqlQuery, P parameters);
+
     #endregion Read methods
 
     #region Write methods

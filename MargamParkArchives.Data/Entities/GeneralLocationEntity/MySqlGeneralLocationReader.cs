@@ -11,11 +11,9 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
 
     private const string GetAllGeneralLocationsQuery = "select * from {0};";
     private const string GetOneGeneralLocationQuery = "select * from {0} where general_location_id = @GeneralLocationId;";
+    private const string CheckGeneralLocationExistsQuery = "select exists(select 1 from {0} where general_location_id = @GeneralLocationId);";
+    private const string InvalidIdErrorMessage = "Id cannot be less than 0.";
 
-    /// <summary>
-    /// Returns an array of all general locations in the database. The array will be empty if the database contains no general locations.
-    /// </summary>
-    /// <returns>An array of all general locations in the database. The array will be empty if the database contains no general locations.</returns>
     public async Task<GeneralLocation[]> GetAllGeneralLocationsAsync()
     {
         string sqlQuery = string.Format(GetAllGeneralLocationsQuery, GeneralLocationTableName);
@@ -23,12 +21,6 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
         return generalLocationDtos.Select(dto => dto.ToGeneralLocation()).ToArray();
     }
 
-    /// <summary>
-    /// Returns one general location from the database specified by its id, or null if it doesn't exist.
-    /// </summary>
-    /// <param name="id">Id that uniquely identifies the general location.</param>
-    /// <returns>The general location identified by the given id, or null if it doesn't exist.</returns>
-    /// <exception cref="ArgumentException">If the id is less than 0 it is invalid.</exception>
     public async Task<GeneralLocation?> GetOneGeneralLocationAsync(int id)
     {
         if (id < 0)
@@ -39,5 +31,16 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
         string sqlQuery = string.Format(GetOneGeneralLocationQuery, GeneralLocationTableName);
         GeneralLocationDto? generalLocationDto = await _dataAccess.GetOneItemAsync<GeneralLocationDto?, object>(sqlQuery, new { GeneralLocationId = id });
         return generalLocationDto?.ToGeneralLocation();
+    }
+
+    public async Task<bool> GeneralLocationExists(int id)
+    {
+        if (id < 0)
+        {
+            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+        }
+
+        string sqlQuery = string.Format(CheckGeneralLocationExistsQuery, DatabaseConstants.GeneralLocationTableName);
+        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { GeneralLocationId = id });
     }
 }

@@ -11,11 +11,9 @@ public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
 
     private const string GetAllCategoriesQuery = "select * from {0};";
     private const string GetOneCategoryQuery = "select * from {0} where category_id = @CategoryId;";
+    private const string CheckCategoryExistsQuery = "select exists(select 1 from {0} where category_id = @CategoryId);";
+    private const string InvalidIdErrorMessage = "Id cannot be an empty string.";
 
-    /// <summary>
-    /// Returns an array of all categories in the database which will be empty if the database contains no categories.
-    /// </summary>
-    /// <returns>An array of all categories in the database which will be empty if the database contains no categories.</returns>
     public async Task<Category[]> GetAllCategoriesAsync()
     {
         string sqlQuery = string.Format(GetAllCategoriesQuery, CategoryTableName);
@@ -23,21 +21,26 @@ public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
         return categoryDtos.Select(dto => dto.ToCategory()).ToArray();
     }
 
-    /// <summary>
-    /// Returns one category from the database specified by its id, or null if it doesn't exist.
-    /// </summary>
-    /// <param name="id">Id that uniquely identifies the category.</param>
-    /// <returns>The category identified by the given id, or null if it doesn't exist.</returns>
-    /// <exception cref="ArgumentException">If the id is an empty string then it is invalid.</exception>
     public async Task<Category?> GetOneCategoryAsync(string id)
     {
         if (string.IsNullOrEmpty(id))
         {
-            throw new ArgumentException("Id cannot be an empty string.", nameof(id));
+            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
         }
 
         string sqlQuery = string.Format(GetOneCategoryQuery, CategoryTableName);
         CategoryDto? categoryDto = await _dataAccess.GetOneItemAsync<CategoryDto?, object>(sqlQuery, new { CategoryId = id });
         return categoryDto?.ToCategory();
+    }
+
+    public async Task<bool> CategoryExists(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+        }
+
+        string sqlQuery = string.Format(CheckCategoryExistsQuery, DatabaseConstants.CategoryTableName);
+        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { CategoryId = id });
     }
 }
