@@ -71,7 +71,7 @@ public class MySqlArtefactReader(IMySqlDataAccess dataAccess, IIdentifierGroupRe
         if (identifierGroup == null)
         {
             string identiferKey = artefact.IdentifierKey
-                ?? IdentifierKeyBuilder.Build(artefact.IdentifierGroupId, identifierNumber);
+                ?? IdentifierKeyHelper.BuildIdentifierKey(artefact.IdentifierGroupId, identifierNumber);
             string message = string.Format(IdentifierGroupNotFoundMessage, artefact.IdentifierGroupId, identiferKey);
             throw new DataIntegrityException(message);
         }

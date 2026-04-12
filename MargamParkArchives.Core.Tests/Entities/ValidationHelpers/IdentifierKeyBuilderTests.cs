@@ -11,7 +11,7 @@ public class IdentifierKeyBuilderTests
     public void BuildsCorrectIdentiferKey_FromValidIdAndNumber(string expectedIdentifierKey,
         string identiferGroupId, int identiferNumber)
     {
-        string actualIdentifierKey = IdentifierKeyBuilder.Build(identiferGroupId, identiferNumber);
+        string actualIdentifierKey = IdentifierKeyHelper.BuildIdentifierKey(identiferGroupId, identiferNumber);
         Assert.Equal(expectedIdentifierKey, actualIdentifierKey);
     }
 }

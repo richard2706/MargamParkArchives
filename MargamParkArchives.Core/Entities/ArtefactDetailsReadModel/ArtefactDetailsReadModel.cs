@@ -52,7 +52,7 @@ public record ArtefactDetailsReadModel
     {
         IdentifierGroupId = identifierGroupId;
         IdentifierNumber = identifierNumber;
-        IdentifierKey = identifierKey ?? IdentifierKeyBuilder.Build(identifierGroupId, identifierNumber);
+        IdentifierKey = identifierKey ?? IdentifierKeyHelper.BuildIdentifierKey(identifierGroupId, identifierNumber);
         IdentifierGroupName = identifierGroupName;
         CategoryId = categoryId;
         CategoryName = categoryName;

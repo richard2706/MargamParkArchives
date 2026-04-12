@@ -10,6 +10,9 @@ namespace MargamParkArchives.Core.Entities.ArtefactEntity;
 
 public class Artefact
 {
+    public const int MinIdentifierNumber = 1;
+    public const string InvalidIdentifierNumberMessage = "Identifier number must be greater than or equal to {0}.";
+
     // Identifying attributes
     public IdentifierGroup IdentifierGroup { get; }
     public int IdentifierNumber { get; }
@@ -36,9 +39,15 @@ public class Artefact
         DateTime? dateCreated = null, DateTime? dateModified = null, ArtefactRightsInformation? rightsInformation = null,
         ArtefactContent? content = null, ArtefactClassification? classification = null)
     {
+        if (identifierNumber < MinIdentifierNumber)
+        {
+            string errorMessage = string.Format(InvalidIdentifierNumberMessage, MinIdentifierNumber);
+            throw new ArgumentException(errorMessage, nameof(identifierNumber));
+        }
+
         IdentifierGroup = identifierGroup;
         IdentifierNumber = identifierNumber;
-        IdentifierKey = identifierKey ?? IdentifierKeyBuilder.Build(identifierGroup.Id, identifierNumber);
+        IdentifierKey = identifierKey ?? IdentifierKeyHelper.BuildIdentifierKey(identifierGroup.Id, identifierNumber);
         Category = category;
         Period = period;
         Creator = creator;
