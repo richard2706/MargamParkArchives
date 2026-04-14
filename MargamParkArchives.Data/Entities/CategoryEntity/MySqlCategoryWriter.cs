@@ -15,11 +15,6 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
 
     private const string UpdateCategoryQuery = "update {0} set category_id = @NewCategoryId, name = @Name where category_id = @ExistingCategoryId;";
 
-    /// <summary>
-    /// Creates a new category in the database asynchronously.
-    /// </summary>
-    /// <param name="category">Object containing the values for the new category.</param>
-    /// <returns>The id of the newly created category.</returns>
     public async Task<string> CreateCategoryAsync(CategoryCreateDto category)
     {
         bool idIsValid = CategoryValidationRules.IsValidCategoryId(category.CategoryId, nameof(category.CategoryId), out string idError);
@@ -39,11 +34,6 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
         return success ? category.CategoryId : throw new DatabaseException(CreateCategoryFailedMessage);
     }
 
-    /// <summary>
-    /// Updates an existing category in the database asynchronously.
-    /// </summary>
-    /// <param name="category">Object containing the updated values for the category.</param>
-    /// <returns>True if the category was updated successfully or false if the category was not found.</returns>
     public async Task<bool> UpdateCategoryAsync(CategoryUpdateDto category)
     {
         bool isNewIdValid = CategoryValidationRules.IsValidCategoryId(category.NewCategoryId, nameof(category.NewCategoryId), out string newIdError);
