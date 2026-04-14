@@ -15,6 +15,7 @@ public class MySqlSpecificLocationWriter(IMySqlDataAccess dataAccess) : ISpecifi
 
     private const string InsertSpecificLocationQuery = "insert into {0} (summary) values (@Summary);";
     private const string UpdateSpecificLocationQuery = "update {0} set summary = @Summary where specific_location_id = @SpecificLocationId;";
+    private const string DeleteSpecificLocationQuery = "delete from {0} where specific_location_id = @SpecificLocationId;";
 
     public async Task<int> CreateSpecificLocationAsync(SpecificLocationCreateDto specificLocation)
     {
@@ -38,5 +39,12 @@ public class MySqlSpecificLocationWriter(IMySqlDataAccess dataAccess) : ISpecifi
 
         string sqlQuery = string.Format(UpdateSpecificLocationQuery, DatabaseConstants.SpecificLocationTableName);
         return await _dataAccess.UpdateAsync<SpecificLocationUpdateDto>(sqlQuery, specificLocation);
+    }
+
+    public async Task<bool> DeleteSpecificLocationAsync(int specificLocationId)
+    {
+        string sqlQuery = string.Format(DeleteSpecificLocationQuery, DatabaseConstants.SpecificLocationTableName);
+        int rowsDeleted = await _dataAccess.DeleteAsync(sqlQuery, new { SpecificLocationId = specificLocationId });
+        return rowsDeleted > 0;
     }
 }

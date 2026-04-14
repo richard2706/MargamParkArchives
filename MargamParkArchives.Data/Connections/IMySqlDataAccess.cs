@@ -111,7 +111,7 @@ public interface IMySqlDataAccess
 
     /// <summary>
     /// Inserts an item into the database asynchronously and return the inserted item's ID. Useful for items
-    /// where the id is auto-generated.
+    /// where the id is an auto-generated int.
     /// </summary>
     /// <typeparam name="P">The type of the parameters object used to supply values for the SQL query.</typeparam>
     /// <param name="sqlQuery">The SQL insert query to execute.</param>
@@ -130,7 +130,15 @@ public interface IMySqlDataAccess
     /// <returns>True if the item was updated sucessfully, false otherwise.</returns>
     public Task<bool> UpdateAsync<P>(string sqlQuery, P parameters);
 
-    //public Task<bool> DeleteAsync<P>(string sqlQuery, P parameters);
+    /// <summary>
+    /// Deletes an item in the database.
+    /// </summary>
+    /// <typeparam name="P">The type of the parameters object used to supply values for the SQL query.</typeparam>
+    /// <param name="sqlQuery"><The SQL update query to execute./param>
+    /// <param name="parameters">An object containing the parameter values to be used with the SQL query. The
+    /// property names in the object should match the parameter names in the query.</param>
+    /// <returns>Number of rows deleted.</returns>
+    public Task<int> DeleteAsync<P>(string sqlQuery, P parameters);
 
     #endregion Write methods
 }

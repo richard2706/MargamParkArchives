@@ -103,17 +103,7 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
 
     public async Task<bool> InsertAsync<P>(string sqlQuery, P parameters)
     {
-        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
-        using MySqlConnection connection = new(connectionString);
-        int rowsAffected = 0;
-        try
-        {
-            rowsAffected = await connection.ExecuteAsync(sqlQuery, parameters);
-        }
-        catch (MySqlException ex)
-        {
-            throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
-        }
+        int rowsAffected = await ExecuteWriteQueryAsync(sqlQuery, parameters);
         return rowsAffected > 0;
     }
 
@@ -121,16 +111,7 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
     {
         string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
         using MySqlConnection connection = new(connectionString);
-        int rowsAffected = 0;
-        try
-        {
-            rowsAffected = await connection.ExecuteAsync(sqlQuery, parameters);
-
-        }
-        catch (MySqlException ex)
-        {
-            throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
-        }
+        int rowsAffected = await ExecuteWriteQueryAsync(sqlQuery, parameters, connection);
 
         if (rowsAffected == 0)
         {
@@ -142,19 +123,42 @@ public class MySqlDataAccess(IConnectionStringProvider connectionStringProvider)
 
     public async Task<bool> UpdateAsync<P>(string sqlQuery, P parameters)
     {
-        string connectionString = await _connectionStringProvider.GetConnectionStringAsync();
-        using MySqlConnection connection = new(connectionString);
+        int rowsAffected = await ExecuteWriteQueryAsync(sqlQuery, parameters);
+        return rowsAffected > 0;
+    }
+
+    public async Task<int> DeleteAsync<P>(string sqlQuery, P parameters)
+    {
+        int rowsAffected = await ExecuteWriteQueryAsync(sqlQuery, parameters);
+        return rowsAffected;
+    }
+
+    #endregion Write methods
+
+    #region Private Helper Methods
+
+    /// <summary>
+    /// Executes the query provided using ExecuteAsync then returns the number of rows affected.
+    /// </summary>
+    /// <param name="sqlQuery"></param>
+    /// <param name="parameters"></param>
+    /// <param name="connection">Optionally, an existing database connection to use, otherwise a connection will be
+    /// created.</param>
+    /// <returns></returns>
+    private async Task<int> ExecuteWriteQueryAsync<P>(string sqlQuery, P parameters, MySqlConnection? connection = null)
+    {
+        using MySqlConnection dbConnection = connection ?? new(await _connectionStringProvider.GetConnectionStringAsync());
         int rowsAffected = 0;
         try
         {
-            rowsAffected = await connection.ExecuteAsync(sqlQuery, parameters);
+            rowsAffected = await dbConnection.ExecuteAsync(sqlQuery, parameters);
         }
         catch (MySqlException ex)
         {
             throw ex.SqlState == InvalidAuthSqlState ? new DatabasePasswordInvalidException(ex.Message) : ex;
         }
-        return rowsAffected > 0;
+        return rowsAffected;
     }
 
-    #endregion Write methods
+    #endregion Private Helper Methods
 }

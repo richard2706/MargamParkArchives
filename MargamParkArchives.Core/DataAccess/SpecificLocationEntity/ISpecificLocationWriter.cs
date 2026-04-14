@@ -15,4 +15,11 @@ public interface ISpecificLocationWriter
     /// <param name="specificLocation">Object containing the updated values for the specific location.</param>
     /// <returns>True if the specific location was updated successfully or false if the specific location was not found.</returns>
     public Task<bool> UpdateSpecificLocationAsync(SpecificLocationUpdateDto specificLocation);
+
+    /// <summary>
+    /// Deletes a specific location item from the database asynchronously.
+    /// </summary>
+    /// <param name="specificLocationId">Id of the specific location item to delete.</param>
+    /// <returns>True if the specific location item was deleted successfully or false if the specific location item was not found.</returns>
+    public Task<bool> DeleteSpecificLocationAsync(int specificLocationId);
 }
