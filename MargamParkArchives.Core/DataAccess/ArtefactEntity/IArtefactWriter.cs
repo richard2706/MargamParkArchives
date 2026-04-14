@@ -27,19 +27,4 @@ public interface IArtefactWriter
     /// <param name="identifierGroupId"></param>
     /// <returns>Identifier key of the most recently inserted artefact in the specified identifier group or null if it is not found</returns>
     public Task<string?> GetLastIdentifierKeyForGroupAsync(string identifierGroupId);
-
-    /// <summary>
-    /// Returns true if an artefact exists with the specified identifier key.
-    /// </summary>
-    /// <param name="identifierKey">Identifier key of the artefact</param>
-    /// <returns>True if an artefact exists with the specified identifier key.</returns>
-    public Task<bool> ArtefactExistsAsync(string identifierKey);
-
-    /// <summary>
-    /// Returns true if an artefact exists with the specified identifier group id and identifier number (equivalent to
-    /// the identifier key).
-    /// </summary>
-    /// <param name="identifierKey">Identifier key of the artefact</param>
-    /// <returns>True if an artefact exists with the specified identifier group id and identifier number.</returns>
-    public Task<bool> ArtefactExistsAsync(string identifierGroupId, int identifierNumber, StringBuilder? errorList = null);
 }

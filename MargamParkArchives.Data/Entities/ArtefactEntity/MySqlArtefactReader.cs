@@ -16,6 +16,7 @@ using MargamParkArchives.Core.Entities.SpecificLocationEntity;
 using MargamParkArchives.Core.Entities.ValidationHelpers;
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities.ArtefactEntity;
+using System.Text;
 using static MargamParkArchives.Data.DatabaseConstants;
 
 namespace MargamParkArchives.Data.Entities;
@@ -87,5 +88,44 @@ public class MySqlArtefactReader(IMySqlDataAccess dataAccess, IIdentifierGroupRe
             await _specificLocationReader.GetOneSpecificLocationAsync(specificLocationId) : null;
 
         return artefact.ToArtefact(identifierGroup, category, period, creator, generalLocation, specificLocation);
+    }
+
+    public async Task<bool> ArtefactExistsAsync(string identifierKey)
+    {
+        if (string.IsNullOrEmpty(identifierKey))
+        {
+            throw new ArgumentNullException(nameof(identifierKey));
+        }
+
+        return await _dataAccess.ExistsAsync<object>(CheckArtefactExistsByIdentifierKeyQuery, new { IdentifierKey = identifierKey });
+    }
+
+    public async Task<bool> ArtefactExistsAsync(string identifierGroupId, int identifierNumber, StringBuilder? errorList = null)
+    {
+        if (string.IsNullOrEmpty(identifierGroupId))
+        {
+            if (errorList != null)
+            {
+                errorList.AppendLine("Identifier group id cannot be empty");
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(identifierGroupId));
+            }
+        }
+        if (identifierNumber < Artefact.MinIdentifierNumber)
+        {
+            if (errorList != null)
+            {
+                errorList.AppendLine(string.Format(Artefact.InvalidIdentifierNumberMessage, Artefact.MinIdentifierNumber));
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(identifierNumber));
+            }
+        }
+
+        return await _dataAccess.ExistsAsync<object>(CheckArtefactExistsByIdentifierIdAndNumberQuery,
+            new { IdentifierGroupId = identifierGroupId, IdentifierNumber = identifierNumber });
     }
 }

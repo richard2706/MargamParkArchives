@@ -13,9 +13,10 @@ using System.Text;
 
 namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
-public class MySqlArtefactWriter(IMySqlDataAccess dataAccess, IIdentifierGroupReader identifierGroupReader,
-    ICategoryReader categoryReader, IPeriodReader periodReader, ICreatorReader creatorReader,
-    IGeneralLocationReader generalLocationReader, ISpecificLocationReader specificLocationReader) : IArtefactWriter
+public class MySqlArtefactWriter(IMySqlDataAccess dataAccess, IArtefactReader artefactReader,
+    IIdentifierGroupReader identifierGroupReader, ICategoryReader categoryReader, IPeriodReader periodReader,
+    ICreatorReader creatorReader, IGeneralLocationReader generalLocationReader,
+    ISpecificLocationReader specificLocationReader) : IArtefactWriter
 {
     #region Private Constants
 
@@ -89,6 +90,7 @@ public class MySqlArtefactWriter(IMySqlDataAccess dataAccess, IIdentifierGroupRe
         string.Format(GetLastIdentifierKeyQueryTemplate, DatabaseConstants.ArtefactTableName);
 
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
+    private readonly IArtefactReader _artefactReader = artefactReader;
     private readonly IIdentifierGroupReader _identifierGroupReader = identifierGroupReader;
     private readonly ICategoryReader _categoryReader = categoryReader;
     private readonly IPeriodReader _periodReader = periodReader;
@@ -141,7 +143,7 @@ public class MySqlArtefactWriter(IMySqlDataAccess dataAccess, IIdentifierGroupRe
 
         // Check artefact and linked entities exist and validate updated artefact properties
         StringBuilder errorList = new();
-        await ArtefactExistsAsync(artefact.IdentifierGroupId, artefact.IdentifierNumber, errorList);
+        await _artefactReader.ArtefactExistsAsync(artefact.IdentifierGroupId, artefact.IdentifierNumber, errorList);
         if (isIdentifierGroupBeingUpdated)
         {
             bool isValidNewIdentifierGroupId = await _identifierGroupReader.IdentifierGroupExists(artefact.NewIdentifierGroupId!);
@@ -185,45 +187,6 @@ public class MySqlArtefactWriter(IMySqlDataAccess dataAccess, IIdentifierGroupRe
         }
 
         return await GetLastIdentifierKeyForGroupInternalAsync(identifierGroupId);
-    }
-
-    public async Task<bool> ArtefactExistsAsync(string identifierKey)
-    {
-        if (string.IsNullOrEmpty(identifierKey))
-        {
-            throw new ArgumentNullException(nameof(identifierKey));
-        }
-
-        return await _dataAccess.ExistsAsync<object>(CheckArtefactExistsByIdentifierKeyQuery, new { IdentifierKey = identifierKey });
-    }
-
-    public async Task<bool> ArtefactExistsAsync(string identifierGroupId, int identifierNumber, StringBuilder? errorList = null)
-    {
-        if (string.IsNullOrEmpty(identifierGroupId))
-        {
-            if (errorList != null)
-            {
-                errorList.AppendLine("Identifier group id cannot be empty");
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(identifierGroupId));
-            }
-        }
-        if (identifierNumber < Artefact.MinIdentifierNumber)
-        {
-            if (errorList != null)
-            {
-                errorList.AppendLine(string.Format(Artefact.InvalidIdentifierNumberMessage, Artefact.MinIdentifierNumber));
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(identifierNumber));
-            }
-        }
-
-        return await _dataAccess.ExistsAsync<object>(CheckArtefactExistsByIdentifierIdAndNumberQuery,
-            new { IdentifierGroupId = identifierGroupId, IdentifierNumber = identifierNumber });
     }
 
     #endregion Public IArtefactWriter Methods
