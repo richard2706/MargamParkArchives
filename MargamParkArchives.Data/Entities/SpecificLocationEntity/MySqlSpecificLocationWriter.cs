@@ -2,6 +2,7 @@
 using MargamParkArchives.Core.Entities.SpecificLocationEntity;
 using MargamParkArchives.Core.Entities.ValidationHelpers;
 using MargamParkArchives.Data.Connections;
+using static MargamParkArchives.Data.DatabaseConstants;
 
 namespace MargamParkArchives.Data.Entities.SpecificLocationEntity;
 
@@ -25,7 +26,7 @@ public class MySqlSpecificLocationWriter(IMySqlDataAccess dataAccess) : ISpecifi
             throw new ValidationException(summaryError, nameof(specificLocation.Summary));
         }
 
-        string sqlQuery = string.Format(InsertSpecificLocationQuery, DatabaseConstants.SpecificLocationTableName);
+        string sqlQuery = string.Format(InsertSpecificLocationQuery, SpecificLocationTableName);
         return await _dataAccess.InsertAndReturnIdAsync(sqlQuery, specificLocation);
     }
 
@@ -37,13 +38,18 @@ public class MySqlSpecificLocationWriter(IMySqlDataAccess dataAccess) : ISpecifi
             throw new ValidationException(summaryError, nameof(specificLocation.Summary));
         }
 
-        string sqlQuery = string.Format(UpdateSpecificLocationQuery, DatabaseConstants.SpecificLocationTableName);
+        string sqlQuery = string.Format(UpdateSpecificLocationQuery, SpecificLocationTableName);
         return await _dataAccess.UpdateAsync<SpecificLocationUpdateDto>(sqlQuery, specificLocation);
     }
 
     public async Task<bool> DeleteSpecificLocationAsync(int specificLocationId)
     {
-        string sqlQuery = string.Format(DeleteSpecificLocationQuery, DatabaseConstants.SpecificLocationTableName);
+        if (specificLocationId < 0)
+        {
+            throw new ArgumentException(InvalidIdErrorMessage, nameof(specificLocationId));
+        }
+
+        string sqlQuery = string.Format(DeleteSpecificLocationQuery, SpecificLocationTableName);
         int rowsDeleted = await _dataAccess.DeleteAsync(sqlQuery, new { SpecificLocationId = specificLocationId });
         return rowsDeleted > 0;
     }

@@ -12,7 +12,6 @@ public class MySqlSpecificLocationReader(IMySqlDataAccess dataAccess) : ISpecifi
     private const string GetAllSpecificLocationsQuery = "select * from {0};";
     private const string GetOneSpecificLocationQuery = "select * from {0} where specific_location_id = @SpecificLocationId;";
     private const string CheckSpecificLocationExistsQuery = "select exists(select 1 from {0} where specific_location_id = @SpecificLocationId);";
-    private const string InvalidIdErrorMessage = "Id cannot be less than 0.";
 
     public async Task<SpecificLocation[]> GetAllSpecificLocationsAsync()
     {
@@ -25,7 +24,7 @@ public class MySqlSpecificLocationReader(IMySqlDataAccess dataAccess) : ISpecifi
     {
         if (id < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(id), "Id cannot be less than 0.");
+            throw new ArgumentOutOfRangeException(nameof(id), InvalidIdErrorMessage);
         }
 
         string sqlQuery = string.Format(GetOneSpecificLocationQuery, SpecificLocationTableName);

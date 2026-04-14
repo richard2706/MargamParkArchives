@@ -12,7 +12,6 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
     private const string GetAllGeneralLocationsQuery = "select * from {0};";
     private const string GetOneGeneralLocationQuery = "select * from {0} where general_location_id = @GeneralLocationId;";
     private const string CheckGeneralLocationExistsQuery = "select exists(select 1 from {0} where general_location_id = @GeneralLocationId);";
-    private const string InvalidIdErrorMessage = "Id cannot be less than 0.";
 
     public async Task<GeneralLocation[]> GetAllGeneralLocationsAsync()
     {
@@ -25,7 +24,7 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
     {
         if (id < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(id), "Id cannot be less than 0.");
+            throw new ArgumentOutOfRangeException(nameof(id), InvalidIdErrorMessage);
         }
 
         string sqlQuery = string.Format(GetOneGeneralLocationQuery, GeneralLocationTableName);
