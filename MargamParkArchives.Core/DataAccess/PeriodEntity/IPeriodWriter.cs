@@ -1,6 +1,4 @@
-﻿using MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
-
-namespace MargamParkArchives.Core.DataAccess.PeriodEntity;
+﻿namespace MargamParkArchives.Core.DataAccess.PeriodEntity;
 
 public interface IPeriodWriter
 {
@@ -17,4 +15,11 @@ public interface IPeriodWriter
     /// <param name="period">Object containing the updated values for the period.</param>
     /// <returns>True if the period was updated successfully or false if the period was not found.</returns>
     public Task<bool> UpdatePeriodAsync(PeriodUpdateDto period);
+
+    /// <summary>
+    /// Deletes an existing period item from the database asynchronously.
+    /// </summary>
+    /// <param name="periodId">Id of the period to delete.</param>
+    /// <returns>True if the period was deleted successfully, false if the period was not found.</returns>
+    public Task<bool> DeletePeriodAsync(int periodId);
 }
