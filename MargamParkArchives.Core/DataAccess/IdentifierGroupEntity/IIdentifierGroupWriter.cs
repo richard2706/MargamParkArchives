@@ -18,4 +18,11 @@ public interface IIdentifierGroupWriter
     /// <param name="identifierGroup">Object containing the updated values for the identifier group.</param>
     /// <returns>True if the identifier group was updated successfully or false if the identifier group was not found.</returns>
     public Task<bool> UpdateIdentifierGroupAsync(IdentifierGroupUpdateDto identifierGroup);
+
+    /// <summary>
+    /// Delete an existing identifier group item from the database asynchronously.
+    /// </summary>
+    /// <param name="identifierGroupId">Id of the identifier group to delete.</param>
+    /// <returns>True if the identifier group was deleted successfully or false if the identifier group was not found.</returns>
+    public Task<bool> DeleteIdentifierGroupAsync(string identifierGroupId);
 }

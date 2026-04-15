@@ -1,9 +1,9 @@
 ﻿using MargamParkArchives.Core.DataAccess.IdentifierGroupEntity;
-using MargamParkArchives.Core.DataAccess.PeriodEntity;
 using MargamParkArchives.Core.Database;
 using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
 using MargamParkArchives.Core.Entities.ValidationHelpers;
 using MargamParkArchives.Data.Connections;
+using static MargamParkArchives.Data.DatabaseConstants;
 
 namespace MargamParkArchives.Data.Entities.IdentifierGroupEntity;
 
@@ -14,6 +14,7 @@ public class MySqlIdentifierGroupWriter(IMySqlDataAccess dataAccess) : IIdentifi
     private const string InsertIdentifierGroupQuery = "insert into {0} (identifier_group_id, name) values (@IdentifierGroupId, @Name);";
     private const string CreateIdentifierGroupFailedMessage = "Failed to create the new identifier group in the database.";
     private const string UpdateIdentifierGroupQuery = "update {0} set identifier_group_id = @NewIdentifierGroupId, name = @Name where identifier_group_id = @ExistingIdentifierGroupId;";
+    private const string DeleteIdentifierGroupQuery = "delete from {0} where identifier_group_id = @IdentifierGroupId;";
 
     public async Task<string> CreateIdentifierGroupAsync(IdentifierGroupCreateDto identifierGroup)
     {
@@ -30,7 +31,7 @@ public class MySqlIdentifierGroupWriter(IMySqlDataAccess dataAccess) : IIdentifi
             throw new ValidationException(nameError, nameof(identifierGroup.Name));
         }
 
-        string sqlQuery = string.Format(InsertIdentifierGroupQuery, DatabaseConstants.IdentifierGroupTableName);
+        string sqlQuery = string.Format(InsertIdentifierGroupQuery, IdentifierGroupTableName);
         bool success = await _dataAccess.InsertAsync(sqlQuery, identifierGroup);
         return success ? identifierGroup.IdentifierGroupId : throw new DatabaseException(CreateIdentifierGroupFailedMessage);
     }
@@ -50,7 +51,19 @@ public class MySqlIdentifierGroupWriter(IMySqlDataAccess dataAccess) : IIdentifi
             throw new ValidationException(nameError, nameof(identifierGroup.Name));
         }
 
-        string sqlQuery = string.Format(UpdateIdentifierGroupQuery, DatabaseConstants.IdentifierGroupTableName);
+        string sqlQuery = string.Format(UpdateIdentifierGroupQuery, IdentifierGroupTableName);
         return await _dataAccess.UpdateAsync<IdentifierGroupUpdateDto>(sqlQuery, identifierGroup);
+    }
+
+    public async Task<bool> DeleteIdentifierGroupAsync(string identifierGroupId)
+    {
+        if (string.IsNullOrEmpty(identifierGroupId))
+        {
+            throw new ArgumentException(ValidationMessages.ValueEmptyMessage, nameof(identifierGroupId));
+        }
+
+        string sqlQuery = string.Format(DeleteIdentifierGroupQuery, IdentifierGroupTableName);
+        int rowsDeleted = await _dataAccess.DeleteAsync(sqlQuery, new { IdentifierGroupId = identifierGroupId });
+        return rowsDeleted > 0;
     }
 }
