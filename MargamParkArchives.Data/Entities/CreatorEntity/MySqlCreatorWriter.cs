@@ -11,6 +11,7 @@ public class MySqlCreatorWriter(IMySqlDataAccess dataAccess) : ICreatorWriter
 
     private const string InsertCreatorQuery = "insert into {0} (creator_id, name) values (@Creator, @Name);";
     private const string UpdateCreatorQuery = "update {0} set name = @Name where creator_id = @CreatorId;";
+    private const string DeleteCreatorQuery = "delete from {0} where creator_id = @CreatorId;";
 
     public async Task<int> CreateCreatorAsync(CreatorCreateDto creator)
     {
@@ -34,5 +35,17 @@ public class MySqlCreatorWriter(IMySqlDataAccess dataAccess) : ICreatorWriter
 
         string sqlQuery = string.Format(UpdateCreatorQuery, DatabaseConstants.CreatorTableName);
         return await _dataAccess.UpdateAsync<CreatorUpdateDto>(sqlQuery, creator);
+    }
+
+    public async Task<bool> DeleteCreatorAsync(int creatorId)
+    {
+        if (creatorId < 0)
+        {
+            throw new ArgumentException(ValidationMessages.ValueEmptyMessage, nameof(creatorId));
+        }
+
+        string sqlQuery = string.Format(DeleteCreatorQuery, DatabaseConstants.CreatorTableName);
+        int rowsDeleted = await _dataAccess.DeleteAsync(sqlQuery, new { CreatorId = creatorId });
+        return rowsDeleted > 0;
     }
 }

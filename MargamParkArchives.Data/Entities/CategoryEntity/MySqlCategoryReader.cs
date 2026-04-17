@@ -1,5 +1,6 @@
 ﻿using MargamParkArchives.Core.DataAccess.CategoryEntity;
 using MargamParkArchives.Core.Entities.CategoryEntity;
+using MargamParkArchives.Core.Entities.ValidationHelpers;
 using MargamParkArchives.Data.Connections;
 using static MargamParkArchives.Data.DatabaseConstants;
 
@@ -12,7 +13,6 @@ public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
     private const string GetAllCategoriesQuery = "select * from {0};";
     private const string GetOneCategoryQuery = "select * from {0} where category_id = @CategoryId;";
     private const string CheckCategoryExistsQuery = "select exists(select 1 from {0} where category_id = @CategoryId);";
-    private const string InvalidIdErrorMessage = "Id cannot be an empty string.";
 
     public async Task<Category[]> GetAllCategoriesAsync()
     {
@@ -23,9 +23,9 @@ public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
 
     public async Task<Category?> GetOneCategoryAsync(string id)
     {
-        if (string.IsNullOrEmpty(id))
+        if (string.IsNullOrWhiteSpace(id))
         {
-            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+            throw new ArgumentException(ValidationMessages.EmptyStringIdErrorMessage, nameof(id));
         }
 
         string sqlQuery = string.Format(GetOneCategoryQuery, CategoryTableName);
@@ -35,12 +35,12 @@ public class MySqlCategoryReader(IMySqlDataAccess dataAccess) : ICategoryReader
 
     public async Task<bool> CategoryExists(string id)
     {
-        if (string.IsNullOrEmpty(id))
+        if (string.IsNullOrWhiteSpace(id))
         {
-            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+            throw new ArgumentException(ValidationMessages.EmptyStringIdErrorMessage, nameof(id));
         }
 
-        string sqlQuery = string.Format(CheckCategoryExistsQuery, DatabaseConstants.CategoryTableName);
+        string sqlQuery = string.Format(CheckCategoryExistsQuery, CategoryTableName);
         return await _dataAccess.ExistsAsync<object>(sqlQuery, new { CategoryId = id });
     }
 }

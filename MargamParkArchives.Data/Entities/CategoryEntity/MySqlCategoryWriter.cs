@@ -11,9 +11,10 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
 
     private const string InsertCategoryQuery = "insert into {0} (category_id, name) values (@CategoryId, @Name);";
-    private const string CreateCategoryFailedMessage = "Failed to create the new category in the database.";
-
     private const string UpdateCategoryQuery = "update {0} set category_id = @NewCategoryId, name = @Name where category_id = @ExistingCategoryId;";
+    private const string DeleteCategoryQuery = "delete from {0} where category_id = @CategoryId;";
+
+    private const string CreateCategoryFailedMessage = "Failed to create the new category in the database.";
 
     public async Task<string> CreateCategoryAsync(CategoryCreateDto category)
     {
@@ -50,5 +51,13 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
 
         string sqlQuery = string.Format(UpdateCategoryQuery, DatabaseConstants.CategoryTableName);
         return await _dataAccess.UpdateAsync<CategoryUpdateDto>(sqlQuery, category);
+    }
+
+    public Task<bool> DeleteCategoryAsync(string categoryId)
+    {
+        if (string.IsNullOrWhiteSpace(categoryId))
+        {
+            throw new ArgumentException("Id cannot be empty", nameof(categoryId));
+        }
     }
 }

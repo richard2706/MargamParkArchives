@@ -49,7 +49,7 @@ public class MySqlPeriodWriter(IMySqlDataAccess dataAccess) : IPeriodWriter
     {
         if (periodId < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(periodId), InvalidIdErrorMessage);
+            throw new ArgumentOutOfRangeException(nameof(periodId), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(DeletePeriodQuery, PeriodTableName);

@@ -10,6 +10,4 @@ internal static class DatabaseConstants
     internal const string SpecificLocationTableName = "specific_location";
     internal const string PeriodTableName = "period";
     internal const string IdentifierGroupTableName = "identifier_group";
-
-    internal const string InvalidIdErrorMessage = "Id cannot be less than 0.";
 }

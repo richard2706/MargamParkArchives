@@ -16,7 +16,7 @@ public interface IIdentifierGroupReader
     /// <param name="id">Id that uniquely identifies the identifier group.</param>
     /// <returns>The identifier group identified by the given id, or null if it doesn't exist.</returns>
     /// <exception cref="ArgumentException">If the id is an empty string then it is invalid.</exception>
-    public Task<IdentifierGroup?> GetOneIdentifierGroupAsync(string id);#
+    public Task<IdentifierGroup?> GetOneIdentifierGroupAsync(string id);
 
     /// <summary>
     /// Returns true if an identifier group with the provided id exists in the database.
