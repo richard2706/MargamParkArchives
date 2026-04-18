@@ -30,8 +30,8 @@ public class MySqlSpecificLocationTests
         const string sqlQuery = "select * from specific_location;";
         SpecificLocationDto[] specificLocationDtos =
         [
-            new SpecificLocationDto() { SpecificLocationId = 1, Summary = "Shelf 1" },
-            new SpecificLocationDto() { SpecificLocationId = 2, Summary = "Shelf 2" }
+            new SpecificLocationDto() { specific_location_id = 1, summary = "Shelf 1" },
+            new SpecificLocationDto() { specific_location_id = 2, summary = "Shelf 2" }
         ];
         _dataAccessMock
             .Setup(x => x.GetManyItemsAsync<SpecificLocationDto>(sqlQuery))
@@ -80,7 +80,7 @@ public class MySqlSpecificLocationTests
 
         // Set up data access mock
         const string sqlQuery = "select * from specific_location where specific_location_id = @SpecificLocationId;";
-        SpecificLocationDto? specificLocationDto = new() { SpecificLocationId = 1, Summary = "Shelf 1" };
+        SpecificLocationDto? specificLocationDto = new() { specific_location_id = 1, summary = "Shelf 1" };
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<SpecificLocationDto?, object>(
                 sqlQuery,

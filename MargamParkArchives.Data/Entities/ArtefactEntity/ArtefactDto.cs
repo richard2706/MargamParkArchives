@@ -10,39 +10,43 @@ namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
 internal record ArtefactDto
 {
-    internal required string IdentifierGroupId { get; init; }
-    internal required int IdentifierNumber { get; init; }
-    internal string? IdentifierKey { get; init; }
-    internal string? FilePath { get; init; }
-    internal DateTime? DateCreated { get; init; }
-    internal DateTime? DateModified { get; init; }
-    internal string? ParentId { get; init; }
-    internal string? Notes { get; init; }
-    internal string? TitleEn { get; init; }
-    internal string? TitleCy { get; init; }
-    internal string? DescriptionEn { get; init; }
-    internal string? DescriptionCy { get; init; }
-    internal string? CategoryId { get; init; }
-    internal string? TagsCy { get; init; }
-    internal string? CultureTagEn { get; init; }
-    internal int? PeriodId { get; init; }
-    internal int? CreatorId { get; init; }
-    internal string? LocationCoverage { get; init; }
-    internal string? RightType1 { get; init; }
-    internal string? RightHolder1En { get; init; }
-    internal string? RightHolder1Cy { get; init; }
-    internal bool? VisualArtefact { get; init; }
-    internal int? GeneralLocationId { get; init; }
-    internal int? SpecificLocationId { get; init; }
+#pragma warning disable IDE1006 // Disable name violation warning as property names must match db field names
+
+    internal required string identifier_group_id { get; init; }
+    internal required int identifier_number { get; init; }
+    internal string? identifier_key { get; init; }
+    internal string? file_path { get; init; }
+    internal DateTime? date_created { get; init; }
+    internal DateTime? date_modified { get; init; }
+    internal string? parent_id { get; init; }
+    internal string? notes { get; init; }
+    internal string? title_en { get; init; }
+    internal string? title_cy { get; init; }
+    internal string? description_en { get; init; }
+    internal string? description_cy { get; init; }
+    internal string? category_id { get; init; }
+    internal string? tags_cy { get; init; }
+    internal string? culture_tag_en { get; init; }
+    internal int? period_id { get; init; }
+    internal int? creator_id { get; init; }
+    internal string? location_coverage { get; init; }
+    internal string? right_type_1 { get; init; }
+    internal string? right_holder_1_en { get; init; }
+    internal string? right_holder_1_cy { get; init; }
+    internal bool? visual_artefact { get; init; }
+    internal int? general_location_id { get; init; }
+    internal int? specific_location_id { get; init; }
+
+#pragma warning restore IDE1006
 
     internal Artefact ToArtefact(IdentifierGroup identifierGroup, Category? category, Period? period, Creator? creator,
         GeneralLocation? generalLocation, SpecificLocation? specificLocation)
     {
-        ArtefactRightsInformation rightsInformation = new(RightType1, RightHolder1En, RightHolder1Cy);
-        ArtefactContent content = new(TitleEn, TitleCy, DescriptionEn, DescriptionCy, Notes);
-        ArtefactClassification classification = new(ParentId, TagsCy, CultureTagEn, LocationCoverage, VisualArtefact);
+        ArtefactRightsInformation rightsInformation = new(right_type_1, right_holder_1_en, right_holder_1_cy);
+        ArtefactContent content = new(title_en, title_cy, description_en, description_cy, notes);
+        ArtefactClassification classification = new(parent_id, tags_cy, culture_tag_en, location_coverage, visual_artefact);
 
-        return new(identifierGroup, IdentifierNumber, IdentifierKey, category, period, creator, generalLocation,
-            specificLocation, FilePath, DateCreated, DateModified, rightsInformation, content, classification);
+        return new(identifierGroup, identifier_number, identifier_key, category, period, creator, generalLocation,
+            specificLocation, file_path, date_created, date_modified, rightsInformation, content, classification);
     }
 }

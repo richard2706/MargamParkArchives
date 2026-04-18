@@ -30,8 +30,8 @@ public class MySqlIdentifierGroupReaderTests
         const string sqlQuery = "select * from identifier_group;";
         IdentifierGroupDto[] identifierGroupDtos =
         [
-            new IdentifierGroupDto() { IdentifierGroupId = "A", Name = "Apple" },
-            new IdentifierGroupDto() { IdentifierGroupId = "B", Name = "Banana" }
+            new IdentifierGroupDto() { identifier_group_id = "A", name = "Apple" },
+            new IdentifierGroupDto() { identifier_group_id = "B", name = "Banana" }
         ];
         _dataAccessMock
             .Setup(x => x.GetManyItemsAsync<IdentifierGroupDto>(sqlQuery))
@@ -80,7 +80,7 @@ public class MySqlIdentifierGroupReaderTests
 
         // Set up data access mock
         const string sqlQuery = "select * from identifier_group where identifier_group_id = @IdentifierGroupId;";
-        IdentifierGroupDto? identifierGroupDto = new() { IdentifierGroupId = "A", Name = "Apple" };
+        IdentifierGroupDto? identifierGroupDto = new() { identifier_group_id = "A", name = "Apple" };
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<IdentifierGroupDto?, object>(
                 sqlQuery,

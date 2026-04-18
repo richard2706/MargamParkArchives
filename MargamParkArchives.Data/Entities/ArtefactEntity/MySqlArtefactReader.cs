@@ -81,23 +81,23 @@ public class MySqlArtefactReader(IMySqlDataAccess dataAccess, IIdentifierGroupRe
 
         // Get linked entities
         IdentifierGroup? identifierGroup =
-            await _identifierGroupReader.GetOneIdentifierGroupAsync(artefact.IdentifierGroupId);
+            await _identifierGroupReader.GetOneIdentifierGroupAsync(artefact.identifier_group_id);
         if (identifierGroup == null)
         {
-            string identiferKey = artefact.IdentifierKey
-                ?? IdentifierKeyHelper.BuildIdentifierKey(artefact.IdentifierGroupId, identifierNumber);
-            string message = string.Format(IdentifierGroupNotFoundMessage, artefact.IdentifierGroupId, identiferKey);
+            string identiferKey = artefact.identifier_key
+                ?? IdentifierKeyHelper.BuildIdentifierKey(artefact.identifier_group_id, identifierNumber);
+            string message = string.Format(IdentifierGroupNotFoundMessage, artefact.identifier_group_id, identiferKey);
             throw new DataIntegrityException(message);
         }
-        Category? category = artefact.CategoryId is string categoryId ?
+        Category? category = artefact.category_id is string categoryId ?
             await _categoryReader.GetOneCategoryAsync(categoryId) : null;
-        Period? period = artefact.PeriodId is int id ?
+        Period? period = artefact.period_id is int id ?
             await _periodReader.GetOnePeriodAsync(id) : null;
-        Creator? creator = artefact.CreatorId is int creatorId ?
+        Creator? creator = artefact.creator_id is int creatorId ?
             await _creatorReader.GetOneCreatorAsync(creatorId) : null;
-        GeneralLocation? generalLocation = artefact.GeneralLocationId is int generalLocationId ?
+        GeneralLocation? generalLocation = artefact.general_location_id is int generalLocationId ?
             await _generalLocationReader.GetOneGeneralLocationAsync(generalLocationId) : null;
-        SpecificLocation? specificLocation = artefact.SpecificLocationId is int specificLocationId ?
+        SpecificLocation? specificLocation = artefact.specific_location_id is int specificLocationId ?
             await _specificLocationReader.GetOneSpecificLocationAsync(specificLocationId) : null;
 
         return artefact.ToArtefact(identifierGroup, category, period, creator, generalLocation, specificLocation);

@@ -52,7 +52,7 @@ public class MySqlArtefactReaderTests
 
         // Set up data access mock
         const string sqlQuery = "select * from artefact where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
-        ArtefactDto? artefactDto = new() { IdentifierGroupId = invalidIdentifierGroupId, IdentifierNumber = 1 };
+        ArtefactDto? artefactDto = new() { identifier_group_id = invalidIdentifierGroupId, identifier_number = 1 };
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<ArtefactDto?, object>(
                 sqlQuery,
@@ -79,7 +79,7 @@ public class MySqlArtefactReaderTests
 
         // Set up data access mock
         const string sqlQuery = "select * from artefact where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
-        ArtefactDto? artefactDto = new() { IdentifierGroupId = "A", IdentifierNumber = 1 };
+        ArtefactDto? artefactDto = new() { identifier_group_id = "A", identifier_number = 1 };
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<ArtefactDto?, object>(
                 sqlQuery,

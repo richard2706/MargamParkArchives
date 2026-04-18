@@ -30,8 +30,8 @@ public class MySqlGeneralLocationReaderTests
         const string sqlQuery = "select * from general_location;";
         GeneralLocationDto[] generalLocationDtos =
         [
-            new GeneralLocationDto() { GeneralLocationId = 1, Name = "Cabinet A" },
-            new GeneralLocationDto() { GeneralLocationId = 2, Name = "Cabinet B" }
+            new GeneralLocationDto() { general_location_id = 1, name = "Cabinet A" },
+            new GeneralLocationDto() { general_location_id = 2, name = "Cabinet B" }
         ];
         _dataAccessMock
             .Setup(x => x.GetManyItemsAsync<GeneralLocationDto>(sqlQuery))
@@ -80,7 +80,7 @@ public class MySqlGeneralLocationReaderTests
 
         // Set up data access mock
         const string sqlQuery = "select * from general_location where general_location_id = @GeneralLocationId;";
-        GeneralLocationDto? generalLocationDto = new() { GeneralLocationId = 1, Name = "Cabinet A" };
+        GeneralLocationDto? generalLocationDto = new() { general_location_id = 1, name = "Cabinet A" };
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<GeneralLocationDto?, object>(
                 sqlQuery,

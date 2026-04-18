@@ -4,40 +4,44 @@ namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
 internal class ArtefactDetailsDto
 {
-    internal required string IdentifierGroupId { get; init; }
-    internal required int IdentifierNumber { get; init; }
-    internal string? IdentifierKey { get; init; }
-    internal string? IdentiferGroupName { get; init; }
-    internal string? FilePath { get; init; }
-    internal DateTime? DateCreated { get; init; }
-    internal DateTime? DateModified { get; init; }
-    internal string? ParentId { get; init; }
-    internal string? Notes { get; init; }
-    internal string? TitleEn { get; init; }
-    internal string? TitleCy { get; init; }
-    internal string? DescriptionEn { get; init; }
-    internal string? DescriptionCy { get; init; }
-    internal string? TagsCy { get; init; }
-    internal string? CultureTagEn { get; init; }
-    internal string? LocationCoverage { get; init; }
-    internal string? RightType1 { get; init; }
-    internal string? RightHolder1En { get; init; }
-    internal string? RightHolder1Cy { get; init; }
-    internal bool? VisualArtefact { get; init; }
-    internal string? CategoryId { get; init; }
-    internal string? CategoryName { get; init; }
-    internal int? CreatorId { get; init; }
-    internal string? CreatorName { get; init; }
-    internal int? GeneralLocationId { get; init; }
-    internal string? GeneralLocationName { get; init; }
-    internal int? SpecificLocationId { get; init; }
-    internal string? SpecificLocationSummary { get; init; }
-    internal int? PeriodId { get; init; }
-    internal string? PeriodDates { get; init; }
+#pragma warning disable IDE1006 // Disable name violation warning as property names must match db field names
 
-    internal ArtefactDetailsReadModel ToArtefactDetailsReadModel() => new(IdentifierGroupId, IdentifierNumber,
-        IdentifierKey, IdentiferGroupName, CategoryId, CategoryName, CreatorId, CreatorName, GeneralLocationId,
-        GeneralLocationName, SpecificLocationId, SpecificLocationSummary, PeriodId, PeriodDates, FilePath, DateCreated,
-        DateModified, ParentId, Notes, TitleEn, TitleCy, DescriptionEn, DescriptionCy, TagsCy, CultureTagEn,
-        LocationCoverage, RightType1, RightHolder1En, RightHolder1Cy, VisualArtefact);
+    internal required string identifier_group_id { get; init; }
+    internal required int identifier_number { get; init; }
+    internal string? identifier_key { get; init; }
+    internal string? identifer_group_name { get; init; }
+    internal string? file_path { get; init; }
+    internal DateTime? date_created { get; init; }
+    internal DateTime? date_modified { get; init; }
+    internal string? parent_id { get; init; }
+    internal string? notes { get; init; }
+    internal string? title_en { get; init; }
+    internal string? title_cy { get; init; }
+    internal string? description_en { get; init; }
+    internal string? description_cy { get; init; }
+    internal string? tags_cy { get; init; }
+    internal string? culture_tag_en { get; init; }
+    internal string? location_coverage { get; init; }
+    internal string? right_type_1 { get; init; }
+    internal string? right_holder_1_en { get; init; }
+    internal string? right_holder_1_cy { get; init; }
+    internal bool? visual_artefact { get; init; }
+    internal string? category_id { get; init; }
+    internal string? category_name { get; init; }
+    internal int? creator_id { get; init; }
+    internal string? creator_name { get; init; }
+    internal int? general_location_id { get; init; }
+    internal string? general_location_name { get; init; }
+    internal int? specific_location_id { get; init; }
+    internal string? specific_location_summary { get; init; }
+    internal int? period_id { get; init; }
+    internal string? period_dates { get; init; }
+
+#pragma warning restore IDE1006
+
+    internal ArtefactDetailsReadModel ToArtefactDetailsReadModel() => new(identifier_group_id, identifier_number,
+        identifier_key, identifer_group_name, category_id, category_name, creator_id, creator_name, general_location_id,
+        general_location_name, specific_location_id, specific_location_summary, period_id, period_dates, file_path, date_created,
+        date_modified, parent_id, notes, title_en, title_cy, description_en, description_cy, tags_cy, culture_tag_en,
+        location_coverage, right_type_1, right_holder_1_en, right_holder_1_cy, visual_artefact);
 }

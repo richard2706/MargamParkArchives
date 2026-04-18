@@ -12,6 +12,19 @@ using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 using Windows.ApplicationModel;
 using MargamParkArchives.Data.Entities.ArtefactEntity;
 using MargamParkArchives.Core.DataAccess.ArtefactEntity;
+using MargamParkArchives.Data.Entities;
+using MargamParkArchives.Core.DataAccess.IdentifierGroupEntity;
+using MargamParkArchives.Data.Entities.IdentifierGroupEntity;
+using MargamParkArchives.Core.DataAccess.PeriodEntity;
+using MargamParkArchives.Data.Entities.PeriodEntity;
+using MargamParkArchives.Core.DataAccess.GeneralLocationEntity;
+using MargamParkArchives.Data.Entities.GeneralLocationEntity;
+using MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
+using MargamParkArchives.Data.Entities.SpecificLocationEntity;
+using MargamParkArchives.Core.DataAccess.CreatorEntity;
+using MargamParkArchives.Data.Entities.CreatorEntity;
+using MargamParkArchives.Core.DataAccess.CategoryEntity;
+using MargamParkArchives.Data.Entities.CategoryEntity;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -69,6 +82,13 @@ public partial class App : Application
             // Data Access Services
             services.AddTransient<IMySqlDataAccess, MySqlDataAccess>();
             services.AddTransient<IArtefactDetailsReader, MySqlArtefactDetailsReader>();
+            services.AddTransient<IArtefactReader, MySqlArtefactReader>();
+            services.AddTransient<IIdentifierGroupReader, MySqlIdentifierGroupReader>();
+            services.AddTransient<ICreatorReader, MySqlCreatorReader>();
+            services.AddTransient<ICategoryReader, MySqlCategoryReader>();
+            services.AddTransient<IPeriodReader, MySqlPeriodReader>();
+            services.AddTransient<IGeneralLocationReader, MySqlGeneralLocationReader>();
+            services.AddTransient<ISpecificLocationReader, MySqlSpecificLocationReader>();
         }).Build();
     }
 

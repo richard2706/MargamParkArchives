@@ -103,8 +103,8 @@ public class MySqlArtefactDetailsReaderTests
         // Set up data access mock
         const string sqlQuery = "select * from artefact_details where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
         ArtefactDetailsDto? artefactDetailsDto = GetArtefactDetailsDtos(1)[0];
-        string identifierGroupId = artefactDetailsDto.IdentifierGroupId;
-        int identifierNumber = artefactDetailsDto.IdentifierNumber;
+        string identifierGroupId = artefactDetailsDto.identifier_group_id;
+        int identifierNumber = artefactDetailsDto.identifier_number;
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<ArtefactDetailsDto?, object>(
                 sqlQuery,
@@ -166,13 +166,13 @@ public class MySqlArtefactDetailsReaderTests
         [
             new ArtefactDetailsDto()
             {
-                IdentifierGroupId = "A", IdentifierNumber = 1, IdentifierKey = "A-000001",
-                IdentiferGroupName = "Apple"
+                identifier_group_id = "A", identifier_number = 1, identifier_key = "A-000001",
+                identifer_group_name = "Apple"
             },
             new ArtefactDetailsDto()
             {
-                IdentifierGroupId = "B", IdentifierNumber = 1, IdentifierKey = "B-000001",
-                IdentiferGroupName = "Banana"
+                identifier_group_id = "B", identifier_number = 1, identifier_key = "B-000001",
+                identifer_group_name = "Banana"
             }
         ];
         return randomArtefactDetailsDtos[0..numItems];

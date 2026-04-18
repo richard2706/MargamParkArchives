@@ -30,8 +30,8 @@ public class MySqlCreatorReaderTests
         const string sqlQuery = "select * from creator;";
         CreatorDto[] creatorDtos =
         [
-            new CreatorDto() { CreatorId = 1, Name = "Jane Smith" },
-            new CreatorDto() { CreatorId = 2, Name = "Bob Smith" }
+            new CreatorDto() { creator_id = 1, name = "Jane Smith" },
+            new CreatorDto() { creator_id = 2, name = "Bob Smith" }
         ];
         _dataAccessMock
             .Setup(x => x.GetManyItemsAsync<CreatorDto>(sqlQuery))
@@ -80,7 +80,7 @@ public class MySqlCreatorReaderTests
 
         // Set up data access mock
         const string sqlQuery = "select * from creator where creator_id = @CreatorId;";
-        CreatorDto? creatorDto = new() { CreatorId = 1, Name = "Jane Smith" };
+        CreatorDto? creatorDto = new() { creator_id = 1, name = "Jane Smith" };
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<CreatorDto?, object>(
                 sqlQuery,

@@ -4,10 +4,13 @@ namespace MargamParkArchives.Data.Entities.PeriodEntity;
 
 internal record PeriodDto
 {
-    internal required int PeriodId { get; init; }
-    internal required string Dates { get; init; }
-    internal DateTime? DateCreated { get; init; }
-    internal DateTime? DateModified { get; init; }
+#pragma warning disable IDE1006 // Disable name violation warning as property names must match db field names
+    internal required int period_id { get; init; }
+    internal required string dates { get; init; }
+    internal DateTime? date_created { get; init; }
+    internal DateTime? date_modified { get; init; }
 
-    internal Period ToPeriod() => new(PeriodId, Dates, DateCreated, DateModified);
+#pragma warning restore IDE1006
+
+    internal Period ToPeriod() => new(period_id, dates, date_created, date_modified);
 }

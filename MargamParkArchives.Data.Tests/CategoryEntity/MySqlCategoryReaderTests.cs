@@ -30,8 +30,8 @@ public class MySqlCategoryReaderTests
         const string sqlQuery = "select * from category;";
         CategoryDto[] categoryDtos =
         [
-            new CategoryDto() { CategoryId = "A", Name = "Apple" },
-            new CategoryDto() { CategoryId = "B", Name = "Banana" }
+            new CategoryDto() { category_id = "A", name = "Apple" },
+            new CategoryDto() { category_id = "B", name = "Banana" }
         ];
         _dataAccessMock
             .Setup(x => x.GetManyItemsAsync<CategoryDto>(sqlQuery))
@@ -80,7 +80,7 @@ public class MySqlCategoryReaderTests
 
         // Set up data access mock
         const string sqlQuery = "select * from category where category_id = @CategoryId;";
-        CategoryDto? categoryDto = new() { CategoryId = "A", Name = "Apple" };
+        CategoryDto? categoryDto = new() { category_id = "A", name = "Apple" };
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<CategoryDto?, object>(
                 sqlQuery,

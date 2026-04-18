@@ -4,10 +4,13 @@ namespace MargamParkArchives.Data.Entities.IdentifierGroupEntity;
 
 internal record IdentifierGroupDto
 {
-    internal required string IdentifierGroupId { get; init; }
-    internal required string Name { get; init; }
-    internal DateTime? DateCreated { get; init; }
-    internal DateTime? DateModified { get; init; }
+#pragma warning disable IDE1006 // Disable name violation warning as property names must match db field names
+    internal required string identifier_group_id { get; init; }
+    internal required string name { get; init; }
+    internal DateTime? date_created { get; init; }
+    internal DateTime? date_modified { get; init; }
 
-    internal IdentifierGroup ToIdentifierGroup() => new(IdentifierGroupId, Name, DateCreated, DateModified);
+#pragma warning restore IDE1006
+
+    internal IdentifierGroup ToIdentifierGroup() => new(identifier_group_id, name, date_created, date_modified);
 }

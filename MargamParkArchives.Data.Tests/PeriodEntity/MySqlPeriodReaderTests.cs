@@ -30,8 +30,8 @@ public class MySqlPeriodReaderTests
         const string sqlQuery = "select * from period;";
         PeriodDto[] periodDtos =
         [
-            new PeriodDto() { PeriodId = 1, Dates = "1800s" },
-            new PeriodDto() { PeriodId = 2, Dates = "1900s" }
+            new PeriodDto() { period_id = 1, dates = "1800s" },
+            new PeriodDto() { period_id = 2, dates = "1900s" }
         ];
         _dataAccessMock
             .Setup(x => x.GetManyItemsAsync<PeriodDto>(sqlQuery))
@@ -75,7 +75,7 @@ public class MySqlPeriodReaderTests
 
         // Set up data access mock
         const string sqlQuery = "select * from period where period_id = @PeriodId;";
-        PeriodDto? periodDto = new() { PeriodId = 1, Dates = "1800s" };
+        PeriodDto? periodDto = new() { period_id = 1, dates = "1800s" };
         _dataAccessMock
             .Setup(x => x.GetOneItemAsync<PeriodDto?, object>(
                 sqlQuery,
