@@ -54,12 +54,6 @@ public class MySqlArtefactWriter(IMySqlDataAccess dataAccess, IArtefactReader ar
     private const string GetLastIdentifierKeyQueryTemplate =
         "select identifier_key from {0} where identifier_group_id = @IdentifierGroupId order by identifier_number desc limit 1;";
 
-    private const string CheckArtefactExistsByIdentifierIdAndNumberQueryTemplate = "select exists(select 1 from {0} where " +
-        "identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber);";
-
-    private const string CheckArtefactExistsByIdentifierKeyQueryTemplate = "select exists(select 1 from {0} where " +
-        "identifier_key = @IdentifierKey);";
-
     private const string IdentifierGroupNotFoundErrorMessage = "Identifier group {0} does not exist.";
     private const string CategoryNotFoundErrorMessage = "Category {0} does not exist.";
     private const string PeriodNotFoundErrorMessage = "Period {0} does not exist.";
@@ -79,12 +73,6 @@ public class MySqlArtefactWriter(IMySqlDataAccess dataAccess, IArtefactReader ar
 
     private static string UpdateArtefactWithNewIdentifierGroupQuery => string.Format(
         UpdateArtefactQueryTemplate, DatabaseConstants.ArtefactTableName, UpdateArtefactSetIdentifierGroupIdPart);
-
-    private static string CheckArtefactExistsByIdentifierIdAndNumberQuery =>
-        string.Format(CheckArtefactExistsByIdentifierIdAndNumberQueryTemplate, DatabaseConstants.ArtefactTableName);
-
-    private static string CheckArtefactExistsByIdentifierKeyQuery =>
-        string.Format(CheckArtefactExistsByIdentifierKeyQueryTemplate, DatabaseConstants.ArtefactTableName);
 
     private static string GetLastIdentifierKeyQuery =>
         string.Format(GetLastIdentifierKeyQueryTemplate, DatabaseConstants.ArtefactTableName);

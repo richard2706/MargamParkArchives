@@ -20,7 +20,8 @@ public class MySqlSpecificLocationWriter(IMySqlDataAccess dataAccess) : ISpecifi
 
     public async Task<int> CreateSpecificLocationAsync(SpecificLocationCreateDto specificLocation)
     {
-        bool isSummaryValid = SpecificLocationValidationRules.IsValidSummary(specificLocation.Summary, nameof(specificLocation.Summary), out string summaryError);
+        bool isSummaryValid = SpecificLocationValidationRules.IsValidSummary(
+            specificLocation.Summary, nameof(specificLocation.Summary), out string summaryError);
         if (!isSummaryValid)
         {
             throw new ValidationException(summaryError, nameof(specificLocation.Summary));
@@ -32,7 +33,8 @@ public class MySqlSpecificLocationWriter(IMySqlDataAccess dataAccess) : ISpecifi
 
     public async Task<bool> UpdateSpecificLocationAsync(SpecificLocationUpdateDto specificLocation)
     {
-        bool isSummaryValid = SpecificLocationValidationRules.IsValidSummary(specificLocation.Summary, nameof(specificLocation.Summary), out string summaryError);
+        bool isSummaryValid = SpecificLocationValidationRules.IsValidSummary(
+            specificLocation.Summary, nameof(specificLocation.Summary), out string summaryError);
         if (!isSummaryValid)
         {
             throw new ValidationException(summaryError, nameof(specificLocation.Summary));
@@ -46,7 +48,7 @@ public class MySqlSpecificLocationWriter(IMySqlDataAccess dataAccess) : ISpecifi
     {
         if (specificLocationId < 0)
         {
-            throw new ArgumentException(InvalidIdErrorMessage, nameof(specificLocationId));
+            throw new ArgumentOutOfRangeException(nameof(specificLocationId), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(DeleteSpecificLocationQuery, SpecificLocationTableName);

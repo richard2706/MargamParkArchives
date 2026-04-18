@@ -25,6 +25,22 @@ public class MySqlArtefactReader(IMySqlDataAccess dataAccess, IIdentifierGroupRe
     ICategoryReader categoryReader, IPeriodReader periodReader, ICreatorReader creatorReader,
     IGeneralLocationReader generalLocationReader, ISpecificLocationReader specificLocationReader) : IArtefactReader
 {
+    private const string GetOneArtefactQuery = "select * from {0} where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
+
+    private const string IdentifierGroupNotFoundMessage = "Identifier group {0} for the artefact {1} could not be found in the database.";
+
+    private const string CheckArtefactExistsByIdentifierIdAndNumberQueryTemplate = "select exists(select 1 from {0} where " +
+        "identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber);";
+
+    private const string CheckArtefactExistsByIdentifierKeyQueryTemplate = "select exists(select 1 from {0} where " +
+        "identifier_key = @IdentifierKey);";
+
+    private static string CheckArtefactExistsByIdentifierIdAndNumberQuery =>
+        string.Format(CheckArtefactExistsByIdentifierIdAndNumberQueryTemplate, DatabaseConstants.ArtefactTableName);
+
+    private static string CheckArtefactExistsByIdentifierKeyQuery =>
+        string.Format(CheckArtefactExistsByIdentifierKeyQueryTemplate, DatabaseConstants.ArtefactTableName);
+
     private readonly IMySqlDataAccess _dataAccess = dataAccess;
     private readonly IIdentifierGroupReader _identifierGroupReader = identifierGroupReader;
     private readonly ICategoryReader _categoryReader = categoryReader;
@@ -32,9 +48,6 @@ public class MySqlArtefactReader(IMySqlDataAccess dataAccess, IIdentifierGroupRe
     private readonly ICreatorReader _creatorReader = creatorReader;
     private readonly IGeneralLocationReader _generalLocationReader = generalLocationReader;
     private readonly ISpecificLocationReader _specificLocationReader = specificLocationReader;
-
-    private const string GetOneArtefactQuery = "select * from {0} where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
-    private const string IdentifierGroupNotFoundMessage = "Identifier group {0} for the artefact {1} could not be found in the database.";
 
     /// <summary>
     /// Gets one Artefact from the database (including all linked entities), or null if it doesn't exist.
@@ -47,13 +60,13 @@ public class MySqlArtefactReader(IMySqlDataAccess dataAccess, IIdentifierGroupRe
     /// exist.</returns>
     public async Task<Artefact?> GetOneArtefactAsync(string identiferGroupId, int identifierNumber)
     {
-        if (string.IsNullOrEmpty(identiferGroupId))
+        if (string.IsNullOrWhiteSpace(identiferGroupId))
         {
-            throw new ArgumentException("Identifier group id cannot be empty.", nameof(identiferGroupId));
+            throw new ArgumentException(ValidationMessages.EmptyStringIdErrorMessage, nameof(identiferGroupId));
         }
         else if (identifierNumber < 0)
         {
-            throw new ArgumentException("Identifier number cannot be less than 0.", nameof(identifierNumber));
+            throw new ArgumentException(ValidationMessages.InvalidIntIdErrorMessage, nameof(identifierNumber));
         }
 
         // Get artefact
@@ -92,9 +105,9 @@ public class MySqlArtefactReader(IMySqlDataAccess dataAccess, IIdentifierGroupRe
 
     public async Task<bool> ArtefactExistsAsync(string identifierKey)
     {
-        if (string.IsNullOrEmpty(identifierKey))
+        if (string.IsNullOrWhiteSpace(identifierKey))
         {
-            throw new ArgumentNullException(nameof(identifierKey));
+            throw new ArgumentException(ValidationMessages.EmptyStringIdErrorMessage, nameof(identifierKey));
         }
 
         return await _dataAccess.ExistsAsync<object>(CheckArtefactExistsByIdentifierKeyQuery, new { IdentifierKey = identifierKey });
@@ -102,11 +115,11 @@ public class MySqlArtefactReader(IMySqlDataAccess dataAccess, IIdentifierGroupRe
 
     public async Task<bool> ArtefactExistsAsync(string identifierGroupId, int identifierNumber, StringBuilder? errorList = null)
     {
-        if (string.IsNullOrEmpty(identifierGroupId))
+        if (string.IsNullOrWhiteSpace(identifierGroupId))
         {
             if (errorList != null)
             {
-                errorList.AppendLine("Identifier group id cannot be empty");
+                errorList.AppendLine(ValidationMessages.EmptyStringIdErrorMessage);
             }
             else
             {

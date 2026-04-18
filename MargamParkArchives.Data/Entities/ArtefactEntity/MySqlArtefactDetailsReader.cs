@@ -5,6 +5,14 @@ using static MargamParkArchives.Data.DatabaseConstants;
 
 namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
+/// <summary>
+/// Methods for reading data from the artefact details database view.
+/// </summary>
+/// <remarks>
+/// Useful for getting details about an artefact for display purposes as only one query is executed to get information
+/// about an artefact from multiple tables.
+/// </remarks>
+/// <param name="dataAccess"></param>
 public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefactDetailsReader
 {
     private readonly IMySqlDataAccess _dataAccess = dataAccess;

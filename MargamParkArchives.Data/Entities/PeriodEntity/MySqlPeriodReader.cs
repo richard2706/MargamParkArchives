@@ -1,5 +1,6 @@
 ﻿using MargamParkArchives.Core.DataAccess.PeriodEntity;
 using MargamParkArchives.Core.Entities.PeriodEntity;
+using MargamParkArchives.Core.Entities.ValidationHelpers;
 using MargamParkArchives.Data.Connections;
 using static MargamParkArchives.Data.DatabaseConstants;
 
@@ -20,19 +21,22 @@ public class MySqlPeriodReader(IMySqlDataAccess dataAccess) : IPeriodReader
         return periodDtos.Select(dto => dto.ToPeriod()).ToArray();
     }
 
-    public async Task<Period?> GetOnePeriodAsync(int id)
+    public async Task<Period?> GetOnePeriodAsync(int periodId)
     {
+        // Note that the id is freely chosen by the user, so negative numbers are valid ids and we don't throw an
+        // error for them.
+
         string sqlQuery = string.Format(GetOnePeriodQuery, PeriodTableName);
-        PeriodDto? periodDto = await _dataAccess.GetOneItemAsync<PeriodDto?, object>(sqlQuery, new { PeriodId = id });
+        PeriodDto? periodDto = await _dataAccess.GetOneItemAsync<PeriodDto?, object>(sqlQuery, new { PeriodId = periodId });
         return periodDto?.ToPeriod();
     }
 
-    public async Task<bool> PeriodExists(int id)
+    public async Task<bool> PeriodExists(int periodId)
     {
         // Note that the id is freely chosen by the user, so negative numbers are valid ids and we don't throw an
         // error for them.
 
         string sqlQuery = string.Format(CheckPeriodExistsQuery, DatabaseConstants.PeriodTableName);
-        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { PeriodId = id });
+        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { PeriodId = periodId });
     }
 }

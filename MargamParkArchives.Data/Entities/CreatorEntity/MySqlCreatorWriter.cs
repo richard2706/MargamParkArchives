@@ -41,7 +41,7 @@ public class MySqlCreatorWriter(IMySqlDataAccess dataAccess) : ICreatorWriter
     {
         if (creatorId < 0)
         {
-            throw new ArgumentException(ValidationMessages.ValueEmptyMessage, nameof(creatorId));
+            throw new ArgumentOutOfRangeException(nameof(creatorId), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(DeleteCreatorQuery, DatabaseConstants.CreatorTableName);

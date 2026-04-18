@@ -1,5 +1,6 @@
 ﻿using MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
 using MargamParkArchives.Core.Entities.SpecificLocationEntity;
+using MargamParkArchives.Core.Entities.ValidationHelpers;
 using MargamParkArchives.Data.Connections;
 using static MargamParkArchives.Data.DatabaseConstants;
 
@@ -20,26 +21,27 @@ public class MySqlSpecificLocationReader(IMySqlDataAccess dataAccess) : ISpecifi
         return specificLocationDtos.Select(dto => dto.ToSpecificLocation()).ToArray();
     }
 
-    public async Task<SpecificLocation?> GetOneSpecificLocationAsync(int id)
+    public async Task<SpecificLocation?> GetOneSpecificLocationAsync(int specificLocationId)
     {
-        if (id < 0)
+        if (specificLocationId < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(id), InvalidIdErrorMessage);
+            throw new ArgumentOutOfRangeException(nameof(specificLocationId), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(GetOneSpecificLocationQuery, SpecificLocationTableName);
-        SpecificLocationDto? specificLocationDto = await _dataAccess.GetOneItemAsync<SpecificLocationDto?, object>(sqlQuery, new { SpecificLocationId = id });
+        SpecificLocationDto? specificLocationDto = await _dataAccess.GetOneItemAsync<SpecificLocationDto?, object>(
+            sqlQuery, new { SpecificLocationId = specificLocationId });
         return specificLocationDto?.ToSpecificLocation();
     }
 
-    public async Task<bool> SpecificLocationExists(int id)
+    public async Task<bool> SpecificLocationExists(int specificLocationId)
     {
-        if (id < 0)
+        if (specificLocationId < 0)
         {
-            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+            throw new ArgumentOutOfRangeException(nameof(specificLocationId), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(CheckSpecificLocationExistsQuery, DatabaseConstants.SpecificLocationTableName);
-        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { SpecificLocationId = id });
+        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { SpecificLocationId = specificLocationId });
     }
 }

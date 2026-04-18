@@ -1,5 +1,8 @@
 ﻿namespace MargamParkArchives.Core.Entities.ValidationHelpers;
 
+/// <summary>
+/// Thrown when a value has failed validation checks
+/// </summary>
 public class ValidationException : Exception
 {
     public string PropertyName { get; set; }

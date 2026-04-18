@@ -1,5 +1,6 @@
 ﻿using MargamParkArchives.Core.DataAccess.GeneralLocationEntity;
 using MargamParkArchives.Core.Entities.GeneralLocationEntity;
+using MargamParkArchives.Core.Entities.ValidationHelpers;
 using MargamParkArchives.Data.Connections;
 using static MargamParkArchives.Data.DatabaseConstants;
 
@@ -24,7 +25,7 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
     {
         if (id < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(id), InvalidIdErrorMessage);
+            throw new ArgumentOutOfRangeException(nameof(id), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(GetOneGeneralLocationQuery, GeneralLocationTableName);
@@ -36,7 +37,7 @@ public class MySqlGeneralLocationReader(IMySqlDataAccess dataAccess) : IGeneralL
     {
         if (id < 0)
         {
-            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+            throw new ArgumentOutOfRangeException(nameof(id), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(CheckGeneralLocationExistsQuery, DatabaseConstants.GeneralLocationTableName);

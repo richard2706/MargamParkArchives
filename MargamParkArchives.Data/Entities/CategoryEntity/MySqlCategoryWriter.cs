@@ -53,11 +53,15 @@ public class MySqlCategoryWriter(IMySqlDataAccess dataAccess) : ICategoryWriter
         return await _dataAccess.UpdateAsync<CategoryUpdateDto>(sqlQuery, category);
     }
 
-    public Task<bool> DeleteCategoryAsync(string categoryId)
+    public async Task<bool> DeleteCategoryAsync(string categoryId)
     {
         if (string.IsNullOrWhiteSpace(categoryId))
         {
-            throw new ArgumentException("Id cannot be empty", nameof(categoryId));
+            throw new ArgumentException(ValidationMessages.EmptyStringIdErrorMessage, nameof(categoryId));
         }
+
+        string sqlQuery = string.Format(DeleteCategoryQuery, DatabaseConstants.CategoryTableName);
+        int rowsDeleted = await _dataAccess.DeleteAsync<object>(sqlQuery, new { CategoryId = categoryId });
+        return rowsDeleted > 0;
     }
 }

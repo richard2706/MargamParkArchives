@@ -42,7 +42,7 @@ public class MySqlGeneralLocationWriter(IMySqlDataAccess dataAccess) : IGeneralL
     {
         if (generalLocationId < 0)
         {
-            throw new ArgumentException(InvalidIdErrorMessage, nameof(generalLocationId));
+            throw new ArgumentOutOfRangeException(nameof(generalLocationId), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(DeleteGeneralLocationQuery, GeneralLocationTableName);

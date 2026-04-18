@@ -1,5 +1,6 @@
 ﻿using MargamParkArchives.Core.DataAccess.CreatorEntity;
 using MargamParkArchives.Core.Entities.CreatorEntity;
+using MargamParkArchives.Core.Entities.ValidationHelpers;
 using MargamParkArchives.Data.Connections;
 using static MargamParkArchives.Data.DatabaseConstants;
 
@@ -20,26 +21,26 @@ public class MySqlCreatorReader(IMySqlDataAccess dataAccess) : ICreatorReader
         return creatorDtos.Select(dto => dto.ToCreator()).ToArray();
     }
 
-    public async Task<Creator?> GetOneCreatorAsync(int id)
+    public async Task<Creator?> GetOneCreatorAsync(int creatorId)
     {
-        if (id < 0)
+        if (creatorId < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(id), InvalidIdErrorMessage);
+            throw new ArgumentOutOfRangeException(nameof(creatorId), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(GetOneCreatorQuery, CreatorTableName);
-        CreatorDto? creatorDto = await _dataAccess.GetOneItemAsync<CreatorDto?, object>(sqlQuery, new { CreatorId = id });
+        CreatorDto? creatorDto = await _dataAccess.GetOneItemAsync<CreatorDto?, object>(sqlQuery, new { CreatorId = creatorId });
         return creatorDto?.ToCreator();
     }
 
-    public async Task<bool> CreatorExists(int id)
+    public async Task<bool> CreatorExists(int creatorId)
     {
-        if (id < 0)
+        if (creatorId < 0)
         {
-            throw new ArgumentException(InvalidIdErrorMessage, nameof(id));
+            throw new ArgumentOutOfRangeException(nameof(creatorId), ValidationMessages.InvalidIntIdErrorMessage);
         }
 
         string sqlQuery = string.Format(CheckCreatorExistsQuery, DatabaseConstants.CreatorTableName);
-        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { CreatorId = id });
+        return await _dataAccess.ExistsAsync<object>(sqlQuery, new { CreatorId = creatorId });
     }
 }
