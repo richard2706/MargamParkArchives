@@ -1,4 +1,4 @@
-﻿using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
+﻿using MargamParkArchives.Core.Entities.ArtefactDetails;
 
 namespace MargamParkArchives.Data.Entities.ArtefactEntity;
 
@@ -39,7 +39,7 @@ internal class ArtefactDetailsDto
 
 #pragma warning restore IDE1006
 
-    internal ArtefactDetailsReadModel ToArtefactDetailsReadModel() => new(identifier_group_id, identifier_number,
+    internal ArtefactDetails ToArtefactDetailsReadModel() => new(identifier_group_id, identifier_number,
         identifier_key, identifer_group_name, category_id, category_name, creator_id, creator_name, general_location_id,
         general_location_name, specific_location_id, specific_location_summary, period_id, period_dates, file_path, date_created,
         date_modified, parent_id, notes, title_en, title_cy, description_en, description_cy, tags_cy, culture_tag_en,

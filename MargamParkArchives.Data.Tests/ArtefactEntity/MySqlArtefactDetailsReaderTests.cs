@@ -1,4 +1,4 @@
-using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
+using MargamParkArchives.Core.Entities.ArtefactDetails;
 using MargamParkArchives.Data.Entities.ArtefactEntity;
 using MargamParkArchives.Data.Connections;
 using Moq;
@@ -22,7 +22,7 @@ public class MySqlArtefactDetailsReaderTests
     [InlineData(2)]
     public async Task GetRandomArtefactsAsync_RequestMany_ReturnsArtefactsArray(int numArtefactsRequested)
     {
-        ArtefactDetailsReadModel[] expectedArtefacts = GetArtefactDetailsReadModels(numArtefactsRequested);
+        ArtefactDetails[] expectedArtefacts = GetArtefactDetailsReadModels(numArtefactsRequested);
 
         // Set up data access mock
         const string sqlQuery = "select * from artefact_details order by rand() limit @Limit;";
@@ -36,7 +36,7 @@ public class MySqlArtefactDetailsReaderTests
             .ReturnsAsync(randomArtefactDetailsDtos);
 
         // Execute reader method
-        ArtefactDetailsReadModel[] actual = await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested);
+        ArtefactDetails[] actual = await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested);
 
         _dataAccessMock.Verify( // Verify data access method was called exactly once
             x => x.GetManyItemsAsync<ArtefactDetailsDto, object>(sqlQuery, It.Is<object>(
@@ -59,7 +59,7 @@ public class MySqlArtefactDetailsReaderTests
     public async Task GetRandomArtefactsAsync_NoArtefactsExists_ReturnsEmptyArray()
     {
         const int numArtefactsRequested = 2;
-        ArtefactDetailsReadModel[] expectedArtefacts = [];
+        ArtefactDetails[] expectedArtefacts = [];
 
         // Set up data access mock
         const string sqlQuery = "select * from artefact_details order by rand() limit @Limit;";
@@ -73,7 +73,7 @@ public class MySqlArtefactDetailsReaderTests
             .ReturnsAsync(randomArtefactDetailsDtos);
 
         // Execute reader method
-        ArtefactDetailsReadModel[] actual = await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested);
+        ArtefactDetails[] actual = await _artefactDetailsReader.GetRandomArtefactsAsync(numArtefactsRequested);
 
         _dataAccessMock.Verify( // Verify data access method was called exactly once
             x => x.GetManyItemsAsync<ArtefactDetailsDto, object>(
@@ -98,7 +98,7 @@ public class MySqlArtefactDetailsReaderTests
     [Fact]
     public async Task GetOneArtefactAsync_ArtefactExists_ReturnsArtefact()
     {
-        ArtefactDetailsReadModel expectedArtefact = GetArtefactDetailsReadModels(1)[0];
+        ArtefactDetails expectedArtefact = GetArtefactDetailsReadModels(1)[0];
 
         // Set up data access mock
         const string sqlQuery = "select * from artefact_details where identifier_group_id = @IdentifierGroupId and identifier_number = @IdentifierNumber;";
@@ -114,7 +114,7 @@ public class MySqlArtefactDetailsReaderTests
             .ReturnsAsync(artefactDetailsDto);
 
         // Execute reader method
-        ArtefactDetailsReadModel? actual = await _artefactDetailsReader.GetOneArtefactAsync(identifierGroupId, identifierNumber);
+        ArtefactDetails? actual = await _artefactDetailsReader.GetOneArtefactAsync(identifierGroupId, identifierNumber);
 
         _dataAccessMock.Verify( // Verify data access method was called exactly once
             x => x.GetOneItemAsync<ArtefactDetailsDto?, object>(
@@ -145,14 +145,14 @@ public class MySqlArtefactDetailsReaderTests
             .ReturnsAsync(artefactDetailsDto);
 
         // Execute reader method
-        ArtefactDetailsReadModel? actual = await _artefactDetailsReader.GetOneArtefactAsync(identifierGroupId, identifierNumber);
+        ArtefactDetails? actual = await _artefactDetailsReader.GetOneArtefactAsync(identifierGroupId, identifierNumber);
 
         Assert.Null(actual);
     }
 
-    private static ArtefactDetailsReadModel[] GetArtefactDetailsReadModels(int numItems)
+    private static ArtefactDetails[] GetArtefactDetailsReadModels(int numItems)
     {
-        ArtefactDetailsReadModel[] expectedArtefacts = // Method under test should return read models
+        ArtefactDetails[] expectedArtefacts = // Method under test should return read models
         [
             new("A", 1, "A-000001", "Apple"),
             new("B", 1, "B-000001", "Banana")

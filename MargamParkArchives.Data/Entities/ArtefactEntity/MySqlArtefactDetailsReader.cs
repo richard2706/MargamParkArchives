@@ -1,5 +1,5 @@
 ﻿using MargamParkArchives.Core.DataAccess.ArtefactEntity;
-using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
+using MargamParkArchives.Core.Entities.ArtefactDetails;
 using MargamParkArchives.Data.Connections;
 using static MargamParkArchives.Data.DatabaseConstants;
 
@@ -26,7 +26,7 @@ public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefact
     /// <param name="numArtefacts">Number of random artefacts to return.</param>
     /// <returns>An array of the specified number of artefact details items chosen at random from the database.</returns>
     /// <exception cref="ArgumentException">If the number of artefacts requested is less than 1.</exception>
-    public async Task<ArtefactDetailsReadModel[]> GetRandomArtefactsAsync(int numArtefacts = 3)
+    public async Task<ArtefactDetails[]> GetRandomArtefactsAsync(int numArtefacts = 3)
     {
         if (numArtefacts <= 0)
         {
@@ -45,7 +45,7 @@ public class MySqlArtefactDetailsReader(IMySqlDataAccess dataAccess) : IArtefact
     /// <param name="identiferGroupId">Id of the identifier group used to uniquely identify the artefact (jointly with the identifier number).</param>
     /// <param name="identifierNumber">Value used to uniquely identify the artefact (along with the identifier group id).</param>
     /// <returns>The artefact details record identified by the identifier group id and identifier number, or null if it doesn't exist.</returns>
-    public async Task<ArtefactDetailsReadModel?> GetOneArtefactAsync(string identiferGroupId, int identifierNumber)
+    public async Task<ArtefactDetails?> GetOneArtefactAsync(string identiferGroupId, int identifierNumber)
     {
         if (string.IsNullOrEmpty(identiferGroupId))
         {

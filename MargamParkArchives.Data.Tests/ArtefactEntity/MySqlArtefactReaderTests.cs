@@ -5,7 +5,7 @@ using MargamParkArchives.Core.DataAccess.IdentifierGroupEntity;
 using MargamParkArchives.Core.DataAccess.PeriodEntity;
 using MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
 using MargamParkArchives.Core.Database;
-using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
+using MargamParkArchives.Core.Entities.ArtefactDetails;
 using MargamParkArchives.Core.Entities.ArtefactEntity;
 using MargamParkArchives.Core.Entities.IdentifierGroupEntity;
 using MargamParkArchives.Data.Connections;

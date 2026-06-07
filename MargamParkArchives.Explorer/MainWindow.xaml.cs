@@ -1,5 +1,5 @@
 using MargamParkArchives.Core.DataAccess.ArtefactEntity;
-using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
+using MargamParkArchives.Core.Entities.ArtefactDetails;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
 using MargamParkArchives.Windows.UI.SharedViews;
@@ -12,7 +12,7 @@ namespace MargamParkArchives.Explorer;
 /// </summary>
 public sealed partial class MainWindow : Window
 {
-    private ArtefactDetailsReadModel[] _artefacts = [];
+    private ArtefactDetails[] _artefacts = [];
     private bool _showPasswordDialog = false;
     private bool _uiLoaded = false;
 

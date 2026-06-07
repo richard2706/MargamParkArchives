@@ -1,8 +1,14 @@
 ﻿using MargamParkArchives.Core.Entities.ValidationHelpers;
 
-namespace MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
+namespace MargamParkArchives.Core.Entities.ArtefactDetails;
 
-public record ArtefactDetailsReadModel
+/// <summary>
+/// Holds all details of an artefact and its linked entities. Corresponds to the ArtefactDetails database view.
+/// </summary>
+/// <remarks>
+/// This class is only a data container, business logic (including validation) is found only in the relevant entity class.
+/// </remarks>
+public record ArtefactDetails
 {
     // Identifying attributes
     public string IdentifierGroupId { get; }
@@ -40,7 +46,7 @@ public record ArtefactDetailsReadModel
     public string? RightHolder1Cy { get; }
     public bool? VisualArtefact { get; }
 
-    public ArtefactDetailsReadModel(string identifierGroupId, int identifierNumber, string? identifierKey,
+    public ArtefactDetails(string identifierGroupId, int identifierNumber, string? identifierKey,
         string? identifierGroupName, string? categoryId = null, string? categoryName = null, int? creatorId = null,
         string? creatorName = null, int? generalLocationId = null, string? generalLocationName = null,
         int? specificLocationId = null, string? specificLocationSummary = null, int? periodId = null,
