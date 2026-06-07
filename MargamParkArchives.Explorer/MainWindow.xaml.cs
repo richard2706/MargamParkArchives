@@ -1,11 +1,9 @@
 using MargamParkArchives.Core.DataAccess.ArtefactEntity;
-using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Core.Entities.ArtefactDetailsReadModel;
+using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
+using MargamParkArchives.Windows.UI.SharedViews;
 using Microsoft.UI.Xaml;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace MargamParkArchives.Explorer;
 
@@ -22,15 +20,22 @@ public sealed partial class MainWindow : Window
     private readonly IArtefactDetailsReader _artefactReader;
     private readonly PasswordDialogService _passwordDialogService;
     private readonly ErrorDialogService? _databaseErrorDialogService;
+    private readonly INavigationService _navigationService;
 
-    public MainWindow(IArtefactDetailsReader artefactReader, PasswordDialogService passwordDialogService)
+    public MainWindow(IArtefactDetailsReader artefactReader, PasswordDialogService passwordDialogService,
+        INavigationService navigationService)
     {
         this.InitializeComponent();
         _artefactReader = artefactReader;
         _passwordDialogService = passwordDialogService;
+        _navigationService = navigationService;
+        _navigationService.Initialise(this.rootFrame);
 
         this.ExtendsContentIntoTitleBar = true;
         this.SetTitleBar(this.AppTitleBar);
+
+        _navigationService.NavigateTo(typeof(ArtefactSearchPage));
+
         //LoadRandomArtefacts();
     }
 

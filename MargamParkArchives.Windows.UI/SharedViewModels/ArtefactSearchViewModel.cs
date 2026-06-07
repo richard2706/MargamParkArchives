@@ -9,5 +9,6 @@ namespace MargamParkArchives.Windows.UI.SharedViewModels;
 
 public partial class ArtefactSearchViewModel : ObservableObject
 {
-    
+    [ObservableProperty]
+    private string searchTextboxPlaceholder = "Search artefacts...";
 }

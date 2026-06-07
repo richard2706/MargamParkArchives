@@ -1,30 +1,32 @@
-﻿using MargamParkArchives.Data.Connections;
+﻿using MargamParkArchives.Core.DataAccess.ArtefactEntity;
+using MargamParkArchives.Core.DataAccess.CategoryEntity;
+using MargamParkArchives.Core.DataAccess.CreatorEntity;
+using MargamParkArchives.Core.DataAccess.GeneralLocationEntity;
+using MargamParkArchives.Core.DataAccess.IdentifierGroupEntity;
+using MargamParkArchives.Core.DataAccess.PeriodEntity;
+using MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
+using MargamParkArchives.Core.Database;
+using MargamParkArchives.Core.Database.PasswordManagement;
+using MargamParkArchives.Core.Database.PasswordManagement.Validation;
+using MargamParkArchives.Data.Connections;
+using MargamParkArchives.Data.Entities;
+using MargamParkArchives.Data.Entities.ArtefactEntity;
+using MargamParkArchives.Data.Entities.CategoryEntity;
+using MargamParkArchives.Data.Entities.CreatorEntity;
+using MargamParkArchives.Data.Entities.GeneralLocationEntity;
+using MargamParkArchives.Data.Entities.IdentifierGroupEntity;
+using MargamParkArchives.Data.Entities.PeriodEntity;
+using MargamParkArchives.Data.Entities.SpecificLocationEntity;
 using MargamParkArchives.Windows;
+using MargamParkArchives.Windows.UI;
+using MargamParkArchives.Windows.UI.Dialogs;
+using MargamParkArchives.Windows.UI.SharedViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 using System.Diagnostics;
-using MargamParkArchives.Core.Database;
-using MargamParkArchives.Core.Database.PasswordManagement;
-using MargamParkArchives.Windows.UI.Dialogs;
-using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 using Windows.ApplicationModel;
-using MargamParkArchives.Data.Entities.ArtefactEntity;
-using MargamParkArchives.Core.DataAccess.ArtefactEntity;
-using MargamParkArchives.Data.Entities;
-using MargamParkArchives.Core.DataAccess.IdentifierGroupEntity;
-using MargamParkArchives.Data.Entities.IdentifierGroupEntity;
-using MargamParkArchives.Core.DataAccess.PeriodEntity;
-using MargamParkArchives.Data.Entities.PeriodEntity;
-using MargamParkArchives.Core.DataAccess.GeneralLocationEntity;
-using MargamParkArchives.Data.Entities.GeneralLocationEntity;
-using MargamParkArchives.Core.DataAccess.SpecificLocationEntity;
-using MargamParkArchives.Data.Entities.SpecificLocationEntity;
-using MargamParkArchives.Core.DataAccess.CreatorEntity;
-using MargamParkArchives.Data.Entities.CreatorEntity;
-using MargamParkArchives.Core.DataAccess.CategoryEntity;
-using MargamParkArchives.Data.Entities.CategoryEntity;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -63,8 +65,13 @@ public partial class App : Application
     {
         AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
         {
+            // General services
             services.AddSingleton<MainWindow>();
             services.AddSingleton<PasswordDialogService>();
+            services.AddSingleton<INavigationService, ExplorerNavigationService>();
+
+            // ViewModels
+            services.AddTransient<ArtefactSearchViewModel>();
 
             // App specific database options and services
             services.AddOptions<DatabaseOptions>()

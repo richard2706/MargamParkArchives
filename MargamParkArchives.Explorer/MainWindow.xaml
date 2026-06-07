@@ -30,8 +30,7 @@
         </TitleBar>
 
         <Frame x:Name="rootFrame"
-               Grid.Row="1"
-               SourcePageType="sharedviews:ArtefactSearchPage" />
+               Grid.Row="1" />
 
         <!--<InfoBar
             Grid.Row="2"

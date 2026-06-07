@@ -26,7 +26,7 @@
                      HorizontalAlignment="Stretch"
                      Width="500"
                      Margin="0,0,10,0"
-                     PlaceholderText="Search artefacts..." />
+                     PlaceholderText="{x:Bind _viewModel.SearchTextboxPlaceholder}"/>
             <Button Grid.Column="1"
                     MinWidth="80"
                     Style="{ThemeResource AccentButtonStyle}"
