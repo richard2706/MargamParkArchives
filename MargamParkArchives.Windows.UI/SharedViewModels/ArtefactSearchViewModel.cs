@@ -1,14 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using CommunityToolkit.Mvvm.Input;
+using MargamParkArchives.Core.DataAccess.ArtefactEntity;
+using MargamParkArchives.Core.Entities.ArtefactDetails;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace MargamParkArchives.Windows.UI.SharedViewModels;
 
-public partial class ArtefactSearchViewModel : ObservableObject
+public partial class ArtefactSearchViewModel(IArtefactDetailsReader artefactDetailsReader) : ObservableObject
 {
+    private IArtefactDetailsReader _artefactReader = artefactDetailsReader;
+
     [ObservableProperty]
-    private string searchTextboxPlaceholder = "Search artefacts...";
+    private ObservableCollection<ArtefactDetails> artefacts;
+
+    [RelayCommand]
+    private async Task LoadRandomArtefacts()
+    {
+        ArtefactDetails[] artefactsArray = await _artefactReader.GetRandomArtefactsAsync();
+        this.Artefacts = new ObservableCollection<ArtefactDetails>(artefactsArray);
+    }
 }

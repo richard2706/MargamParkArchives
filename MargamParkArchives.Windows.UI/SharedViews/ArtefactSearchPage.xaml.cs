@@ -10,8 +10,7 @@ namespace MargamParkArchives.Windows.UI.SharedViews;
 /// </summary>
 public sealed partial class ArtefactSearchPage : Page
 {
-    private const string ViewModelInvalidMessage = $"Navigation to {nameof(ArtefactSearchPage)} requires a ViewModel of type {nameof(ArtefactSearchViewModel)}.";
-    private ArtefactSearchViewModel? _viewModel;
+    private ArtefactSearchViewModel _viewModel;
 
     public ArtefactSearchPage()
     {
@@ -26,10 +25,13 @@ public sealed partial class ArtefactSearchPage : Page
         {
             _viewModel = viewModel;
             //this.DataContext = _viewModel; // Only needed when using {Binding ...} in XAML
+
+            _viewModel.LoadRandomArtefactsCommand.Execute(null);
         }
         else
         {
-            throw new ArgumentException(ArtefactSearchPage.ViewModelInvalidMessage);
+            string message = string.Format(WindowsUIConstants.ViewModelInvalidMessage, nameof(ArtefactSearchPage), nameof(ArtefactSearchViewModel));
+            throw new ArgumentException(message);
         }
     }
 }
