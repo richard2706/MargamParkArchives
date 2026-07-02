@@ -25,8 +25,6 @@ public sealed partial class ArtefactSearchPage : Page
         {
             _viewModel = viewModel;
             //this.DataContext = _viewModel; // Only needed when using {Binding ...} in XAML
-
-            _viewModel.LoadRandomArtefactsCommand.Execute(null);
         }
         else
         {

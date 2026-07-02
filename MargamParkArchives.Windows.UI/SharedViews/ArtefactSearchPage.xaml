@@ -4,9 +4,15 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MargamParkArchives.Windows.UI.SharedViews"
+    xmlns:tableview="using:WinUI.TableView"
+    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -30,17 +36,30 @@
             <Button Grid.Column="1"
                     MinWidth="80"
                     Style="{ThemeResource AccentButtonStyle}"
-                    Content="Search" />
+                    Content="Search"
+                    Command="{x:Bind _viewModel.SearchCommand}"/>
         </Grid>
 
         <!-- Results row -->
-        <Grid>
-            <!--<TextBlock Grid.Row="1" Margin="10,5">Search results will appear here.</TextBlock>-->
-            <ItemsView ItemsSource="{x:Bind _viewModel.Artefacts, Mode=OneWay}">
-                <ItemsView.Layout>
-                    <StackLayout Spacing="5"/>
-                </ItemsView.Layout>
-            </ItemsView>
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Margin="10,5"
+                        HorizontalAlignment="Center"
+                        Visibility="{x:Bind _viewModel.ShowSearchPrompt, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                Use the tools above to search the archives
+            </TextBlock>
+
+            <ProgressRing IsActive="True" Visibility="{x:Bind _viewModel.ShowSearchLoadingIndicator, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+            <tableview:TableView x:Name="ArtefactTableView"
+                                 Height="Auto"
+                                 ItemsSource="{x:Bind _viewModel.Artefacts, Mode=OneWay}"
+                                 IsReadOnly="True"
+                                 SelectionUnit="Row"
+                                 Visibility="{x:Bind _viewModel.ShowResultsTable, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </Grid>
     </Grid>
 </Page>
