@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>MargamParkArchives.Windows.UI</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
     <WinUISDKReferences>false</WinUISDKReferences>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
@@ -17,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MargamParkArchives.Core\MargamParkArchives.Core.csproj" />
+    <ProjectReference Include="..\MargamParkArchives.Data\MargamParkArchives.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="SharedViews\ArtefactSearchPage.xaml">
