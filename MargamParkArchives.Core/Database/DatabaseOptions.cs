@@ -2,6 +2,9 @@
 
 namespace MargamParkArchives.Core.Database;
 
+/// <summary>
+/// Holds data from the "DatabaseOptions" section of appsettings.json
+/// </summary>
 public sealed class DatabaseOptions
 {
     [Required]

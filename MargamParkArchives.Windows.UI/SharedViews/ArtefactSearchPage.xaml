@@ -32,7 +32,8 @@
                      HorizontalAlignment="Stretch"
                      Width="500"
                      Margin="0,0,10,0"
-                     PlaceholderText="Search artefacts..."/>
+                     PlaceholderText="Search artefacts..."
+                     Text="{x:Bind _viewModel.SearchTerm, Mode=TwoWay}"/>
             <Button Grid.Column="1"
                     MinWidth="80"
                     Style="{ThemeResource AccentButtonStyle}"
@@ -56,10 +57,38 @@
 
             <tableview:TableView x:Name="ArtefactTableView"
                                  Height="Auto"
-                                 ItemsSource="{x:Bind _viewModel.Artefacts, Mode=OneWay}"
+                                 ItemsSource="{x:Bind _viewModel.ArtefactRows, Mode=OneWay}"
                                  IsReadOnly="True"
                                  SelectionUnit="Row"
-                                 Visibility="{x:Bind _viewModel.ShowResultsTable, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                 Visibility="{x:Bind _viewModel.ShowResultsTable, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                 AutoGenerateColumns="False">
+                <tableview:TableView.Columns>
+                    <tableview:TableViewTextColumn Header="Identifier Key"
+                                                   Binding="{Binding IdentifierKey}"
+                                                   Visibility="{x:Bind GetColumnVisibility('IdentifierKey'), Mode=OneWay}"/>
+                    <tableview:TableViewTextColumn Header="Identifier Group"
+                                                   Binding="{Binding IdentifierGroupName}"
+                                                   Visibility="{x:Bind GetColumnVisibility('IdentifierGroupName'), Mode=OneWay}"/>
+                    <tableview:TableViewTextColumn Header="Date Created"
+                                                   Binding="{Binding DateCreated}"
+                                                   Visibility="{x:Bind GetColumnVisibility('DateCreated'), Mode=OneWay}"/>
+                    <tableview:TableViewTextColumn Header="Description"
+                                                   Binding="{Binding DescriptionEn}"
+                                                   Visibility="{x:Bind GetColumnVisibility('DescriptionEn'), Mode=OneWay}"/>
+                    <tableview:TableViewCheckBoxColumn Header="Visual Artefact"
+                                                       Binding="{Binding IsVisualArtefact}"
+                                                       Visibility="{x:Bind GetColumnVisibility('IsVisualArtefact'), Mode=OneWay}"/>
+                    <tableview:TableViewTextColumn Header="Category"
+                                                   Binding="{Binding CategoryName}"
+                                                   Visibility="{x:Bind GetColumnVisibility('CategoryName'), Mode=OneWay}"/>
+                    <tableview:TableViewTextColumn Header="Creator"
+                                                   Binding="{Binding CreatorName}"
+                                                   Visibility="{x:Bind GetColumnVisibility('CreatorName'), Mode=OneWay}"/>
+                    <tableview:TableViewTextColumn Header="Period"
+                                                   Binding="{Binding PeriodDates}"
+                                                   Visibility="{x:Bind GetColumnVisibility('PeriodDates'), Mode=OneWay}"/>
+                </tableview:TableView.Columns>
+            </tableview:TableView>
         </Grid>
     </Grid>
 </Page>

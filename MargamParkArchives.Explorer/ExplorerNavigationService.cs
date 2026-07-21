@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MargamParkArchives.Windows.UI;
-using MargamParkArchives.Windows.UI.SharedViewModels;
 using MargamParkArchives.Windows.UI.SharedViews;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
@@ -14,7 +13,7 @@ public class ExplorerNavigationService : INavigationService
     private const string NotInitialisedMessage = "The navigation service has not been initialised using Initialise(Frame).";
     private const string ViewModelNotRegisteredMessage = "The view model for the specified page has not been registered.";
 
-    private IServiceProvider _services;
+    private readonly IServiceProvider _services;
     private readonly Dictionary<Type, Func<ObservableObject>> _viewModelFactories = new();
     private bool _initialised = false;
     private Frame? _frame;
@@ -84,6 +83,6 @@ public class ExplorerNavigationService : INavigationService
     /// </summary>
     private void ConfigureViewModelFactories()
     {
-        _viewModelFactories[typeof(ArtefactSearchPage)] = () => _services.GetRequiredService<ArtefactSearchViewModel>();
+        _viewModelFactories[typeof(ArtefactSearchPage)] = () => _services.GetRequiredService<ExplorerArtefactSearchViewModel>();
     }
 }

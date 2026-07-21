@@ -15,11 +15,11 @@ public abstract class MySqlArtefactSearchServiceBase<TQueryResult>(IMySqlDataAcc
     private const string SearchTermEmptyMessage = "Search term cannot be null or empty.";
 
     protected virtual string SearchQuerySelectClause => "select " +
-        "artefact.identifier_key, identifier_group.name, artefact.file_path, artefact.date_created, artefact.description_en, " +
-        "artefact.visual_artefact, category.name, creator.name, period.dates";
+        "artefact.identifier_key, identifier_group.name as identifier_group_name, artefact.file_path, artefact.date_created, artefact.description_en, " +
+        "artefact.visual_artefact, category.name as category_name, creator.name as creator_name, period.dates as period_dates";
 
     protected virtual string SearchQueryFromClause => "from artefact " +
-        "inner join identifier_group on artefact.identifier_group_id = identifier_group.identifier_group_id" +
+        "inner join identifier_group on artefact.identifier_group_id = identifier_group.identifier_group_id " +
         "inner join category on artefact.category_id = category.category_id " +
         "inner join creator on artefact.creator_id = creator.creator_id " +
         "inner join period on artefact.period_id = period.period_id";

@@ -10,17 +10,16 @@ using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Entities;
-using MargamParkArchives.Data.Entities.ArtefactEntity;
 using MargamParkArchives.Data.Entities.CategoryEntity;
 using MargamParkArchives.Data.Entities.CreatorEntity;
 using MargamParkArchives.Data.Entities.GeneralLocationEntity;
 using MargamParkArchives.Data.Entities.IdentifierGroupEntity;
 using MargamParkArchives.Data.Entities.PeriodEntity;
 using MargamParkArchives.Data.Entities.SpecificLocationEntity;
+using MargamParkArchives.Data.Services;
 using MargamParkArchives.Windows;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
-using MargamParkArchives.Windows.UI.SharedViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -63,7 +62,7 @@ public partial class App : Application
 
     private static void ConfigureAppHost()
     {
-        AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
+        App.AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
         {
             // General services
             services.AddSingleton<MainWindow>();
@@ -71,7 +70,7 @@ public partial class App : Application
             services.AddSingleton<INavigationService, ExplorerNavigationService>();
 
             // ViewModels
-            services.AddTransient<ArtefactSearchViewModel>();
+            services.AddTransient<ExplorerArtefactSearchViewModel>();
 
             // App specific database options and services
             services.AddOptions<DatabaseOptions>()
@@ -88,7 +87,7 @@ public partial class App : Application
 
             // Data Access Services
             services.AddTransient<IMySqlDataAccess, MySqlDataAccess>();
-            services.AddTransient<IArtefactDetailsReader, MySqlArtefactDetailsReader>();
+            services.AddTransient<IArtefactSearchService, MySqlBasicArtefactSearchService>();
             services.AddTransient<IArtefactReader, MySqlArtefactReader>();
             services.AddTransient<IIdentifierGroupReader, MySqlIdentifierGroupReader>();
             services.AddTransient<ICreatorReader, MySqlCreatorReader>();

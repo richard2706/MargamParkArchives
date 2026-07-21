@@ -1,5 +1,3 @@
-using MargamParkArchives.Core.DataAccess.ArtefactEntity;
-using MargamParkArchives.Core.Entities.ArtefactDetails;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
 using MargamParkArchives.Windows.UI.SharedViews;
@@ -12,21 +10,17 @@ namespace MargamParkArchives.Explorer;
 /// </summary>
 public sealed partial class MainWindow : Window
 {
-    private ArtefactDetails[] _artefacts = [];
     private bool _showPasswordDialog = false;
     private bool _uiLoaded = false;
 
     // Services
-    private readonly IArtefactDetailsReader _artefactReader;
     private readonly PasswordDialogService _passwordDialogService;
-    private readonly ErrorDialogService? _databaseErrorDialogService;
+    //private readonly ErrorDialogService? _databaseErrorDialogService;
     private readonly INavigationService _navigationService;
 
-    public MainWindow(IArtefactDetailsReader artefactReader, PasswordDialogService passwordDialogService,
-        INavigationService navigationService)
+    public MainWindow(PasswordDialogService passwordDialogService, INavigationService navigationService)
     {
         this.InitializeComponent();
-        _artefactReader = artefactReader;
         _passwordDialogService = passwordDialogService;
         _navigationService = navigationService;
         _navigationService.Initialise(this.rootFrame);
@@ -35,8 +29,6 @@ public sealed partial class MainWindow : Window
         this.SetTitleBar(this.AppTitleBar);
 
         _navigationService.NavigateTo(typeof(ArtefactSearchPage));
-
-        //LoadRandomArtefacts();
     }
 
     // Earliest point where XamlRoot is available
