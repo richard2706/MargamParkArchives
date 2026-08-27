@@ -1,31 +1,66 @@
+using MargamParkArchives.Data.Connections;
+using MargamParkArchives.Data.Services;
+using MargamParkArchives.Windows.UI;
+using MargamParkArchives.Windows.UI.Dialogs;
+using MargamParkArchives.Windows.UI.SharedViews;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Threading.Tasks;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace MargamParkArchives.AdminConsole;
 
-namespace MargamParkArchives.AdminConsole
+/// <summary>
+/// Main Window for the Admin Console application. Contains the top level NavigationView and handles cross page functionality
+/// such as notifications and password prompts
+/// </summary>
+public sealed partial class MainWindow : Window
 {
+    private readonly INavigationService _navigationService;
+    private readonly IMySqlDataAccess _dataAccess;
+    private readonly PasswordDialogService _passwordDialogService;
+
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// Creates a new instance of the MainWindow class and initializes the navigation service
     /// </summary>
-    public sealed partial class MainWindow : Window
+    /// <param name="navigationService"></param>
+    /// <param name="dataAccess"></param>
+    /// <param name="passwordDialogService"></param>
+    public MainWindow(INavigationService navigationService, IMySqlDataAccess dataAccess, PasswordDialogService passwordDialogService)
     {
-        public MainWindow()
+        this.InitializeComponent();
+        this._navigationService = navigationService;
+        this._dataAccess = dataAccess;
+        this._passwordDialogService = passwordDialogService;
+
+        this.ExtendsContentIntoTitleBar = true;
+        //this.SetTitleBar(this.AppTitleBar);
+
+        this._navigationService.Initialise(this.ContentFrame);
+        this._navigationService.NavigateTo(typeof(ArtefactSearchPage));
+    }
+
+    /// <summary>
+    /// Called when the RootGrid is loaded
+    /// </summary>
+    /// <remarks>
+    /// This is the earliest point where XamlRoot is available, and can be used to trigger any actions that require the UI to be fully loaded.
+    /// </remarks>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        _ = this.ShowDatabasePasswordPromptIfRequired();
+    }
+
+    /// <summary>
+    /// Verifies the database connection is working and triggers a password prompt if the connection fails due to a missing or invalid password
+    /// </summary>
+    private async Task ShowDatabasePasswordPromptIfRequired()
+    {
+        DatabaseConnectionCheckService dbConnectionCheck = new(this._dataAccess);
+        bool isPasswordPromptRequired = !(await dbConnectionCheck.IsStoredPasswordValidAsync());
+        if (isPasswordPromptRequired)
         {
-            InitializeComponent();
+            await this._passwordDialogService.ShowDialog(this.Content.XamlRoot);
         }
     }
 }

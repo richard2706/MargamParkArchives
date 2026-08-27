@@ -17,6 +17,10 @@ public partial class StartupErrorDialogService(string errorTitle, string errorDe
     private readonly string _errorTitle = errorTitle;
     private readonly string _errorDetails = errorDetails;
 
+    /// <summary>
+    /// Displays the startup error dialog to the user
+    /// </summary>
+    /// <param name="exceptionThrown">The exception that was thrown</param>
     public async void ShowDialog(Exception exceptionThrown)
     {
         // Create a temporary window to host the dialog
@@ -44,16 +48,22 @@ public partial class StartupErrorDialogService(string errorTitle, string errorDe
 
         if (result == ContentDialogResult.Primary)
         {
-            OpenDatabaseSettingsFile();
+            StartupErrorDialogService.OpenDatabaseSettingsFile();
         }
         else if (result == ContentDialogResult.Secondary)
         {
-            await CopyDatabaseErrorToClipboard(exceptionThrown, tempWindow);
+            await StartupErrorDialogService.CopyDatabaseErrorToClipboard(exceptionThrown, tempWindow);
         }
 
         tempWindow.Close();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="exceptionThrown"></param>
+    /// <param name="tempWindow"></param>
+    /// <returns></returns>
     private static async Task CopyDatabaseErrorToClipboard(Exception exceptionThrown, Window tempWindow)
     {
         DataPackage dataPackage = new();

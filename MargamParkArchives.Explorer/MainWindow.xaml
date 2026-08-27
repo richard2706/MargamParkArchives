@@ -14,8 +14,7 @@
         <MicaBackdrop Kind="Base"/>
     </Window.SystemBackdrop>
 
-    <!--<Grid Loaded="RootGrid_Loaded">-->
-    <Grid>
+    <Grid Loaded="RootGrid_Loaded">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>  <!-- Title bar -->
             <RowDefinition Height="*"/> <!-- Content contained in a frame -->
@@ -23,13 +22,14 @@
         </Grid.RowDefinitions>
 
         <TitleBar x:Name="AppTitleBar"
+                  Grid.Row="0"
                   Title="WinUI Notes"
                   IsBackButtonVisible="True"
-                  IsBackButtonEnabled="{x:Bind rootFrame.CanGoBack, Mode=OneWay}">
+                  IsBackButtonEnabled="{x:Bind _navigationService.CanGoBack(), Mode=OneWay}">
                   <!--BackRequested="AppTitleBar_BackRequested">-->
         </TitleBar>
 
-        <Frame x:Name="rootFrame"
+        <Frame x:Name="ContentFrame"
                Grid.Row="1" />
 
         <!--<InfoBar

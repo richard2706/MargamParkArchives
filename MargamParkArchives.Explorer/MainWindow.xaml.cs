@@ -1,7 +1,10 @@
+using MargamParkArchives.Data.Connections;
+using MargamParkArchives.Data.Services;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
 using MargamParkArchives.Windows.UI.SharedViews;
 using Microsoft.UI.Xaml;
+using System.Threading.Tasks;
 
 namespace MargamParkArchives.Explorer;
 
@@ -14,32 +17,36 @@ public sealed partial class MainWindow : Window
     private bool _uiLoaded = false;
 
     // Services
-    private readonly PasswordDialogService _passwordDialogService;
     //private readonly ErrorDialogService? _databaseErrorDialogService;
     private readonly INavigationService _navigationService;
+    private readonly IMySqlDataAccess _dataAccess;
+    private readonly PasswordDialogService _passwordDialogService;
 
-    public MainWindow(PasswordDialogService passwordDialogService, INavigationService navigationService)
+    public MainWindow(INavigationService navigationService, IMySqlDataAccess dataAccess, PasswordDialogService passwordDialogService)
     {
         this.InitializeComponent();
-        _passwordDialogService = passwordDialogService;
         _navigationService = navigationService;
-        _navigationService.Initialise(this.rootFrame);
+        _passwordDialogService = passwordDialogService;
+        _dataAccess = dataAccess;
 
         this.ExtendsContentIntoTitleBar = true;
         this.SetTitleBar(this.AppTitleBar);
 
+        _navigationService.Initialise(this.ContentFrame);
         _navigationService.NavigateTo(typeof(ArtefactSearchPage));
     }
 
     // Earliest point where XamlRoot is available
-    //private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
-    //{
-    //    _uiLoaded = true;
-    //    if (_showPasswordDialog)
-    //    {
-    //        await ShowPasswordDialogThenReloadAsync();
-    //    }
-    //}
+    private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        //_uiLoaded = true;
+        //if (_showPasswordDialog)
+        //{
+        //    await ShowPasswordDialogThenReloadAsync();
+        //}
+
+        _ = this.ShowDatabasePasswordPromptIfRequired();
+    }
 
     //private async void LoadRandomArtefacts()
     //{
@@ -87,4 +94,17 @@ public sealed partial class MainWindow : Window
     //{
     //    _databaseErrorDialogService?.ShowDialog(Content.XamlRoot);
     //}
+
+    /// <summary>
+    /// Verifies the database connection is working and triggers a password prompt if the connection fails due to a missing or invalid password
+    /// </summary>
+    private async Task ShowDatabasePasswordPromptIfRequired()
+    {
+        DatabaseConnectionCheckService dbConnectionCheck = new(this._dataAccess);
+        bool isPasswordPromptRequired = !(await dbConnectionCheck.IsStoredPasswordValidAsync());
+        if (isPasswordPromptRequired)
+        {
+            await this._passwordDialogService.ShowDialog(this.Content.XamlRoot);
+        }
+    }
 }
