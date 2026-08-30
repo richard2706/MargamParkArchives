@@ -1,10 +1,11 @@
+using Microsoft.UI.Xaml;
+using System.Threading.Tasks;
+
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Services;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
 using MargamParkArchives.Windows.UI.SharedViews;
-using Microsoft.UI.Xaml;
-using System.Threading.Tasks;
 
 namespace MargamParkArchives.Explorer;
 
@@ -22,6 +23,12 @@ public sealed partial class MainWindow : Window
     private readonly IMySqlDataAccess _dataAccess;
     private readonly PasswordDialogService _passwordDialogService;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="navigationService"></param>
+    /// <param name="dataAccess"></param>
+    /// <param name="passwordDialogService"></param>
     public MainWindow(INavigationService navigationService, IMySqlDataAccess dataAccess, PasswordDialogService passwordDialogService)
     {
         this.InitializeComponent();
@@ -36,7 +43,14 @@ public sealed partial class MainWindow : Window
         _navigationService.NavigateTo(typeof(ArtefactSearchPage));
     }
 
-    // Earliest point where XamlRoot is available
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// Earliest point where XamlRoot is available
+    /// </remarks>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
     {
         //_uiLoaded = true;

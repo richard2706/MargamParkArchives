@@ -1,11 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MargamParkArchives.Data.Entities.ArtefactEntity;
-using MargamParkArchives.Data.Services;
-using MargamParkArchives.Windows.UI.TableRows;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+
+using MargamParkArchives.Data.Entities.ArtefactEntity;
+using MargamParkArchives.Data.Services;
+using MargamParkArchives.Windows.UI.TableRows;
 
 namespace MargamParkArchives.Windows.UI.SharedViewModels;
 
@@ -18,10 +19,7 @@ namespace MargamParkArchives.Windows.UI.SharedViewModels;
 /// <param name="searchService">Service for searching artefacts</param>
 public abstract partial class ArtefactSearchViewModel(IArtefactSearchService searchService) : ObservableObject
 {
-    /// <summary>
-    /// Visibility of a column if not specified in the VisibleColumns property of the derived class. Default is false (hidden).
-    /// </summary>
-    public const bool DefaultColumnVisibility = false;
+    private const string SearchPrompt = "Use the tools above to search the archives";
 
     private readonly IArtefactSearchService _searchService = searchService;
 
@@ -65,6 +63,14 @@ public abstract partial class ArtefactSearchViewModel(IArtefactSearchService sea
     /// 
     /// </summary>
     public bool ShowNoResultsMessage => !this.ShowSearchLoadingIndicator && (this.ArtefactRows?.Count == 0);
+
+    /// <summary>
+    /// Text to show in place of the results table before the user has performed a search.
+    /// </summary>
+    /// <remarks>
+    /// Note this cannot be static as the data binding then does not work
+    /// </remarks>
+    public string SearchPromptText => SearchPrompt;
 
     /// <summary>
     /// Perform a search from the user's input and show the results.
