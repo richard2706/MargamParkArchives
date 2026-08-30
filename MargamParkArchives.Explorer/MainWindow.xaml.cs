@@ -5,7 +5,7 @@ using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Services;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
-using MargamParkArchives.Windows.UI.SharedViews;
+using MargamParkArchives.Windows.UI.Pages;
 
 namespace MargamParkArchives.Explorer;
 

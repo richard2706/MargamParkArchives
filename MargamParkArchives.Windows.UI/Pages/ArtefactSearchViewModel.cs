@@ -8,7 +8,7 @@ using MargamParkArchives.Data.Entities.ArtefactEntity;
 using MargamParkArchives.Data.Services;
 using MargamParkArchives.Windows.UI.TableRows;
 
-namespace MargamParkArchives.Windows.UI.SharedViewModels;
+namespace MargamParkArchives.Windows.UI.Pages;
 
 /// <summary>
 /// View model for searching artefacts and displaying the results in a table

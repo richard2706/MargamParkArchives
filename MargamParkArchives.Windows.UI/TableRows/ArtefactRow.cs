@@ -1,5 +1,6 @@
-﻿using MargamParkArchives.Data.Entities.ArtefactEntity;
-using System;
+﻿using System;
+
+using MargamParkArchives.Data.Entities.ArtefactEntity;
 
 namespace MargamParkArchives.Windows.UI.TableRows;
 

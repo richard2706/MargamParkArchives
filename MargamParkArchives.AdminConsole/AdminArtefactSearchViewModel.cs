@@ -1,5 +1,5 @@
 ﻿using MargamParkArchives.Data.Services;
-using MargamParkArchives.Windows.UI.SharedViewModels;
+using MargamParkArchives.Windows.UI.Pages;
 using MargamParkArchives.Windows.UI.TableRows;
 
 namespace MargamParkArchives.AdminConsole;

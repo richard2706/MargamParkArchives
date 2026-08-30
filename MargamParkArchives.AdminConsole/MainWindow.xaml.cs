@@ -1,10 +1,11 @@
+using Microsoft.UI.Xaml;
+using System.Threading.Tasks;
+
 using MargamParkArchives.Data.Connections;
 using MargamParkArchives.Data.Services;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
-using MargamParkArchives.Windows.UI.SharedViews;
-using Microsoft.UI.Xaml;
-using System.Threading.Tasks;
+using MargamParkArchives.Windows.UI.Pages;
 
 namespace MargamParkArchives.AdminConsole;
 

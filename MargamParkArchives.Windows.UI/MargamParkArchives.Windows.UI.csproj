@@ -21,7 +21,7 @@
     <ProjectReference Include="..\MargamParkArchives.Data\MargamParkArchives.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="SharedViews\ArtefactSearchPage.xaml">
+    <Page Update="Pages\ArtefactSearchPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

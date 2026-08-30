@@ -1,9 +1,13 @@
 ﻿using MargamParkArchives.Data.Services;
-using MargamParkArchives.Windows.UI.SharedViewModels;
+using MargamParkArchives.Windows.UI.Pages;
 using MargamParkArchives.Windows.UI.TableRows;
 
 namespace MargamParkArchives.Explorer;
 
+/// <summary>
+/// Explorer implementation for the ArtefactSearchViewModel
+/// </summary>
+/// <param name="artefactSearchService"></param>
 internal partial class ExplorerArtefactSearchViewModel(IArtefactSearchService artefactSearchService)
     : ArtefactSearchViewModel(artefactSearchService)
 {

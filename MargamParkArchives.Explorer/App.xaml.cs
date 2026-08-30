@@ -1,4 +1,11 @@
-﻿using MargamParkArchives.Core.DataAccess.ArtefactEntity;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.UI.Xaml;
+using System.Diagnostics;
+using Windows.ApplicationModel;
+
+using MargamParkArchives.Core.DataAccess.ArtefactEntity;
 using MargamParkArchives.Core.DataAccess.CategoryEntity;
 using MargamParkArchives.Core.DataAccess.CreatorEntity;
 using MargamParkArchives.Core.DataAccess.GeneralLocationEntity;
@@ -20,12 +27,6 @@ using MargamParkArchives.Data.Services;
 using MargamParkArchives.Windows;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Microsoft.UI.Xaml;
-using System.Diagnostics;
-using Windows.ApplicationModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

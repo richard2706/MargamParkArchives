@@ -1,7 +1,8 @@
-﻿using MargamParkArchives.Windows.UI;
-using MargamParkArchives.Windows.UI.SharedViews;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+
+using MargamParkArchives.Windows.UI;
+using MargamParkArchives.Windows.UI.Pages;
 
 namespace MargamParkArchives.Explorer;
 

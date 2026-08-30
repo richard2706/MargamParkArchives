@@ -1,10 +1,9 @@
-using MargamParkArchives.Windows.UI.SharedViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 
-namespace MargamParkArchives.Windows.UI.SharedViews;
+namespace MargamParkArchives.Windows.UI.Pages;
 
 /// <summary>
 /// Page for the user to search the artefact database and filter the results.
