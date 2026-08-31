@@ -15,19 +15,21 @@
 
     <Grid Loaded="RootGrid_Loaded">
         <Grid.RowDefinitions>
-            <!--<RowDefinition Height="Auto"/>--> <!-- Title bar -->
+            <RowDefinition Height="Auto"/> <!-- Title bar -->
             <RowDefinition Height="*"/> <!-- NavigationView for pages contained in a frame -->
             <RowDefinition Height="Auto"/> <!-- Info bar -->
         </Grid.RowDefinitions>
         
-        <!--<TitleBar x:Name="AppTitleBar"
+        <TitleBar x:Name="AppTitleBar"
                   Grid.Row="0"
-                  Title="WinUI Notes"
+                  Title="Margam Park Archives Admin Console"
                   IsBackButtonVisible="True"
                   IsBackButtonEnabled="{x:Bind _navigationService.CanGoBack(), Mode=OneWay}">
-        </TitleBar>-->
+        </TitleBar>
 
-        <NavigationView Grid.Row="0" PaneDisplayMode="Top" IsSettingsVisible="False">
+        <NavigationView Grid.Row="1"
+                        PaneDisplayMode="Top"
+                        IsSettingsVisible="False">
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Browse Artefacts" IsSelected="True"/>
                 <NavigationViewItem Content="Import Data"/>

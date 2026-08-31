@@ -33,7 +33,7 @@ public sealed partial class MainWindow : Window
         this._passwordDialogService = passwordDialogService;
 
         this.ExtendsContentIntoTitleBar = true;
-        //this.SetTitleBar(this.AppTitleBar);
+        this.SetTitleBar(this.AppTitleBar);
 
         this._navigationService.Initialise(this.ContentFrame);
         this._navigationService.NavigateTo(typeof(ArtefactSearchPage));
