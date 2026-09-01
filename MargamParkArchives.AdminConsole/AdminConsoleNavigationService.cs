@@ -16,5 +16,6 @@ internal class AdminConsoleNavigationService(IServiceProvider serviceProvider) :
     protected override void ConfigureViewModelFactories()
     {
         _viewModelFactories[typeof(ArtefactSearchPage)] = () => _services.GetRequiredService<AdminArtefactSearchViewModel>();
+        _viewModelFactories[typeof(ImportPage)] = () => _services.GetRequiredService<ImportViewModel>();
     }
 }

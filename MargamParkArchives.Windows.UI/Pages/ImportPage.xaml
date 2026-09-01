@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MargamParkArchives.Windows.UI.Pages.ImportPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MargamParkArchives.Windows.UI.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Margin="16" RowSpacing="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Spacing="8">
+            <TextBlock Text="{x:Bind _viewModel.ArtefactFilePickerPromptMessage, Mode=OneTime}" />
+            <Button Content="Choose CSV file"
+                    IsEnabled="{x:Bind _viewModel.IsPickArtefactFileButtonEnabled, Mode=OneWay}"
+                    Command="{x:Bind _viewModel.OpenArtefactFilePickerCommand}"/>
+            <TextBlock Text="{x:Bind _viewModel.ArtefactFilePickerMessage, Mode=OneWay}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <Button Content="Import artefacts"
+                    IsEnabled="{x:Bind _viewModel.IsImportButtonEnabled, Mode=OneWay}"
+                    Command="{x:Bind _viewModel.ImportArtefactsCommand}"
+                    Style="{ThemeResource AccentButtonStyle}"/>
+        </StackPanel>
+    </Grid>
+</Page>

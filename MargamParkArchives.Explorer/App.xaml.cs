@@ -28,9 +28,6 @@ using MargamParkArchives.Windows;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace MargamParkArchives.Explorer;
 
 /// <summary>
@@ -61,6 +58,9 @@ public partial class App : Application
         this.Start();
     }
 
+    /// <summary>
+    /// Configures the application host by registering services for dependency injection.
+    /// </summary>
     private static void ConfigureAppHost()
     {
         App.AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>

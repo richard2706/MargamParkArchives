@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
 
 using MargamParkArchives.Data.Connections;
@@ -62,6 +63,31 @@ public sealed partial class MainWindow : Window
         if (isPasswordPromptRequired)
         {
             await this._passwordDialogService.ShowDialog(this.Content.XamlRoot);
+        }
+    }
+
+    /// <summary>
+    /// User has selected a new page from the navigation view, so navigate to the selected page
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        NavigationViewItem? selectedPage = args.SelectedItem as NavigationViewItem;
+        if (selectedPage is not null && selectedPage.Tag is NavigationPage page)
+        {
+            switch (page)
+            {
+                case NavigationPage.ArtefactSearch:
+                    this._navigationService.NavigateTo(typeof(ArtefactSearchPage));
+                    break;
+
+                case NavigationPage.Import:
+                    this._navigationService.NavigateTo(typeof(ImportPage));
+                    break;
+            }
+
+            //this._navigationService.NavigateTo(page); // Will simplfy to this once the navigation service is updated to support NavigationPage enum directly
         }
     }
 }

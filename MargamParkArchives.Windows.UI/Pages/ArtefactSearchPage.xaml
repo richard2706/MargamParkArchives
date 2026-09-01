@@ -23,18 +23,20 @@
         <!-- Search row -->
         <Grid Grid.Row="0"
               HorizontalAlignment="Center"
-              Margin="10,5">
+              Margin="16,8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0"
-                     HorizontalAlignment="Stretch"
-                     Width="500"
-                     Margin="0,0,10,0"
-                     PlaceholderText="Search artefacts..."
-                     Text="{x:Bind _viewModel.SearchTerm, Mode=TwoWay}"/>
+            <StackPanel HorizontalAlignment="Center">
+                <TextBox Grid.Column="0"
+                         HorizontalAlignment="Stretch"
+                         Width="500"
+                         Margin="0,0,10,0"
+                         PlaceholderText="Search artefacts..."
+                         Text="{x:Bind _viewModel.SearchTerm, Mode=TwoWay}"/>
+            </StackPanel>
             <Button Grid.Column="1"
                     MinWidth="80"
                     Style="{ThemeResource AccentButtonStyle}"

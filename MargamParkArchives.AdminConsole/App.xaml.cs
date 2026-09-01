@@ -1,4 +1,11 @@
-﻿using MargamParkArchives.Core.Database;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.UI.Xaml;
+using System.Diagnostics;
+using Windows.ApplicationModel;
+
+using MargamParkArchives.Core.Database;
 using MargamParkArchives.Core.Database.PasswordManagement;
 using MargamParkArchives.Core.Database.PasswordManagement.Validation;
 using MargamParkArchives.Data.Connections;
@@ -6,16 +13,7 @@ using MargamParkArchives.Data.Services;
 using MargamParkArchives.Windows;
 using MargamParkArchives.Windows.UI;
 using MargamParkArchives.Windows.UI.Dialogs;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Microsoft.UI.Xaml;
-using System;
-using System.Diagnostics;
-using Windows.ApplicationModel;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using MargamParkArchives.Windows.UI.Pages;
 
 namespace MargamParkArchives.AdminConsole;
 
@@ -72,7 +70,6 @@ public partial class App : Application
     /// <summary>
     /// Configures the app host with services
     /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
     private static void ConfigureAppHost()
     {
         App.AppHost = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
@@ -84,6 +81,7 @@ public partial class App : Application
 
             // ViewModels
             services.AddTransient<AdminArtefactSearchViewModel>();
+            services.AddTransient<ImportViewModel>();
 
             // App specific database options and services
             services.AddOptions<DatabaseOptions>()

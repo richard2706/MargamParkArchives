@@ -29,10 +29,12 @@
 
         <NavigationView Grid.Row="1"
                         PaneDisplayMode="Top"
-                        IsSettingsVisible="False">
+                        IsSettingsVisible="False"
+                        SelectionChanged="NavigationView_SelectionChanged"
+                        IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Browse Artefacts" IsSelected="True"/>
-                <NavigationViewItem Content="Import Data"/>
+                <NavigationViewItem Content="Browse Artefacts" IsSelected="True" Tag="{x:Bind local:NavigationPage.ArtefactSearch}"/>
+                <NavigationViewItem Content="Import Data" Tag="{x:Bind local:NavigationPage.Import}"/>
             </NavigationView.MenuItems>
 
             <Frame x:Name="ContentFrame"/>
